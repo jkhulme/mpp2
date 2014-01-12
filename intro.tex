@@ -1,29 +1,41 @@
 \section{Introduction}
 
-TODO: HAVE I USED THE CORRECT PHRASE
+Biologists often use computer models to help guide their research as they are much cheaper than doing the experiments for real.  There are a number of tools available for their use.  These tools typically require a certain level of numerical confidence to create and interpret the results from.  Not all biologists have this numerical confidence.  For some writing and interpreting the model is a challenge, this can make them less effective in their research.  It is therefore necessary for these tools to help them relate the data to their field by incorporating domain knowledge.
 
-Biologists often use computer models to help guide their research.  There are a number of tools available for their use.  Not all biologists have equal ability in analysing data and graphs, in fact, for some they consider it a challenge.  It is therefore necessary for these tools to help them relate the data to their field by incorporating domain knowledge.
+One such tool that can be used for modelling is Bio-PEPA, an extension of the PEPA process algebra.  Bio-PEPA is currently implemented as a plugin for Eclipse IDE.  Bio-PEPA visualises data as time-series graphs.  There is one team in particular who use Bio-PEPA and are not comfortable with analysing graphs.  This team has provided the focus for this project.
 
-One such tool that can be used for modelling is Bio-PEPA, an extension of the PEPA process algebra.  Bio-PEPA is currently implemented as a plugin for Eclipse IDE.  Bio-PEPA outputted data as time-series graphs.  There is one team in particular who use Bio-PEPA and are not comfortable with analysing graphs.  This team has provided the focus for this project.
+The purpose of this project was to extend Bio-PEPA's visualisation capabilities to allow the previously mentioned team, and other similar users of Bio-PEPA to more effectively analyse their results.
 
-The purpose of this project was to extend Bio-PEPA's visualisation capabilities to allow the previously mentioned team, and other users of Bio-PEPA to more effectively analyse their results.
+A significant problem with Bio-PEPA's visualisation capability is that it is difficult to represent spatial change on a time-series graph.  In Bio-PEPA you can have a species at different locations in the cell, for example, next to the nucleus, next to the cell membrane and throughout the cytoplasm.  The movement of this species through the cell can by modelled by seeing the population of it in each location over time.  This is difficult to visualise on a time series plot as three lines is too abstract.  It requires the use of biological metaphor to be easily interpreted.  In this case a visualisation of the cell that can show how the species moves through the cell.
+
+Over the course of the project the scope has been expanded.  The original objective was to assess which forms of visual representation are most helpful and informative to laboratory science.  At the end of the first project phase the object changed to be to develop a tool to visualise the results of dynamic, time-series models of intra-cellular behaviour based on biochemical reactions.  This objective was focused on visualisation to aid those researchers who are not numerically confident.  The second phase of the project has added to this objective to also aid interpretation and collaboration.  This change in objective is to make the tool better for all users.
+
+\subsection{Where Does This Tool Fit In?}
 
 In the first stage of the project a review was performed of the features of a number of modelling and visualisation tools.  This review included specialised software aimed at biologists and general software for anybody doing data visualisation.
 
-Over the course of the project the scope has been expanded, a new aim of making it more effective for all users.  This was to be accomplished by adding in features useful to all.
+The software that was reviewed were: Bio-PEPA, Uppaal, V-Cell, Cell-O, Copasi, Cell Designer and WEAVE.  Bio-PEPA, V-Cell, Cell-O, Copasi and Cell Designer have been written for biological modelling.  Uppaal is modelling software for general use, and WEAVE is a general data visualisation tool.
 
-The software that was reviewed was:  TODO LIST SOFTWARE
+All offered some level of visualisation, some simply graphs, others more complex visualisations.  Bio-PEPA offered only line graphs.  Uppaal had visualisations that highlighted where in a finite state machine view of the model the current state is.  V-Cell had visualisation of the model in a hierarchical set of circles, it was also display spatial elements of the results data by displaying a heat model view of the cell.  Cell-O was aimed more at multi-cell models and was able to show them moving and splitting, it also had visualisation of the model as a finite state machine.  Copasi only graphs although the user had more control over the display of the plots.  WEAVE had the largest visualisation capacity being able to display a variety of standard graph times along with more interesting ones, such as geographical maps, but it did not appear to have anything specialised for biological models.  WEAVE is also the tool that gave the user the most control over the visualisation.
 
-The features that were found in these were: TODO LIST FEATURES
+The existing biological modelling software seems to be focused more on the ease of modelling.  The visualisation features on offer are typically quite basic.  They also lack the more innovative features that can be found in the newer general data visualisation software.
 
-The results of this project are: TODO LIST RESULTS
+An important area that all the reviewed software were lacking in is collaboration.  In recent years cloud software has taken off and made real time collaboration a possibility.  The current work flow using the existing software is do your analysis, save it, email it to a colleague with additional files and notes, have them open it and try and work out what is happening.  It is a disjointed conversation.  None of the tools surveyed offered a more efficient approach.
+
+This tool has a space in the existing landscape in two ways.  The first as offering visualisation capabilities similar to those in the other biological modelling software to Bio-PEPA.  The second is by implementing modern collaboration features, making it a unique tool.
 
 \subsection{Previous Work}
 
 Early on in the first stage of the project it was decided to separate this project from the Eclipse plugin.  It was felt that Eclipse is not the right tool to do data visualisation in.
 
-The initial development stages were focused on getting the new tool to match the ability of what visualisation could be done with Eclipse.  This is, creating the user interface (U.I.), parsing the results and plotting them on a graph.
+The initial development stages were focused on getting the new tool from zero functionality to matching the visualisation features of the Eclipse plug-in.  This involved writing an early version of the U.I., parsing the Bio-PEPA results data, and plotting it using matplotlib.
 
 After matching the existing functionality it was time to add new functionality.
-WHAT NEW FUNCTIONALITY WAS ADDED.  WHY.
+The first new feature was intensity plotting where the colour of the line increases in intensity/opaqueness as the population of the species increases.  Then visualisation of the model was added.  It used a system of nesting circles and rings to build a heirarchical view of the cell from its model components.  Finally the user was given control of the plot, allowing the toggle whether it is shown or not, how it is plotted, what colour it is and the thickness of the line.
+
+Over the course of the first stage of work a number of evaluations were carried out with potential and actual users of Bio-PEPA.  The findings from these evaluations were used to improve the tool.
+
+\subsection{Results}
+
+Break down by project stage?  Aniticipating this to be 1.5 - 2 pages
 
