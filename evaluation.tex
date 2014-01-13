@@ -25,8 +25,11 @@ Some issues were encountered:
 \item The results from the survey indicated that both users thought the tool had a good appearance.  Was average in difficulty to use -- neither easy nor difficult, the annotation buttons on the toolbar were clear as to what they did, that it was obvious how to attach supporting files.  Both users thought that it is bery useful to attach files to the session so that they can be easily emailed to a colleague.  When asked about having the graph be automatically annotated they though it would be very useful but wanted to the ability to disable them.  Both found the animation useful.
 \end{itemize}
 
-
 \subsubsection{Personal}
+
+At this stage in the development the program was in a state where some existing functionality had been broken and gone unnoticed during the implementation of the new features.  This showed some bad architecting that had found its way into the code.  There were multiple paths through the program that data was taking, and duplicated code in places.  Since then a majority of these bugs have been ironed out, and the code much better architected and the duplications removed.  At the time of the evaluation with the users not all the features could be tested with them -- mainly the plot preferences dialog.  These features have now been fixed and they will be evaluated by the users at the next meeting.
+
+Having the users use it has also highlighted a number of usability problems, menus being badly organised and named, features, such as annotation, relying on knowledge of how they work to use them.  All this created a unfriendly environment for the user.  This was due to losing sight of the need for usability during development and when testing new features not removing the knowledge of the code from my mind.  Since this evaluation the three lists of usability have been read and the code gone through and had the principles applied.  TALK A BIT MORE HERE ABOUT THIS.
 
 \subsection{Evaluation 2 - Start of Second Semester}
 \subsubsection{User Group}
