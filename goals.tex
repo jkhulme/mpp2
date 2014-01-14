@@ -32,6 +32,28 @@ For each of the below, why, how inc conceptual problems, impact, how it could be
 
 \subsubsection{Annotation}
 
+\paragraph{Annotation of the Graph}
+
+Annotation of the graph was an important feature to add.  It is one of Grinstein's features that data visualisation software should have.  This is because these data visualisation should help analyse.  If you had a print out of a graph it would be second nature to draw over it, highlighting areas of interest.  It needs to be able to be performed digitally as well.  As well as helping users analyse their data it also means that images for presentations can be prepared without having to save the graph and open it in an external program.  If you did this and then wanted to change the graph you would have to re-annotate it.  This is wasted time and frustrating.  Being able to do it from within the visualisation problem.  Another benefit of being able to annotate is it is another way of attaching additional information to the graph when sending it to a colleague, having this information on the graph saves them from flicking back and forth.
+
+Annotation on the graph was relatively straightforward.  matplotlib provides annotation capabilities in two forms.  One form is annotating arrows with or without text, and the other is arbitrary drawing on the graph.
+
+Buttons for each of the annotations have been placed on the matplotlib toolbar.  There were problems in making it usable.  Text and Circles were usable as all they require is one click.  However the arrows required two clicks.  At first it was similar in that it required two clicks, first is the start point, second is the finish point.  This was non obvious.  It was changed so that the first click still placed the start point, after the first click, now however, a temporary annotation is continuously redrawn that has its end point of wherever the mouse is.  This allows the user to see the arrow they are drawing.
+
+Next the annotations had to be able to be edited or deleted.  They could not just be clicked as they are not a U.I. element.  The solution to this was to have an array of annotations.  When a user right clicks on the graph it searches through all annotations and selects the annotation that was closest to the click, if it was below a certain threshold.  The selected annotation is then highlighted red, and context menu appears to give feedback to the user that they have successfully selected.  Then properties of the selected line can be changed.
+
+\paragraph{Annotation of the Animation}
+
+After completing annotation of the graph it was important to expand this to other areas of the program, particularly the animation panel.  This poses more of a challenge than for annotation of the graph.  There are a number of issues to overcome.
+
+\begin{enumerate}
+\item How exactly to do the annotations?  For the graph matplotlib has built in annotation support.  wxPython does have drawing support but no in built annotation support.  This means manually handling the drawing on top of the animation visualisation.  Manual drawing means that the automatic layout functionality that wxPython provides has to be left behind.
+\item When to display annotations?  When an annotation is drawn on the graph it is there to be displayed at all times.  The appearance of the graph does not change over time.  However on the animation visualisation appearance does change over time.  The problem faced when annotating is then is whether to have annotations available at only specific times in the animation, or to have them there the whole time, and if they are going to appear and disappear how can it be done without being distracting.
+\item Control over annotations -- Related to the previous item, when a user wants to edit or delete an annotation on the graph it is always there.  However on the animation panel if the annotation is temporal, then it is not always there for the user to edit or delete, and it would be frustrating for a user to constantly have to search through the animation time to look for annotations to change them.
+\end{enumerate}
+
+WRITE MORE AFTER DOING THIS.
+
 \subsubsection{Animation}
 
 \subsubsection{Data Mining}
@@ -47,9 +69,13 @@ In all the evaluations of the project so far users have commented on the difficu
 \paragraph{Undo \& Redo}
 Shneiderman calls for easy reversal of actions and Nielson calls for user control and freedom -- an emergency exit from an unwanted state.  For this undo/redo functionality has been added.  This required refactoring of the project code, so that the raw data is in one location, inside a singleton, any changes to this data model and the next U.I. update uses this data to display the visualisations.  This data model is stored as a dictionary.  To implement undo and redo copies of the data dictionary are pushed and popped onto the stack.  Copies are pushed onto the undo stack on any atomic change the user makes.  This gives the user a full session history to go back through and this was one of the early goals from the first project phase.
 
+A problem was encountered when trying to copy the dictionary onto the stack.  When just pushing the dictionary onto the stack it would not put a new copy onto the stack, so any changes to the dictionary after it has pushed onto the stack are also there in the stack.  Python dictionaries have a copy method.  Copy only does a shallow copy -- any objects in the original dictionary will have their reference placed in the new dictionary.  This was fine for some parts of the session dictionary, but others it was not, in particular lines and annotations.  This was solved by using deep copy.  With deep copy a new copy is made of objects as well.  Some elements of wxPython and matplotlib were unable to be deep copied, but this was fixed whilst focusing more around around the data -- so the U.I. elements use the data, not the other way around.
+
 \paragraph{Saving}
 
 It is important that a user is able to save and load the visualisation session.  Because the user is able to add annotations and change preferences and attach files they do no want to have to repeat all these actions every time.  Luckily it was able to build on the reworking done to get undo/redo to work.  Although further work was required. Python has a module called pickle to serialise and deserialise data.  When saving the data dictionary is pickled and written to a file and the loaded the reverse happens.  Because the program is now focused on the data model once a previous session has been loaded, a U.I. refresh is triggered and the loaded session is visible.
+
+Saving the data also enables limited collaboration.  The user can annotate, change colours etc, save the state to a file, and then email that file to a colleague.  They can then load this file, and see what the user was seeing.  They can then add more annotations, correct or delete existing ones.  This can then be saved and emailed back.  This is useful -- better than no collaboration.  But it happens asynchronously.
 
 \paragraph{Feedback}
 Norman and Shneiderman both call for feedback to be given to the user so that they can be sure that an action has been accomplished.  This feedback can come in a number of different forms, and was in place in some parts of the project.
