@@ -44,18 +44,18 @@ For each of the below, why, how inc conceptual problems, impact, how it could be
 
 In all the evaluations of the project so far users have commented on the difficulty of using parts of it.  Action has been taken to make it easier to use.  Many of the changes have been guided by Shneiderman, Norman \& Nielson's guidelines.  Specifics are detailed below.
 
-\subsubsubsection{Undo/Redo}
+\paragraph{Undo \& Redo}
 Shneiderman calls for easy reversal of actions and Nielson calls for user control and freedom -- an emergency exit from an unwanted state.  For this undo/redo functionality has been added.  This required refactoring of the project code, so that the raw data is in one location, inside a singleton, any changes to this data model and the next U.I. update uses this data to display the visualisations.  This data model is stored as a dictionary.  To implement undo and redo copies of the data dictionary are pushed and popped onto the stack.  Copies are pushed onto the undo stack on any atomic change the user makes.  This gives the user a full session history to go back through and this was one of the early goals from the first project phase.
 
-\subsubsubsection{Saving}
+\paragraph{Saving}
 
 It is important that a user is able to save and load the visualisation session.  Because the user is able to add annotations and change preferences and attach files they do no want to have to repeat all these actions every time.  Luckily it was able to build on the reworking done to get undo/redo to work.  Although further work was required. Python has a module called pickle to serialise and deserialise data.  When saving the data dictionary is pickled and written to a file and the loaded the reverse happens.  Because the program is now focused on the data model once a previous session has been loaded, a U.I. refresh is triggered and the loaded session is visible.
 
-\subsubsubsection{Feedback}
+\paragraph{Feedback}
 Norman and Shneiderman both call for feedback to be given to the user so that they can be sure that an action has been accomplished.  This feedback can come in a number of different forms, and was in place in some parts of the project.
 Existing feedback in the project was a natural byproduct of some of the features.  For example when loading a results file the feedback that the load has been successful is that a graph appears on the screen, if it doesn't succeed then something has gone wrong.  Additional feedback has been added to the project, when adding annotations the cursor changes to indicate to the user that they can interact with the graph in a different way.  And before there was no indication that a save operation had been successful.  Now the title bar text changes to display ``unsaved'' when the user makes a change and then changes back to ``saved'' when a successful save has been performed.
 
-\subsubsubsection{Guiding the User}
+\paragraph{Guiding the User}
 
 The first evaluation of the second phase of the project unearthed that the users struggled when there were multiple ways of doing the same operation, but that had slightly different uses.  These multiple paths have been removed.  For example now there is only one way to open results files initially.  To help guide the user further U.I. elements are enabled and disabled as appropriate.  So when the program is first loaded the only action a user can perform is to load a session or start a new session.  Afterwords other U.I. elements are enabled to allow them to start using the tool effectively.
 
