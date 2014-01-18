@@ -1,14 +1,32 @@
 \section{Introduction}
 
-Biologists often use computer models to help guide their research as they are much cheaper than doing the experiments for real.  There are a number of tools available for their use.  These tools typically require a certain level of numerical confidence to create and interpret the results from.  Not all biologists have this numerical confidence.  For some writing and interpreting the model is a challenge, this can make them less effective in their research.  It is therefore necessary for these tools to help them relate the data to their field by incorporating domain knowledge.
+Biologists often use computer models to help guide their research as modelling is much cheaper than experimentation.  There are a number of tools available for biological modelling.  These tools typically require a certain level of numerical confidence to create and interpret.  Not all biologists have this numerical confidence.  Some researchers find writing and interpreting models a challenge, this can make them less effective in their research.  It is therefore necessary for these tools to help them relate the data to their field by incorporating domain knowledge.
 
-One such tool that can be used for modelling is Bio-PEPA, an extension of the PEPA process algebra.  Bio-PEPA is currently implemented as a plugin for Eclipse IDE.  Bio-PEPA visualises data as time-series graphs.  There is one team in particular who use Bio-PEPA and are not comfortable with analysing graphs.  This team has provided the focus for this project.
+One such tool that can be used for modelling is Bio-PEPA, an extension of the PEPA process algebra.  Bio-PEPA is currently implemented as a plugin for the Eclipse IDE.  Bio-PEPA visualises the model results as time-series graphs.  There is one team, the Src researchers, in particular who use Bio-PEPA and do not have the numerical confidence, as described above, to be comfortable using Bio-PEPA.  This team is the focus for this project.  The purpose of this project was to extend Bio-PEPA's visualisation capabilities to allow the previously mentioned team, and other similar users of Bio-PEPA to more effectively analyse their results.
 
-The purpose of this project was to extend Bio-PEPA's visualisation capabilities to allow the previously mentioned team, and other similar users of Bio-PEPA to more effectively analyse their results.
+A significant problem with Bio-PEPA's visualisation capability is that it is difficult to represent spatial change on a time-series graph (as can be seen in Figure~\ref{fig:asrc_intro}).  In Bio-PEPA you can have a species at different locations in the cell, for example, next to the nucleus, next to the cell membrane and throughout the cytoplasm.  The movement of this species through the cell can by modelled by seeing the population of it in each location over time.  This is difficult to visualise on a time series plot as three lines is too abstract.  It requires the use of biological metaphor to be easily interpreted.  In this case a visualisation of the cell that can show how the species moves through the cell.  It is this sort of inference that the
+Src researches find challenging to do with Bio-PEPA currently.
 
-A significant problem with Bio-PEPA's visualisation capability is that it is difficult to represent spatial change on a time-series graph.  In Bio-PEPA you can have a species at different locations in the cell, for example, next to the nucleus, next to the cell membrane and throughout the cytoplasm.  The movement of this species through the cell can by modelled by seeing the population of it in each location over time.  This is difficult to visualise on a time series plot as three lines is too abstract.  It requires the use of biological metaphor to be easily interpreted.  In this case a visualisation of the cell that can show how the species moves through the cell.
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{0.4\textwidth}
+        \centering
+        \includegraphics[width=0.8\textwidth]{images/asrc_graph_intro.png}
+        \caption{Time Series Representation}
+        \label{fig:asrc_graph_intro}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.4\textwidth}
+        \centering
+        \includegraphics[width=0.5\textwidth]{images/asrc_cell_intro.png}
+        \caption{Spatial Representation}
+        \label{fig:asrc_cell_intro}
+    \end{subfigure}
+    \caption{One species at three locations in the cell represented traditionally on a time series graph and also spatially in a cell}
+    \label{fig:asrc_intro}
+\end{figure}
 
-Over the course of the project the scope has been expanded.  The original objective was to assess which forms of visual representation are most helpful and informative to laboratory science.  At the end of the first project phase the object changed to be to develop a tool to visualise the results of dynamic, time-series models of intra-cellular behaviour based on biochemical reactions.  This objective was focused on visualisation to aid those researchers who are not numerically confident.  The second phase of the project has added to this objective to also aid interpretation and collaboration.  This change in objective is to make the tool better for all users.
+
+Over the course of the project the scope has been expanded.  The original objective was to assess which forms of visual representation are most helpful and informative to laboratory science.  At the end of the first project phase the object changed (to reflect that it was more of an engineering project than an experimental project) to be to develop a tool to visualise the results of dynamic, time-series models of intra-cellular behaviour based on biochemical reactions.  This objective was focused on visualisation to aid those researchers who are not numerically confident.  The second phase of the project has added to this objective to also aid interpretation and collaboration.  This change in objective is to make the tool better for all users.
 
 \subsection{Where Does This Tool Fit In?}
 
