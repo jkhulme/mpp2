@@ -19,19 +19,17 @@ Users of the new tool are provided with four annotation types: arrow, text, arro
 
 There were problems in annotation user friendly.  Text and circle annotations were intuitive as all they require is one click -- click where you want the annotation and it will be placed there.  However the two arrow annotation types required two clicks.  The first click is the start point (tail of the arrow) and the second click is the finish point (head of the arrow).  This was not obvious, when handed over to the users they didn't know that it required two clicks and didn't know whether the arrows would be drawn head to tail or tail to head.  The technique for placing arrows was changed so that the first click still fixed the position of the tail of the arrow, however the behaviour after the first click has changed, now a temporary annotation is continuously redrawn that has the head of the arrow wherever the mouse is.  This allows the user to see the arrow they are drawing.
 
-Next the annotations had to be able to be edited or deleted.  They could not just be clicked as they are not a U.I. element.  The solution to this was to have an array of annotations.  When a user right clicks on the graph it searches through all annotations and selects the annotation that was closest to the click, if it was below a certain threshold.  The selected annotation is then highlighted red, and context menu appears to give feedback to the user that they have successfully selected.  Then properties of the selected line can be changed.
+Next the annotations had to be able to be edited or deleted.  The annotations can not just be clicked as they are not a \ac{UI} widget like a button.  The solution to this was to have an array of annotations.  When a user right clicks on the graph it searches through all annotations and selects the annotation that was closest to the click (if it was below a certain threshold).  The selected annotation is then highlighted red, and a context menu appears to give feedback to the user that they have successfully selected an annotation.  The context menu then gives the user the option to edit or delete an annotation.  Editing an annotation only allows for editing text.  For changing position the annotation has to be deleted and redrawn.
 
 \paragraph{Annotation of the Animation}
 
-After completing annotation of the graph it was important to expand this to other areas of the program, particularly the animation panel.  This poses more of a challenge than for annotation of the graph.  There are a number of issues to overcome.
+After completing annotation of the graph it was important to expand this to the animation panel as this is the other area where visualisations are put.  This poses more of a challenge than for annotation of the graph and there are a number of issues to overcome.
 
 \begin{enumerate}
 \item How exactly to do the annotations?  For the graph matplotlib has built in annotation support.  wxPython does have drawing support but no in built annotation support.  This means manually handling the drawing on top of the animation visualisation.  Manual drawing means that the automatic layout functionality that wxPython provides has to be left behind.
 \item When to display annotations?  When an annotation is drawn on the graph it is there to be displayed at all times.  The appearance of the graph does not change over time.  However on the animation visualisation appearance does change over time.  The problem faced when annotating is then is whether to have annotations available at only specific times in the animation, or to have them there the whole time, and if they are going to appear and disappear how can it be done without being distracting.
 \item Control over annotations -- Related to the previous item, when a user wants to edit or delete an annotation on the graph it is always there.  However on the animation panel if the annotation is temporal, then it is not always there for the user to edit or delete, and it would be frustrating for a user to constantly have to search through the animation time to look for annotations to change them.
 \end{enumerate}
-
-WRITE MORE AFTER DOING THIS.
 
 \subsubsection{Animation}
 
