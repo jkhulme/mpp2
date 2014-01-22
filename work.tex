@@ -26,24 +26,28 @@ Next the annotations had to be able to be edited or deleted.  The annotations ca
 After completing annotation of the graph it was important to expand this to the animation panel as this is the other area where visualisations are put.  This poses more of a challenge than for annotation of the graph and there are a number of issues to overcome.
 
 \begin{enumerate}
-\item How exactly to do the annotations?  For the graph matplotlib has built in annotation support.  wxPython does have drawing support but no in built annotation support.  This means manually handling the drawing on top of the animation visualisation.  Manual drawing means that the automatic layout functionality that wxPython provides has to be left behind.
-\item When to display annotations?  When an annotation is drawn on the graph it is there to be displayed at all times.  The appearance of the graph does not change over time.  However on the animation visualisation appearance does change over time.  The problem faced when annotating is then is whether to have annotations available at only specific times in the animation, or to have them there the whole time, and if they are going to appear and disappear how can it be done without being distracting.
-\item Control over annotations -- Related to the previous item, when a user wants to edit or delete an annotation on the graph it is always there.  However on the animation panel if the annotation is temporal, then it is not always there for the user to edit or delete, and it would be frustrating for a user to constantly have to search through the animation time to look for annotations to change them.
+\item How to implement the annotations?  For the graph matplotlib has built in annotation support.  wxPython does have drawing support but no in built annotation support.  Annotating on the animation will need manual handling the drawing on top of the animation visualisation.  Manual drawing means that the automatic layout functionality that wxPython provides has to be left behind.
+\item When to display the annotations?  When an annotation is drawn on the graph it is displayed at all times.  The appearance of the graph does not change over time.  However on the animation visualisation appearance does change over time.  The problem faced when annotating is then is whether to have annotations available at only specific times in the animation, or to have them there the whole time, and if they are going to appear and disappear how can it be done without being distracting.
+\item How to give the user control over the annotations? When a user wants to edit or delete an annotation on the graph it is always there.  However on the animation panel if the annotation is temporal, then it is not always visible for the user to edit or delete and it would be frustrating for a user to constantly have to search through the animation to look for annotations to change them.
 \end{enumerate}
 
 \subsubsection{Animation}
 
-Animation was a key goal of the project.  The core aim of the project is to help biologists who aren't comfortable with traditional time-series graphs.  So the aim was to give them visualisations closer to what they see in their domain.  This has been accomplished by displaying spatial data in the shape of the cell.
+Animation was a key goal of the project.  The core aim of the project is to help biologists who aren't comfortable with traditional time-series graphs.  So the goal was to provide them with visualisations closer to what they see in their domain.  This has been accomplished by displaying spatial data in the shape of the cell.
 
 The animation is ideally used to display species moving through a cell.  This collapses what would be multiple different lines, that give no indication of their real position in the cell, into a single image.  There is one segment in the cell animation for each line.  The colours in each segment reflect the colour of the line on the graph.  Then over the course of the animation the colours are set by the colour in the intensity plot version of the line.  This allows the researcher to compare the two visualisations and will hopefully help build their confidence on the graph plot.
+
+To make setting up the animation user friendly to control it requires the model file so that the location hierarchy can be parsed.  Before this there was an awkward system where the user had to input where in the cell a species is.  This was time consuming, awkward and quite brittle.  At the time it assumed that there would be three compartments in the species, which is a terrible assumption to make.
+
+The requirement of the model file for parsing animation has also led to animation replacing the previous model visualisation.  In the set up phase after the the model and the species have been parsed the user is presented with a cell segment, similar to what is seen in the animation panel.  The cell segment is split into different regions, one for each region of the cell.  These segments are then coloured if the selected species is present in them.  The user can select between all species in the selected results files.  This has a number of benefits.  First, they can sanity check that they have matching results and model files.  Second, they can see how the model is structured.
+
+Similar control is provided on the animation panel itself.  The user can see the animation focused on a specific species, in which case a cell segment is drawn for each file that the species is in.  Or they can have the animation focused on a specific results file in which case a cell segment is drawn for each species in that results file.
 
 \subsubsection{Data Mining}
 
 \subsubsection{Search}
 
 \subsubsection{Collaboration}
-
-
 
 \subsubsection{Usability}
 
