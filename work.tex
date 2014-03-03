@@ -51,6 +51,23 @@ Similar control is provided on the animation panel itself.  The user can see the
 
 \subsubsection{Search}
 
+Using a time series as a plot posed some interesting problems.
+\begin{itemize}
+\item How to cope with different scales
+\item How to cope with events happening at different times
+\item How to represent the plot to allow for efficient search
+\item How to determine similarity between two graphs
+\end{itemize}
+
+All of these needed to be overcome for this feature to be useful.
+
+This is an area of active research.  Early techniques used simple techniques such as Euclidean distance, but these simple approaches gave poor results.  It is feasible to have a species that exhibits a similar reaction to our query (the line has the same shape) but it happens at a different time in the experiment than our query plot.  In other words the graph is offset.  We can tell that the two graphs are similar, but euclidean distance will return that they are unsimilar.  The same problem occurs with differences in species population giving an offset in the x axis.
+
+After researching current techniques an approach was taken that solves all the problems above.
+
+The first step is to convert the input data to be a list of all n length sub lists of the input data. i.e. with input data [1,2,3,4,5] and n = 3 our input data would become [[1,2,3], [2,3,4], [3,4,5]].  The sub lists are our features.  We then normalise each feature to be zero mean, unit variance.
+
+The next step is to convert the continuous data into discrete data and reduce the dimensionality of it.  By normalising the data to be zero mean and unit variance we have allowed a normal distribution to be easily fitted to our data.
 \subsubsection{Collaboration}
 
 \subsubsection{Usability}
