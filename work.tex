@@ -67,7 +67,25 @@ After researching current techniques an approach was taken that solves all the p
 
 The first step is to convert the input data to be a list of all n length sub lists of the input data. i.e. with input data [1,2,3,4,5] and n = 3 our input data would become [[1,2,3], [2,3,4], [3,4,5]].  The sub lists are our features.  We then normalise each feature to be zero mean, unit variance.
 
-The next step is to convert the continuous data into discrete data and reduce the dimensionality of it.  By normalising the data to be zero mean and unit variance we have allowed a normal distribution to be easily fitted to our data.   Using the normal distribution we convert a data point in our sub list to be one of three possible values.
+The next step is to convert the continuous data into discrete data and reduce the dimensionality of it.  By normalising the data to be zero mean and unit variance we have allowed a normal distribution to be easily fitted to our data.   Using the normal distribution we convert a data point in our sub list to be one of three possible values.  Here we use the characters `a', `b' \& `c'.  This builds a string representation of the plot.
+
+The paper this approach is taken from then calls for reducing local duplicates.  This further reduces the size of our fingerprint and increases the efficiency.  Removing the local duplicates means any ignoring runs of a certain string can be replaced with just one instance of the string.
+
+This provides us with a finger print of the plot.  A string size of 8, with 3 possible value leads to a vocabulary size of 6561 possible representations.  A single plot will have very few of these, so we use a sparse representation.  For each line a dictionary is stored.  The dictionary keys are the strings in the fingerprints and the value is the count of that string in the plot's fingerprint.
+
+This format of the fingerprint also solves the problem of similar features happening at different times.  The plot fingerprint is a bag-of-words, in this case a bag-of-features.  There is no order to them, it is as though we are assuming that all features appear at the same instant.
+
+Now that we have a representation of the plot that is scale and time invariant and allows for efficient comparisons we can find a method to calculate the similarity.
+
+We could simply just use Euclidean distance again, but this does not do anything to weight rarer features that can tell us more about a graph.  An alternative distance measure would be cosine distance, but this suffers the same drawback.
+
+It was decided to implement tf.idf weighted cosine as the similarity measure.  This takes into account term frequencies to provide a higher weight to rarer vectors.  tf.idf is very well researched in the field of information retrieval and text mining.  Given the representation of the finger print is equivalent to a bag-of-words it seems sensible to apply tf.idf to this domain.
+
+EXPLANATION OF HOW TF.IDF WORKS
+
+Initial results are very promising with the tf.idf weighted cosine providing much clearer results than with simple euclidean distance.  There is not a large enough truth set of plot similarities to be able to confidently say that it is effective.  However these early promising results seem to indicate that further research would certainly be worthwhile, but outside the scope of the project.
+
+DISCUSSION OF THE EARLY RESULTS
 
 \subsubsection{Collaboration}
 
