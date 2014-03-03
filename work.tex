@@ -67,7 +67,8 @@ After researching current techniques an approach was taken that solves all the p
 
 The first step is to convert the input data to be a list of all n length sub lists of the input data. i.e. with input data [1,2,3,4,5] and n = 3 our input data would become [[1,2,3], [2,3,4], [3,4,5]].  The sub lists are our features.  We then normalise each feature to be zero mean, unit variance.
 
-The next step is to convert the continuous data into discrete data and reduce the dimensionality of it.  By normalising the data to be zero mean and unit variance we have allowed a normal distribution to be easily fitted to our data.
+The next step is to convert the continuous data into discrete data and reduce the dimensionality of it.  By normalising the data to be zero mean and unit variance we have allowed a normal distribution to be easily fitted to our data.   Using the normal distribution we convert a data point in our sub list to be one of three possible values.
+
 \subsubsection{Collaboration}
 
 \subsubsection{Usability}
