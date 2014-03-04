@@ -81,13 +81,25 @@ We could simply just use Euclidean distance again, but this does not do anything
 
 It was decided to implement tf.idf weighted cosine as the similarity measure.  This takes into account term frequencies to provide a higher weight to rarer vectors.  tf.idf is very well researched in the field of information retrieval and text mining.  Given the representation of the finger print is equivalent to a bag-of-words it seems sensible to apply tf.idf to this domain.
 
-EXPLANATION OF HOW TF.IDF WORKS
+\paragraph{tf.idf} is a way of ranking how important a word is.  Taken into account are frequency of a word in the query, frequency of a word in the document, length of the document, average length of documents in the corpus, total number of documents and frequency of the word across all documents.
+
+The formula is: INSERT FORMULA.
+
+These term weights are then used in a tf.idf weighted cosine.
+
+This approach allows for effiecient search.  If we have two indexes.  One where keys are the documents and the values are the words in the document and their frequencies. Then we have another index, an inverted one.  Where the keys are the words and the values are a list of documents that contain them.  The individual components of the tf.idf equation can therefore be calculated with very little effort.  This means that a plot can be compared to the database of plots in O(n) time.
 
 Initial results are very promising with the tf.idf weighted cosine providing much clearer results than with simple euclidean distance.  There is not a large enough truth set of plot similarities to be able to confidently say that it is effective.  However these early promising results seem to indicate that further research would certainly be worthwhile, but outside the scope of the project.
 
 DISCUSSION OF THE EARLY RESULTS
 
 \subsubsection{Collaboration}
+
+The initial step of allowing collaboration is enabling two instances of the program to talk to each other.  There are a number of techniques to allow for this.  Data could have been sent directly through sockets, another option would be to create a web server and send get requests and pass parameters.  It was decided to use an existing library to handle the communication.  The library chose was simplexmlrpc.  This allows each instance to run a client and a server.  The server has an api and this can be called.
+
+On initial connection the `master' sends its entire session state the the `slave' uses this as its initial state.  After this whenever either client performs an action it issues a call to the other clients server to perform the same action.
+
+An issue that was encountered is how to ensure that both clients are seeing everything in the same order.  Lamport clock proved to be the solution.
 
 \subsubsection{Usability}
 
