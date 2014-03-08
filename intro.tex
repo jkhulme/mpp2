@@ -58,13 +58,17 @@ Lucid Chart is a collaborative diagramming tool.  Lucid Chart lies between Googl
 
 SynBioWave was a biological extension to Google Wave.  It is the only example found of a platform for real time collaboration focused at synthetic biology that could be found.  Unfortunately it could not be made to work.  The instruction page still refers to Google Wave.  Google Wave has been discontinued since 2012 (some of its real time features found their way into Google Docs).  An attempt was made to follow the instructions using Apache Wave (Google Wave was handed over to the Apache foundation) but the SynBioWave tool did not work.  The user guide does seem to give a good indication of how the tool would work.  The review is based off this.  Wave was used to enable the collaboration.  You would create a new wave and add your human collaborators.  You would also add the SynBioWave agent as a collaborator.   When the SynBioWave agent is added to the wave it adds a menu bar, through this menu the human collaborators can call various functions, the agent then calculates the result and displays the visualisations.  The agent and its results can be interacted with in real time. SynBioWave is modular and there are multiple agents available.  Custom agents can also be created.  The use of Google Wave allowed the biologists to focus on implementing domain functionality without having to worry about the code infrastructure for real time collaboration.  Unfortunately by relying on a third party for the backbone of the system SynBioWave appears to have become unusable after Google Wave shut down.
 
-\subsection{Findings:} By implementing more advanced visualisation features this tool makes Bio-PEPA a more attractive modelling tool, by bringing the feature set in line with the alternative modelling tools.  There are also features that are not offered by any of the other reviewed biological software -- visualisation and non visualisation features.  None of the other tools gave the users as much control over the look of their results.  Also none of the other tools had the correspondence between the different visualisations that exist in this new tool.  This tool is also the only one that allowed the user to annotate and attach supporting documentation.  None of the other modelling or visualisation tools reviewed offered any sort of collaborative features - real time or not.  This makes this tool unique and innovative.
+\subsection{Findings:}
+
+From studying the alternative modelling tools available and their visualisation capabilities it was clear that the visualisation capabilities of Bio-PEPA had to be increased.  It was also clear that all the modelling tools were limited in their visualisation capability and that increasing the interactivity and customization available would be very useful.
+
+We can see that there are a number of tools now that offer the ability to collaborate in real time.  Only one, however, could be found that was focused on synthetic biology.  This one tool appeared to now be dead.  Given how useful tools like collaborative document editors have been more commonplace it seems like a good idea to try and bring this functionality into the synthetic biology domain.  This would give Bio-PEPA a competitive advantage and hopefully encourage more researchers to use it.
 
 \section{Previous Work}
 
-Early on in the first stage of the project it was decided to separate this project from the Eclipse plugin.  It was felt that Eclipse is not the right tool to do data visualisation in.
+Early on in the first stage of the project it was decided to separate this project from the Eclipse plug-in.  It was felt that Eclipse is not the right tool to do data visualisation in.
 
-The initial development stages were focused on getting the new tool from having zero functionality to matching the visualisation features of the Eclipse plug-in.  This involved writing an early version of the \ac{UI}, parsing the Bio-PEPA results data, and plotting it using matplotlib.
+The initial development stages were focused on getting the new tool from having zero functionality to matching the visualisation features of the Eclipse plug-in.  This involved writing an early version of the \ac{UI}, parsing the Bio-PEPA results data, and plotting it using matplotlib~\cite{mpl}.
 
 The next stage of the project was to extend the functionality.  The first new feature was intensity plotting where the colour of the line increases in intensity/opaqueness as the population of the species increases.  The next feature added was visualisation of the model.  Model visualisation used a system of nesting circles and rings to build a hierarchical view of the cell from its model components.  Finally the user was given control of the plot, allowing them to alter whether lines are plotted or not, what colour the line is and the thickness of the line.  Figure~\ref{fig:f75_mac_intro} shows how the main screen of the program looked at the end of the first stage of development.
 
@@ -78,6 +82,8 @@ The next stage of the project was to extend the functionality.  The first new fe
 Over the course of the first stage of work a number of evaluations were carried out with potential and actual users of Bio-PEPA.  The findings from these evaluations were used to improve the tool.
 
 \section{Results}
+
+ORPHAN PARAGRAPH FROM FINDINGS ABOVE - SEEMS TO FIT MORE HERE By implementing more advanced visualisation features this tool should make Bio-PEPA a more attractive modelling tool. The visualisation features have been brought into line with the features in alternative modelling tools.
 
 Break down by project stage?  Anticipating this to be 1.5 - 2 pages
 
