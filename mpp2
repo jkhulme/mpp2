@@ -1,0 +1,6 @@
+#!/bin/sh
+
+pdflatex mpp2.tex
+bibtex mpp2
+pdflatex mpp2.tex
+pdflatex mpp2.tex
