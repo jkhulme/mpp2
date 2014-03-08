@@ -30,7 +30,7 @@ During the first half of the second phase of development new goals were identifi
 
 \subsection{Data Manipulation and Export}
 
-This goal was added after a meeting with the maintainer of BioDARE.  This web based tool is aimed at results from laboratory experiments, specifically experiments relating to circadian rhythm.
+This goal was added after a meeting with the maintainer of BioDARE~\cite{biodare}.  This web based tool is aimed at results from laboratory experiments, specifically experiments relating to circadian rhythm.
 
 The maintainer explained that he had found that researchers often visualise their data after it has been normalised.  This removes any issues where different species have different scales and makes it easier for the users to interpret the data.
 
@@ -40,12 +40,18 @@ This seemed like a very useful feature for users and it was added as a project g
 
 \subsection{Time Series Data as a Query}
 
-There has been a lot of research in recent years about using time series data as a query against a database of other time series plots through some similarity measure.
+There has been a lot of research in recent years~\cite{esling, chotirat, agrawal, nakamura, goldin, structural_similarity, faloutsos, chakrabarti, popivanov, keogh, faloutsos2, bollobas, kahveci} into using time series data as a query against a database of other time series plots through some similarity measure.
 
-This would be a very useful feature to add to the tool.  It would allow researchers to search through their past work for similar time series data that also shared some species. They then know that different species behave similarly when exposed to another species.
+This would be a very useful feature to add to the tool.  By allowing researchers to use a plot as a query they would be able to discover other plots exhibiting similar behaviour.  This could be the same species reacting the same to different species, or a species that is exhibiting similar behaviour.  This could help the biologists discover alternative candidate species for research.
 
-Eventually this database of plots could be a central repository online available to all researchers, allowing users to see if their research overlaps with any other research -- identifying potential collaborators.
+This feature would be most effective if there was an online repository of plots for the biologist to search.  This would also allow them to discover potential collaborators.  Online repositories of data do exist, BioDARE is one of them.  These repositories are unlikely at the moment to store the data in a suitable way to allow for efficient search.
+
+Given the potential usefulness of this feature, and the fact that none of the other modelling software had this capability it has been added as a goal.
 
 \subsection{Real Time Collaboration}
 
-An important area that all the reviewed software were lacking in is collaboration, real time or not.  The current work flow using the existing software is do your analysis, save it, email it to a colleague with additional files and notes, have them open it and try and work out what is happening.  It is a disjointed conversation.  None of the tools surveyed offered a more efficient approach.  A new goal for this project was to offer real time collaboration to improve the existing work flow.
+An important area that all the reviewed software were lacking in is collaboration, real time or not.  The current work flow using the existing software is: perform your analysis, save it, email it to a colleague with additional files and notes, have them open it, they attempt to work out the visualisation is showing.  It is a disjointed conversation.
+
+It is not just the modelling software that did not offer collaboration, none of the visualisation software reviewed offered real time collaboration either.
+
+Adding real time collaboration was added as a goal to offer researchers a better work flow.
