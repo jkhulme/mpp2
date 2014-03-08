@@ -1,32 +1,34 @@
 \chapter{Goals}
 
-Signpost text
+To help guide development during the project a number of goals were identified.  Over the course of the project the goals have been refined, new goals have been added and some goals have been dropped.
 
-\subsection{Previous Goals}
-Through research into the problem a number of goals were identified.  After performing a review of the existing software the goals were refined.  The goals were again refined during the first stage of development.  Some of these goals were completed in the first phase of development:
+\section{Previous Goals}
+Through research into the problem a number of goals were identified.  After performing a review of the existing software the goals were refined.  The initial user evaluations also fed into the refinement of the goals of the project.  Some of these goals were completed in the first stage of development, the other goals were carried forward into the second phase of development.
 
-\begin{itemize}
-\item Improve existing capabilities -- This goal was completed in the first phase of development, with the implementation of the intensity plotting and the extra customisation available to the user.
-\item Visualise the model more intuitively -- This goal was completed in the first phase of development with the implementation of the hierarchical drawing of the model components.
-\end{itemize}
-
-Others were to be completed during the second phase of development:
+The goals that were to be completed in the first stage of development are:
 
 \begin{itemize}
-\item Provide visualisations that take into account the domain - This has been implemented in the second phase of the project.  This goal was merged with animation of the data.
-\item Animation of the data - This has been implemented: the user can now visualise species moving through a cell.
-\item Investigating which visualisation combinations work best - This was planned to be performed in this stage of the project, but due to the new features not all being different visualisations the goal is less relevant now, and has been removed.
-\item Add the ability to annotate the visualisations - This goal has been implemented: the user can add annotations to the visualisations.
-\item Allow the ability to save and load the program state - This goal has been implemented: users can save and load the program state into files, these can then be emailed to other users who can modify them.
-\item Provide a full session history to the user - This has been implemented, the user has a full undo and redo history within the session allowing them to easily correct mistakes.
-\item Data Mining - The plan for this has not changed since the first phase.
-\item Making meta data accessible - The plan for this has not changed since the first phase.
+\item Improve existing capabilities -- The purpose of the goal was to add to Bio-PEPA's visualisation capabilities and bring the more into line with the other modelling software.  This goal was completed in the first phase of development. The user was given extra control over the appearance of their graphs.  Intensity plotting was also implemented.
+\item Visualise the model more intuitively -- The purpose of this goal was to help the biologists to increase their understanding of what the model and the graph is showing them.  This goal was completed in the first phase of development with the implementation of the hierarchical drawing of the model components.
 \end{itemize}
 
-\subsection{New Goals}
+These other goals were to be completed during the second phase of development:
+
+\begin{itemize}
+\item Provide visualisations that take into account the domain -- The purpose of the goal was also to help the biologists further understand what the model and the graph are showing them. This has been implemented in the second phase of the project.  This goal was merged with animation of the data.
+\item Animation of the data -- The purpose of this goal was to make it easier for the biologists to interpret spacial data by showing the species in their results moving through the cell.  This has been implemented: the user can now visualise species moving through a cell.
+\item Investigating which visualisation combinations work best -- The purpose of this goal was to try and work out whether there were any combinations on visualisations that the program could offer that the biologists found particularly useful.  This was originally planned to be performed in the second stage of the project, but due to the project focusing on non visualisation features the goal has been removed.
+\item Add the ability to annotate the visualisations -- The purpose of this goal is to allow the biologists to add extra supporting information directly onto the visualisation. This goal has been implemented: the user can add annotations to the visualisations.
+\item Allow the ability to save and load the program state -- The purpose of this goal was to allow the biologists to complete their work in multiple sessions. This goal has been implemented: users can save and load the program state into files, these can then be emailed to other users who can modify them.
+\item Provide a full session history to the user -- The purpose of this goal allow the biologists to recover from any mistakes they might make. This has been implemented, the user has a full undo and redo history within the session allowing them to easily correct mistakes.
+\item Data Mining -- The purpose of this goal was to have the program provide some level of automatic annotation and setting optimisation to reduce the workload for the biologists.  Due to other features being added that reduce the need for this goal the goal has now been dropped.  The research for this goal was not lost however as a similar goal was added.  This is not a goal that should be abandoned either, instead it would be implemented if the development continued.
+\item Making meta data accessible -- The purpose of this goal was to The plan for this has not changed since the first phase.
+\end{itemize}
+
+\section{New Goals}
 During the first half of the second phase of development new goals were identified.
 
-\subsubsection{Data Manipulation and Export}
+\subsection{Data Manipulation and Export}
 
 This goal was added after a meeting with the maintainer of BioDARE.  This web based tool is aimed at results from laboratory experiments, specifically experiments relating to circadian rhythm.
 
@@ -36,7 +38,7 @@ BioDARE can also export the raw data allowing the researchers to use it in other
 
 This seemed like a very useful feature for users and it was added as a project goal.
 
-\subsubsection{Time Series Data as a Query}
+\subsection{Time Series Data as a Query}
 
 There has been a lot of research in recent years about using time series data as a query against a database of other time series plots through some similarity measure.
 
@@ -44,6 +46,6 @@ This would be a very useful feature to add to the tool.  It would allow research
 
 Eventually this database of plots could be a central repository online available to all researchers, allowing users to see if their research overlaps with any other research -- identifying potential collaborators.
 
-\subsubsection{Real Time Collaboration}
+\subsection{Real Time Collaboration}
 
 An important area that all the reviewed software were lacking in is collaboration, real time or not.  The current work flow using the existing software is do your analysis, save it, email it to a colleague with additional files and notes, have them open it and try and work out what is happening.  It is a disjointed conversation.  None of the tools surveyed offered a more efficient approach.  A new goal for this project was to offer real time collaboration to improve the existing work flow.
