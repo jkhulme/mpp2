@@ -34,7 +34,7 @@ It was important that annotations could be edited or deleted.  The annotations c
     \label{fig:annotation_selection}
 \end{figure}
 
-To calculate the distance from the location of the mouse click to the annotation two problems had to be solved.  The first was how to calculate the distance from a point to a line.  An equation for this can be seen in Figure~\ref{fig:point_to_line_eq}
+To calculate the distance from the location of the mouse click to the annotation two problems had to be solved.  The first was how to calculate the distance from a point to a line.  An equation for this can be seen in Figure~\ref{fig:point_to_line_eq}.  Equation~\ref{eq:line} is the equation for a line in two dimensions.  This represents the annotation.  The equation can be calculated from the start and end points of the annotation. Equation~\ref{eq:point} is the position of the mouse click.  Equation~\ref{eq:distance} shows the equation for calculating the distance from the point to the line.  The second problem that had to be overcome was the difference in scale.  In effect we have two coordinate systems.  The results coordinate system and the visual coordinate system.  These difference are illustrated in Figure~\ref{fig:distance_scale}.  The annotations in Figure~\ref{fig:distance_scale_a} are further away from each other in the results coordinate system than the annotations in Figure~\ref{fig:distance_scale_b}, however they are closer in the visual coordinate system.  When selecting an annotation the user is using the visual coordinate system but the distance is calculated using the result coordinate space.  This could lead to the wrong annotation being selected.  The solution to this was to transfer one coordinate system into the other.  When calculating the distance from the point to the line the values are scaled by the size of the graph.
 
 \begin{figure}[h!]
     \centering
@@ -42,23 +42,42 @@ To calculate the distance from the location of the mouse click to the annotation
     \begin{subfigure}[b]{\textwidth}
         \centering
         \includegraphics[width=0.3\textwidth]{images/point_to_line.png}
-        \caption{Time Series Representation}
+        \caption{Diagram of the Point to Line Distance Problem}
         \label{fig:point_to_line_diagram}
     \end{subfigure}
 
     \begin{subfigure}[b]{\textwidth}
         \begin{subequations}
             \begin{align}
-            & y = -\frac{a}{b}x - \frac{c}{b} \\
-            & (x_{0}, y_{0}) \\
-            & d = \frac{\mid ax_{0} + by_{0} + c \mid}{\sqrt{a^{2} + b^{2}}}
+            & y = -\frac{a}{b}x - \frac{c}{b} \label{eq:line}\\
+            & (x_{0}, y_{0}) \label{eq:point} \\
+            & d = \frac{\mid ax_{0} + by_{0} + c \mid}{\sqrt{a^{2} + b^{2}}} \label{eq:distance}
             \end{align}
         \end{subequations}
-        \caption{Fuck}
-        \label{fig:fuck}
+        \caption{Equations for Calculating the Distance From a Point to a Line.}
+        \label{fig:point_to_line_equations}
     \end{subfigure}
-    \caption{Equations for Calculating the Distance From a Point to a Line}
+    \caption{Equations and Diagram for Calculating the Distance From a Point to a Line (taken from WolframMathWorld~\cite{point_to_line})}
     \label{fig:point_to_line_eq}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{0.6\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/distance_scale_a.png}
+        \caption{Annotations With Distance of Approximately 20000}
+        \label{fig:distance_scale_a}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.6\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/distance_scale_b.png}
+        \caption{Annotations With Distance of Approximately 5000}
+        \label{fig:distance_scale_b}
+    \end{subfigure}
+    \caption{Two Sets of Annotations Illustrating the Problems When Calculating Distance to an Annotation}
+    \label{fig:distance_scale}
 \end{figure}
 
 What happens when we normalise
