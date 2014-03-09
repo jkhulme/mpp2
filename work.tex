@@ -1,29 +1,71 @@
 \chapter{Work Done}
 
-\subsection{Previous Work}
-Could move here from intro, could talk a bit more about how they could be improved.
+This section details the development work that has been performed in the second phrase of the project.  This includes conceptual problems faced, effectiveness of the result and any future work that could be performed.
 
-\subsection{New Work}
+%For each of the below, why, how inc conceptual problems, impact, how it could be improved
 
-Signposting text
+\section{Annotation}
 
-For each of the below, why, how inc conceptual problems, impact, how it could be improved
+Annotation was an important feature to add.  It is one of Grinstein's features that data visualisation software should have~\cite{gg_vizbi}.  This is because the purpose of a visualisation is to aid analysis.  If you have a print out of a visualisation you are able draw on it and highlight areas of interest.  Users need to be able to do this on digital versions of their visualisations.  As well as helping users analyse their data, being able to annotate also means that images for presentations can be prepared without having to save the visualisation and open it in an external program.  If you did this and then wanted to change the visualisation you would have to re-annotate it.  This is frustrating for a user and wastes their time.  Being able to do it from within the visualisation solves this problem as the raw data and the annotation data are together.  Another benefit of being able to annotate is having another way of attaching additional information to the visualisation when sending it to a colleague. Having this information on the visualisation saves them from flicking back and forth from an email or other supporting documentation.
 
-\subsubsection{Annotation}
+Implementing annotation of the visualisations on offer in this tool had to be done in two parts.  This is because there are two parts to the annotation.  The graph and the cell level view.  One is a static visualisation and one is a dynamic visualisation.  Each of these required a different approach.  These are detailed below.
 
-\paragraph{Annotation of the Graph}
+\subsection{Annotation of the Graph}
 
-Annotation of the graph was an important feature to add.  It is one of Grinstein's features that data visualisation software should have.  This is because data visualisations should help users analyse their results.  If you had a print out of a graph it would be second nature to draw over it and highlight areas of interest.  This task needs to be able to be supported digitally as well.  As well as helping users analyse their data, being able to annotate also means that images for presentations can be prepared without having to save the graph and open it in an external program.  If you did this and then wanted to change the graph you would have to re-annotate it.  This is frustrating for a user and wastes their time.  Being able to do it from within the visualisation solves this problem as the raw data and the annotation data are together.  Another benefit of being able to annotate is having another way of attaching additional information to the graph when sending it to a colleague. Having this information on the graph saves them from flicking back and forth from an email or other supporting documentation.
+Annotation on the graph was relatively straightforward to implement.  matplotlib provides annotation capabilities in two forms.  One form is annotations that use arrows with or without text, and the other is arbitrary drawing on the graph.  Both of these forms have been utilised for annotations.
 
-Annotation on the graph was relatively straightforward to implement.  matplotlib provides annotation capabilities in two forms.  One form is annotating arrows with or without text, and the other is arbitrary drawing on the graph.
+Users of the new tool are provided with four annotation types: arrow, text, arrow with text and circles.  Buttons for each of these annotation types have been placed on the matplotlib toolbar.  This can be seen in Figure~\ref{fig:annotation_demo}
 
-Users of the new tool are provided with four annotation types: arrow, text, arrow with text and circles.  Buttons for each of these annotation types have been placed on the matplotlib toolbar.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{images/annotation_demo.png}
+    \caption{Example of Each of the Four Annotation Types and the Toolbar Buttons that Correspond to Them}
+    \label{fig:annotation_demo}
+\end{figure}
 
-There were problems in making annotation user friendly.  Text and circle annotations were intuitive as all they require is one click -- click where you want the annotation and it will be placed there.  However the two arrow annotation types required two clicks.  The first click is the start point (tail of the arrow) and the second click is the finish point (head of the arrow).  This was not obvious, when handed over to the users they didn't know that it required two clicks and didn't know whether the arrows would be drawn head to tail or tail to head.  The technique for placing arrows was changed so that the first click still fixed the position of the tail of the arrow. However the behaviour after the first click has changed, now a temporary annotation is continuously redrawn that has the head of the arrow wherever the mouse is.  This allows the user to see the arrow they are drawing.
+There were problems in making the annotation creation process user friendly.  For all of the annotations the user needs to first press the appropriate button on the on the toolbar.  The next actions depend on the annotation type.  Text and circle annotations were intuitive as all they require is one click.  The user clicks where they want the annotation to be placed and it will be drawn on the graph there.  However the two arrow annotation types required two clicks.  The first click marks the start point (the tail of the arrow) and the second click is the finish point (the head of the arrow).  This was not obvious, when handed over to the users they didn't know that it required two clicks and didn't know whether the arrows would be drawn head to tail or tail to head.  The technique for placing arrows was changed so that the first click still fixed the position of the tail of the arrow. However the behaviour after the first click has changed, now a temporary annotation is continuously redrawn that has the head of the arrow wherever the mouse is.  This allows the user to see the arrow they are drawing.  To indicate to the user that they need to click on the graph the cursor is changed after pressing one of the annotation buttons on the toolbar.  The use of different cursors is a common technique to help guide users to perform actions.
 
-Next the annotations had to be able to be edited or deleted.  The annotations can not just be clicked as they are not a \ac{UI} widget like a button.  The solution to this was to have an array of annotations.  When a user right clicks on the graph it searches through all annotations and selects the annotation that was closest to the click (if it was below a certain threshold).  The selected annotation is then highlighted red, and a context menu appears to give feedback to the user that they have successfully selected an annotation.  The context menu then gives the user the option to edit or delete an annotation.  Editing an annotation only allows for editing text.  For changing position the annotation has to be deleted and redrawn.
+It was important that annotations could be edited or deleted.  The annotations can not just be clicked as they are not a \ac{UI} widget like a button.  The solution to this was to have an array of annotations.  When a user right clicks on the graph it searches through all annotations and selects the annotation that was closest to the click (if that distance was below a certain threshold).  The selected annotation is then highlighted red, and a context menu appears to give feedback to the user that they have successfully selected an annotation.  This can be seen in Figure~\ref{fig:annotation_selection}  The context menu then gives the user the option to edit or delete an annotation.  Editing an annotation only allows for editing text.  For changing position the annotation has to be deleted and redrawn.
 
-\paragraph{Annotation of the Animation}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{images/annotation_selection.png}
+    \caption{Context Menu on Selection of Annotation}
+    \label{fig:annotation_selection}
+\end{figure}
+
+To calculate the distance from the location of the mouse click to the annotation two problems had to be solved.  The first was how to calculate the distance from a point to a line.  An equation for this can be seen in Figure~\ref{fig:point_to_line_eq}
+
+\begin{figure}[h!]
+    \centering
+
+    \begin{subfigure}[b]{\textwidth}
+        \centering
+        \includegraphics[width=0.3\textwidth]{images/point_to_line.png}
+        \caption{Time Series Representation}
+        \label{fig:point_to_line_diagram}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{\textwidth}
+        \begin{subequations}
+            \begin{align}
+            & y = -\frac{a}{b}x - \frac{c}{b} \\
+            & (x_{0}, y_{0}) \\
+            & d = \frac{\mid ax_{0} + by_{0} + c \mid}{\sqrt{a^{2} + b^{2}}}
+            \end{align}
+        \end{subequations}
+        \caption{Fuck}
+        \label{fig:fuck}
+    \end{subfigure}
+    \caption{Equations for Calculating the Distance From a Point to a Line}
+    \label{fig:point_to_line_eq}
+\end{figure}
+
+What happens when we normalise
+
+What could be done in the future
+
+\subsection{Annotation of the Animation}
 
 After completing annotation of the graph it was important to expand this to the animation panel, as this is the other area where visualisations are put.  This posed more of a challenge than for annotation of the graph and there were a number of issues to overcome.
 
@@ -33,7 +75,7 @@ After completing annotation of the graph it was important to expand this to the 
 \item How to give the user control over the annotations? When a user wants to edit or delete an annotation on the graph it is always there.  However on the animation panel if the annotation is temporal, then it is not always visible for the user to edit or delete and it would be frustrating for a user to constantly have to search through the animation to look for annotations to change them.
 \end{enumerate}
 
-\subsubsection{Animation}
+\section{Animation}
 
 THIS NEEDS A LOT OF WORK
 
@@ -47,9 +89,9 @@ The requirement of the model file for parsing animation has also led to animatio
 
 Similar control is provided on the animation panel itself.  The user can see the animation focused on a specific species, in which case a cell segment is drawn for each file that the species is in.  Or they can have the animation focused on a specific results file in which case a cell segment is drawn for each species in that results file.
 
-\subsubsection{Data Mining}
+\section{Data Mining}
 
-\subsubsection{Search}
+\section{Search}
 
 Using a time series as a plot posed some interesting problems.
 \begin{itemize}
@@ -81,7 +123,7 @@ We could simply just use Euclidean distance again, but this does not do anything
 
 It was decided to implement tf.idf weighted cosine as the similarity measure.  This takes into account term frequencies to provide a higher weight to rarer vectors.  tf.idf is very well researched in the field of information retrieval and text mining.  Given the representation of the finger print is equivalent to a bag-of-words it seems sensible to apply tf.idf to this domain.
 
-\paragraph{tf.idf} is a way of ranking how important a word is.  Taken into account are frequency of a word in the query, frequency of a word in the document, length of the document, average length of documents in the corpus, total number of documents and frequency of the word across all documents.
+\subsection{tf.idf} is a way of ranking how important a word is.  Taken into account are frequency of a word in the query, frequency of a word in the document, length of the document, average length of documents in the corpus, total number of documents and frequency of the word across all documents.
 
 The formula is: INSERT FORMULA.
 
@@ -93,7 +135,7 @@ Initial results are very promising with the tf.idf weighted cosine providing muc
 
 DISCUSSION OF THE EARLY RESULTS
 
-\subsubsection{Collaboration}
+\section{Collaboration}
 
 The initial step of allowing collaboration is enabling two instances of the program to talk to each other.  There are a number of techniques to allow for this.  Data could have been sent directly through sockets, another option would be to create a web server and send get requests and pass parameters.  It was decided to use an existing library to handle the communication.  The library chose was simplexmlrpc.  This allows each instance to run a client and a server.  The server has an api and this can be called.
 
@@ -101,22 +143,22 @@ On initial connection the `master' sends its entire session state the the `slave
 
 An issue that was encountered is how to ensure that both clients are seeing everything in the same order.  Lamport clock proved to be the solution.
 
-\subsubsection{Usability}
+\section{Usability}
 
 In all the evaluations of the project users have commented on the difficulty of using parts of the tool.  Action has been taken to make it easier to use.  Many of the changes have been guided by Shneiderman, Norman \& Nielson's guidelines.  Specifics are detailed below.
 
-\paragraph{Undo \& Redo}
+\subsection{Undo \& Redo}
 Shneiderman calls for easy reversal of actions and Nielson calls for user control and freedom -- an emergency exit from an unwanted state.  To address this, an undo/redo functionality has been added.  This required refactoring of the project code, so that the session data is in one location, inside a singleton. Any changes to this data are picked up during the next \ac{UI} update and are reflected in the visualisations.  The session data is stored as a dictionary.  To implement undo and redo, copies of the data dictionary are pushed and popped onto the stack.  Copies are pushed onto the undo stack on any atomic change the user makes.  This gives the user a full session history to go back through and this was one of the early goals from the first project phase.
 
 A problem was encountered when trying to copy the dictionary onto the stack.  When just pushing the dictionary onto the stack it would not put a new copy of it onto the stack, so any changes to the dictionary after it has pushed onto the stack are also there in the stack.  Python dictionaries have a copy method.  Copy only does a shallow copy -- any objects in the original dictionary will have their reference placed in the new dictionary.  This was fine for some parts of the session dictionary, but for others it was not. In particular, lines and annotations, which are custom objects presented problems.  This was solved by using deep copy.  With deep copy a new copy is made of objects as well.  Some elements of wxPython and matplotlib were unable to be deep copied, but this was fixed whilst focusing more around the data -- so the \ac{UI} elements use the data, not the other way around.
 
-\paragraph{Saving}
+\subsection{Saving}
 
 It is important that a user is able to save and load the visualisation session as they may not be able to complete all their analysis in one sitting and may want to come back to their work in the future.  Without the ability to save and load the user would have to repeatedly add annotations and change preferences and attach files.  It was possible to add Saving and loadingby building on the work done to implement undo \& redo, although further work was required. Python has a module called pickle to serialise and deserialise data.  When saving, the dictionary containing the session data is pickled and written to a file and when loading the reverse happens.  Because the program is now focused on the data model, once a previous session has been loaded, a \ac{UI} refresh is triggered and the visualisation reflects the loaded data.
 
 Saving the data also enables limited collaboration.  The user can customize the appearance and add annotations.  They can then save the state to a file and email that file to a colleague.  The colleague can then load the file and see the user's work.  The colleague can then correct any issues and add their own work.  The colleague can then save this and email it back to the user.  This is useful and is better than no collaboration, but it is entirely non realtime.
 
-\paragraph{Feedback}
+\subsection{Feedback}
 Norman and Shneiderman both call for feedback to be given to the user so that the user can be sure that an action has been accomplished.  This feedback can come in a number of different forms and was in place in some parts of the project already.
 
 Existing feedback in the project was a natural byproduct of some of the features; for example, when loading a results file the feedback that the load operation has been successful is that a graph appears on the screen. If the graph does not appear then something has gone wrong.  Additional feedback has been added to the project:
@@ -125,11 +167,11 @@ Existing feedback in the project was a natural byproduct of some of the features
 \item The title bar text changes to display ``unsaved'' when the user makes a change and then changes back to ``saved'' when a successful save has been performed.
 \end{itemize}
 
-\paragraph{Guiding the User}
+\subsection{Guiding the User}
 
 The first evaluation of the second phase of the project unearthed that the users struggled to choose the correct action as there were multiple ways of doing the same action that had slightly different use cases.  There was also confusing language in the menu options.  These multiple paths have been removed. For example, now there is only one way to open results files initially.  To help guide the user further \ac{UI} elements are enabled and disabled as appropriate.  Now when the program is first loaded the only action a user can perform is to load a session or start a new session.  Afterwards other \ac{UI} elements are enabled to allow the user to start using the tool effectively.
 
-\subsubsection{Data Manipulation and Export}
+\section{Data Manipulation and Export}
 
-\subsection{Finished Product}
+\section{Finished Product}
 Overview and walkthrough of tool
