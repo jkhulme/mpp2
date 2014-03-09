@@ -80,9 +80,26 @@ To calculate the distance from the location of the mouse click to the annotation
     \label{fig:distance_scale}
 \end{figure}
 
-What happens when we normalise
+A similar issue to the difference in scale when calculating the distance from the mouse to annotation was encountered when switching the graph to normalised mode.  When normalised the graph in the y axis only goes between 0 and 1.  The coordinates of the annotation are likely to be very much outside this range and the annotation would not appear on the graph.  The solution was to if the graph is normalised then to also normalise the positions of the annotations when drawing them.  A side effect of this technique is that the lines are potentially going to rescale themselves.  This could leave an annotation point to nothing.  This is unavoidable as the annotation has no concept of what it is pointing at.  It may be pointing to the intersection of more than one line, in this case it would be impossible to keep the annotation pointing at what it was originally pointing at.  Neither of these is optimal.  Both approaches lose the information that the user originally added.  During user evaluations, when the annotation would not be visible during data normalisation, the user was very confused as to why their annotation had disappeared.  It was therefore decided to have the annotation be visible but most likely incorrect as it is clearer to the user what has happened.
 
-What could be done in the future
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{0.6\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/unnormalised_annotation.png}
+        \caption{Annotation Pointing at Correct Intersection of Species}
+        \label{fig:distance_scale_a}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.6\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/normalised_annotation.png}
+        \caption{Annotation Pointing at Nothing After Data Normalisation}
+        \label{fig:distance_scale_b}
+    \end{subfigure}
+    \caption{Graphs Illustrating What Happens to Annotations Whilst Data is Normalised}
+    \label{fig:distance_scale}
+\end{figure}
 
 \subsection{Annotation of the Animation}
 
