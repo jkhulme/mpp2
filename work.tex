@@ -4,6 +4,21 @@ This section details the development work that has been performed in the second 
 
 %For each of the below, why, how inc conceptual problems, impact, how it could be improved
 
+
+\section{Animation}
+
+THIS NEEDS A LOT OF WORK
+
+Animation was a key goal of the project.  The core aim of the project is to help biologists who aren't comfortable with traditional time-series graphs.  So the goal was to provide them with visualisations closer to what they see in their domain.  This has been accomplished by displaying spatial data in the shape of the cell.
+
+The animation is ideally used to display species moving through a cell.  This collapses what would be multiple different lines in a graph, that give no indication of their real position in the cell, into a single image.  There is one segment in the cell animation for each line.  The colours in each segment reflect the colour of the line on the graph.  Then over the course of the animation the colours are set by the colour in the intensity plot version of the line.  This allows the researcher to compare the two visualisations and will hopefully help build their confidence on the graph plot.
+
+To make setting up the animation user friendly to control required the model file so that the location hierarchy could be parsed.  Before this there was an awkward system where the user had to input where in the cell a species is.  This was time consuming, awkward and quite brittle.  At the time it assumed that there would be three compartments in the species, which is a terrible assumption to make.
+
+The requirement of the model file for parsing animation has also led to animation replacing the previous model visualisation.  In the set up phase after the the model and the species have been parsed the user is presented with a cell segment, similar to what is seen in the animation panel.  The cell segment is split into different regions, one for each region of the cell.  These segments are then coloured if the selected species is present in them.  The user can select between all species in the selected results files.  This has a number of benefits.  First, they can sanity check that they have matching results and model files.  Second, they can see how the model is structured.
+
+Similar control is provided on the animation panel itself.  The user can see the animation focused on a specific species, in which case a cell segment is drawn for each file that the species is in.  Or they can have the animation focused on a specific results file in which case a cell segment is drawn for each species in that results file.
+
 \section{Annotation}
 
 Annotation was an important feature to add.  It is one of Grinstein's features that data visualisation software should have~\cite{gg_vizbi}.  This is because the purpose of a visualisation is to aid analysis.  If you have a print out of a visualisation you are able draw on it and highlight areas of interest.  Users need to be able to do this on digital versions of their visualisations.  As well as helping users analyse their data, being able to annotate also means that images for presentations can be prepared without having to save the visualisation and open it in an external program.  If you did this and then wanted to change the visualisation you would have to re-annotate it.  This is frustrating for a user and wastes their time.  Being able to do it from within the visualisation solves this problem as the raw data and the annotation data are together.  Another benefit of being able to annotate is having another way of attaching additional information to the visualisation when sending it to a colleague. Having this information on the visualisation saves them from flicking back and forth from an email or other supporting documentation.
@@ -103,7 +118,7 @@ A similar issue to the difference in scale when calculating the distance from th
 
 \subsection{Annotation of the Animation}
 
-After completing annotation of the graph it was important to expand this to the animation panel, as this is the other area where visualisations are put.  This posed more of a challenge than for annotation of the graph and there were a number of issues to overcome.
+After completing annotation of the graph it was important to expand this to the animation panel, as this is the other visualisation option available to a user.  Annotating animations posed more of a challenge than annotation of the graph and there were a number of issues to overcome.
 
 \begin{enumerate}
 \item How to implement the annotations?  For the graph matplotlib has built in annotation support.  wxPython does have drawing support but not in built annotation support.  Annotating on the animation will need manual handling of the drawing on top of the animation visualisation.  Manual drawing means that the automatic layout functionality that wxPython provides cannot be used.
@@ -111,19 +126,50 @@ After completing annotation of the graph it was important to expand this to the 
 \item How to give the user control over the annotations? When a user wants to edit or delete an annotation on the graph it is always there.  However on the animation panel if the annotation is temporal, then it is not always visible for the user to edit or delete and it would be frustrating for a user to constantly have to search through the animation to look for annotations to change them.
 \end{enumerate}
 
-\section{Animation}
+A platform where users are able to annotate an `animation' is YouTube~\cite{youtube}.  YouTube's annotation interface can be seen in Figure~\ref{fig:youtube}.  Youtube's approach is to allow the user to set what period of time an annotation is visible for.  There is also a management panel where the user can see all of the annotations and edit or delete them.  This approach solved issues two and three and was adapted for this tool.
 
-THIS NEEDS A LOT OF WORK
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/youtube.png}
+    \caption{YouTube Video Annotation Interface}
+    \label{fig:youtube}
+\end{figure}
 
-Animation was a key goal of the project.  The core aim of the project is to help biologists who aren't comfortable with traditional time-series graphs.  So the goal was to provide them with visualisations closer to what they see in their domain.  This has been accomplished by displaying spatial data in the shape of the cell.
+On the right hand side of the tool there is a panel which lists all annotations that have currently been added to the tool, this can be seen in Figure~\ref{fig:annotatlion_list}.  This provides the user with the persistent view of what has been added.  When the user creates an annotation they are shown a dialogue that allows them to enter the annotation text and to choose a duration.  This indicates to the user that the annotation will only be visible at certain times.  The start and end times are given in model time.  The duration displayed to the user is given as the real time that the annotation will be visible for.  This can be seen in Figure~\ref{fig:annotation_dialog}.
 
-The animation is ideally used to display species moving through a cell.  This collapses what would be multiple different lines in a graph, that give no indication of their real position in the cell, into a single image.  There is one segment in the cell animation for each line.  The colours in each segment reflect the colour of the line on the graph.  Then over the course of the animation the colours are set by the colour in the intensity plot version of the line.  This allows the researcher to compare the two visualisations and will hopefully help build their confidence on the graph plot.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/annotation_list.png}
+    \caption{Animation Annotation List}
+    \label{fig:annotation_list}
+\end{figure}
 
-To make setting up the animation user friendly to control required the model file so that the location hierarchy could be parsed.  Before this there was an awkward system where the user had to input where in the cell a species is.  This was time consuming, awkward and quite brittle.  At the time it assumed that there would be three compartments in the species, which is a terrible assumption to make.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/annotation_dialog.png}
+    \caption{Animation Annotation Dialogue}
+    \label{fig:annotation_dialog}
+\end{figure}
 
-The requirement of the model file for parsing animation has also led to animation replacing the previous model visualisation.  In the set up phase after the the model and the species have been parsed the user is presented with a cell segment, similar to what is seen in the animation panel.  The cell segment is split into different regions, one for each region of the cell.  These segments are then coloured if the selected species is present in them.  The user can select between all species in the selected results files.  This has a number of benefits.  First, they can sanity check that they have matching results and model files.  Second, they can see how the model is structured.
+The first problem -- how to display the annotations -- has also been solved.  Drawing in wxPython takes place on panels.  Each cell cross section is placed on its own panel.  This drastically limits the available space.  The panels are not wide enough to have the annotation text drawn on.  The solution was to assign each annotation a number and that number is what is used to annotate the cell.  The number is then displayed in the annotation list box allowing the user to read the appropriate annotation.  This can be seen in Figure~\ref{fig:annotation_whole}
 
-Similar control is provided on the animation panel itself.  The user can see the animation focused on a specific species, in which case a cell segment is drawn for each file that the species is in.  Or they can have the animation focused on a specific results file in which case a cell segment is drawn for each species in that results file.
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{0.4\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{images/annotation_whole_b.png}
+        \caption{Annotated Cell Section}
+        \label{fig:annotation_whole_cell}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.4\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{images/annotation_whole_a.png}
+        \caption{Corresponding Annotation List}
+        \label{fig:annotation_whole_list}
+    \end{subfigure}
+    \caption{Animation Annotations}
+    \label{fig:annotation_whole}
+\end{figure}
 
 \section{Data Mining}
 

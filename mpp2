@@ -1,6 +1,11 @@
 #!/bin/sh
 
-pdflatex mpp2.tex
-bibtex mpp2
-pdflatex mpp2.tex
-pdflatex mpp2.tex
+if rubber -d mpp2.tex; then
+    printf 'success\n'
+    pdflatex mpp2.tex
+    bibtex mpp2
+    pdflatex mpp2.tex
+    pdflatex mpp2.tex
+else
+    printf 'fail\n'
+fi
