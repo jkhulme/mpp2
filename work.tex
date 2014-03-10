@@ -7,17 +7,29 @@ This section details the development work that has been performed in the second 
 
 \section{Animation}
 
-THIS NEEDS A LOT OF WORK
+Animation was a key goal of the project.  The core aim of the project is to help biologists who aren't comfortable with traditional time-series graphs.  The goal was to provide them with visualisations closer to what they see in their domain.  This has been accomplished by displaying spatial data in the shape of a cross-section of a cell.
 
-Animation was a key goal of the project.  The core aim of the project is to help biologists who aren't comfortable with traditional time-series graphs.  So the goal was to provide them with visualisations closer to what they see in their domain.  This has been accomplished by displaying spatial data in the shape of the cell.
+The animation is ideally used to display species moving through a cell.  This collapses what would be multiple different lines in a graph, that give no indication of their real position in the cell, into a single image.  This can be seen in Figure~\ref{fig:asrc_intro}.
 
-The animation is ideally used to display species moving through a cell.  This collapses what would be multiple different lines in a graph, that give no indication of their real position in the cell, into a single image.  There is one segment in the cell animation for each line.  The colours in each segment reflect the colour of the line on the graph.  Then over the course of the animation the colours are set by the colour in the intensity plot version of the line.  This allows the researcher to compare the two visualisations and will hopefully help build their confidence on the graph plot.
+For each line in the visualisation one cell cross section is drawn.  Each cross section is split into compartments, these are parsed from the model file.  The colours in each compartment reflect the colour of the line on the graph.
 
-To make setting up the animation user friendly to control required the model file so that the location hierarchy could be parsed.  Before this there was an awkward system where the user had to input where in the cell a species is.  This was time consuming, awkward and quite brittle.  At the time it assumed that there would be three compartments in the species, which is a terrible assumption to make.
+Over the course of the animation the colour of the segment changes to reflect the colour in the intensity plot version of the line.  This allows the researcher to compare the two visualisations and will hopefully help build their confidence understanding the graph plot.
+
+Animation takes advantage of the data centric model.  When the play button is pressed a thread runs whose job it is to increment the clock and refresh all the \ac{UI} elements.  When refreshed the \ac{UI} elements pick up on the change of clock and update what they display appropriately.
+
+The first step towards animation was calculating at what points the line changes colour.  This is done during the interpolation phase that was written in the first stage of development.  To do the interpolation the original plot is split into multiple separate plots with the results padded with null values to allow matplotlib to plot them as one.  The number of these null values is counted and that gives the time at which the colour should change.  This is stored as an array of time, colour tuples.  Each line also has an internal counter to say how far through this array they have gone.  When the animation clock is updated and the refresh triggered each cell segment finds the appropriate colour change point in the line and updates the segment colour.  This position is then used as the new starting point on the next refresh.  This saves looking through past points unnecessarily.
+
+The user has can control the time through the time slider.  When the time slider is used each line has its internal clock set to 0.  Then when the animation thread triggers a refresh the whole of the lines colour change points are searched to find the appropriate point.  This is a much neater solution than keeping track of previous points and slicing the arrays.
+
+A nice \ac{UX} feature that has been added a line to the main graph panel that indicates the current time.  When the animation is running the line moves along the graph.  This again helps the user build a correspondence between the two visualisation types.
+
+The user is also given control over what is displayed.  The cell segments can be drawn in a file focussed manner or a species focussed manner.  In the file focussed manner a cell cross section is drawn for every species in that file.  The user can switch between all results files that have been added to the session.  In the species focussed manner a cell cross section is drawn for every file that contains that species.  The user can select between all species found across all the results files.
+
+After originally requiring the user to manually label which compartments were which cell segments which was very brittle.
 
 The requirement of the model file for parsing animation has also led to animation replacing the previous model visualisation.  In the set up phase after the the model and the species have been parsed the user is presented with a cell segment, similar to what is seen in the animation panel.  The cell segment is split into different regions, one for each region of the cell.  These segments are then coloured if the selected species is present in them.  The user can select between all species in the selected results files.  This has a number of benefits.  First, they can sanity check that they have matching results and model files.  Second, they can see how the model is structured.
 
-Similar control is provided on the animation panel itself.  The user can see the animation focused on a specific species, in which case a cell segment is drawn for each file that the species is in.  Or they can have the animation focused on a specific results file in which case a cell segment is drawn for each species in that results file.
+MOVE THIS INTO WHEREREVER SESSION CREATOR IS TALKED ABOUT To make setting up the animation user friendly to control required the model file so that the location hierarchy could be parsed.  Before this there was an awkward system where the user had to input where in the cell a species is.  This was time consuming, awkward and quite brittle.  At the time it assumed that there would be three compartments in the species, which is a terrible assumption to make.
 
 \section{Annotation}
 
