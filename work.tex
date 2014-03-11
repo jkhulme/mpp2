@@ -247,15 +247,29 @@ It is important to define what it means for two lines to be similar.  It is obvi
     \label{fig:similar_y}
 \end{figure}
 
-Approaches that have been researched to determine similarity between time series data have included shape based approaches and dynamic programming techniques.  Not all of these approaches lent themselves to fingerprinting.  A necessary feature for efficient querying.  After researching alternatives an approach was adapted from the work of Lin & Li~\cite{structural_similarity}.
+Approaches that have been researched to determine similarity between time series data have included shape based approaches and dynamic programming techniques.  Not all of these approaches lent themselves to fingerprinting.  A necessary feature for efficient querying.  After researching alternatives an approach was adapted from the work of Lin \& Li~\cite{structural_similarity}.
 
 Their approach uses normalised sub sequence data to reduce the dimensionality of the dataset and build a fingerprint.  This fingerprint can then be used to efficiently find the most similar plots in the database.  This approach is explained in further detail below:
 
-The first step is to convert the input data to be a list of all n length sub lists of the input data. i.e. with input data [1,2,3,4,5] and n = 3 our input data would become [[1,2,3], [2,3,4], [3,4,5]].  The sub lists are our features.  We then normalise each feature to be zero mean, unit variance.
+The first step is to take the input data and using a sliding window to create the sub lists.  The size of the sliding window will determine the word size in the fingerprint.  Lin uses a size of 8 for the sliding window.  The same value was chosen here.  If we have input data $[1,2,3,4,5]$ and windows size $n = 3$ then we get the sub lists as $[[1,2,3], [2,3,4], [3,4,5]]$
 
-The next step is to convert the continuous data into discrete data and reduce the dimensionality of it.  By normalising the data to be zero mean and unit variance we have allowed a normal distribution to be easily fitted to our data.   Using the normal distribution we convert a data point in our sub list to be one of three possible values.  Here we use the characters `a', `b' \& `c'.  This builds a string representation of the plot.
+The second step is to normalise each sub list.  Each sub list is normalised to be zero mean and unit variance.  This places each sub list onto the same scale.  This removes the effect of the offsets seen in Figure~\ref{fig:similar_y}.  To normalise to zero mean and unit we need the mean ($\mu$) and the standard deviation ($\sigma$).  We then have:
 
-The paper this approach is taken from then calls for reducing local duplicates.  This further reduces the size of our fingerprint and increases the efficiency.  Removing the local duplicates means any ignoring runs of a certain string can be replaced with just one instance of the string.
+$$
+\left[\frac{X - \mu}{\sigma},\text{   } x \in sublist\right]
+$$
+
+The third step is to reduce the dimensionality of the data and build the fingerprint.  Lin's approach also involves converting the data from a continuous representation into a discrete representation.  By normalizing the sub lists to be zero mean and unit variance we allow a Gaussian distribution to be fitted to the data.  This can be seen in Figure~\ref{fig:gaussian_plot}.  This approach does assume the Gaussian distribution is a suitable distribution.  Lin found it to be a suitable distribution but does note that other distributions could be investigated, this was outside the scope of this project.  For each data point we use the Gaussian function and map it to a letter.  This can be seen in Figure~\ref{fig:gaussian_plot}.  Lin uses three characters and found it to be suitable, again alternative numbers of characters could be used but this is outside the scope of the project.  This builds up a fingerprint of the graph with much reduced dimensionality.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{images/similiarty_normalise.png}
+    \caption{Fitting Gaussian to Time Series Data, taken from~\cite{structural_similarity}.}
+    \label{fig:gaussian_plot}
+\end{figure}
+
+Our fingerprint of the plot is now a list of words.  Lin now calls for the removal of local duplicates of words.  If we have runs of a certain word then that should be reduced to a single instance of the word.  For example if we have the fingerprint $"AAA", "AAA", "BBA", "BBB", "BBB", "AAA", "AAA"$ it should be reduced to
+$"AAA", "BBA", "BBB", "AAA"$ not $"AAA", "BBA", "BBB"$.  We are not removing all duplicates of the word.  This reduces the number of entries in the fingerprint and provides an efficiency benefit.  It will also remove the effect seen in Figure~\ref{fig:similar_2} where Euclidean distance would fail if one line is a scaled version of the other.
 
 This provides us with a finger print of the plot.  A string size of 8, with 3 possible value leads to a vocabulary size of 6561 possible representations.  A single plot will have very few of these, so we use a sparse representation.  For each line a dictionary is stored.  The dictionary keys are the strings in the fingerprints and the value is the count of that string in the plot's fingerprint.
 
