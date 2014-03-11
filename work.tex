@@ -203,19 +203,50 @@ The first problem -- how to display the annotations -- has also been solved.  Dr
 
 \section{Data Mining}
 
+Gone - WHY?
+
 \section{Search}
 
-Using a time series as a plot posed some interesting problems.
+Begin able to use a time series data as a query against a database of time series data was one of the new goals added to the project.  It was felt it would be of great use to the biologists as it would allow for discoverability within the tool. \tdi{Find a citation that backs this as being useful}.  It is also a feature in the tool that incorporates cross domain knowledge in an area of active research.
+
+Some problems needed to be overcome before using plots as a query was useful:
 \begin{itemize}
-\item How to cope with different scales
-\item How to cope with events happening at different times
-\item How to represent the plot to allow for efficient search
-\item How to determine similarity between two graphs
+\item How to cope with different scales?
+\item How to cope with events happening at different times?
+\item How to represent the plot to allow for efficient search?
+\item How to determine similarity between two graphs?
 \end{itemize}
 
-All of these needed to be overcome for this feature to be useful.
+Early techniques used simple similarity measures such as Euclidean distance, but these gave poor results.  The reason for the poor results is that Euclidean distance does not take into account scale or time.  Figure~\ref{fig:similar} illustrates a case where Euclidean distance would give a poor similarity measure.  The two lines are identical, but the green line has been shifted in time.  Euclidean distance will not recognise that they are similar.  The same problem would happen if one line had been shifted in the y-axis above the other.
 
-This is an area of active research.  Early techniques used simple techniques such as Euclidean distance, but these simple approaches gave poor results.  It is feasible to have a species that exhibits a similar reaction to our query (the line has the same shape) but it happens at a different time in the experiment than our query plot.  In other words the graph is offset.  We can tell that the two graphs are similar, but euclidean distance will return that they are unsimilar.  The same problem occurs with differences in species population giving an offset in the x axis.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/similar_plots.png}
+    \caption{Identical Plots Shifted in Time}
+    \label{fig:similar}
+\end{figure}
+
+It is important to define what it means for two lines to be similar.  It is obvious that in case such as Figure~\ref{fig:similar} that the two lines are similar.  Both lines are the same shape, they are exhibiting the same behaviour.  When determining similarity of plots we should take a time invariant approach.  Perhaps less obvious is the case where we have offset in the Y-Axis as shown in Figure~\ref{fig:similar_y}
+
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{0.6\textwidth}
+        \centering
+        \includegraphics[width=0.7\textwidth]{images/similar_plots_2.png}
+        \caption{Identical Plots Shifted in Population Level}
+        \label{fig:similar_1}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.6\textwidth}
+        \centering
+        \includegraphics[width=0.7\textwidth]{images/similar_plots_3.png}
+        \caption{Identical Plots Shifted in Population Level}
+        \label{fig:similar_2}
+    \end{subfigure}
+    \caption{Graphs Illustrating Different Ways Lines can be Offset in the Y-Axis}
+    \label{fig:similar_y}
+\end{figure}
+
 
 After researching current techniques an approach was taken that solves all the problems above.
 

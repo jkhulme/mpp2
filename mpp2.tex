@@ -10,6 +10,21 @@
 \usepackage{color}
 \usepackage{subcaption}
 \usepackage{acronym}
+\usepackage{todonotes}
+
+\let\oldtodo\todo
+\newcommand{\tdi}[1]{\oldtodo[inline]{#1}}
+\renewcommand\todo[1]{\oldtodo[size=\tiny]{#1}}
+\newcommand{\tdic}[2][]{
+    \oldtodo[inline, caption={#1}]{
+        \begin{minipage}{
+            \textwidth-4pt
+        }
+        #2
+        \end{minipage}
+    }
+}
+\setlength{\marginparwidth}{2cm}
 
 \definecolor{mygreen}{rgb}{0,0.6,0}
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
