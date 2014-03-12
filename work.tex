@@ -251,7 +251,7 @@ Approaches that have been researched to determine similarity between time series
 
 Their approach uses normalised sub sequence data to reduce the dimensionality of the dataset and build a fingerprint.  This fingerprint can then be used to efficiently find the most similar plots in the database.  This approach is explained in further detail below:
 
-The first step is to take the input data and using a sliding window to create the sub lists.  The size of the sliding window will determine the word size in the fingerprint.  Lin uses a size of 8 for the sliding window.  The same value was chosen here.  If we have input data $[1,2,3,4,5]$ and windows size $n = 3$ then we get the sub lists as $[[1,2,3], [2,3,4], [3,4,5]]$
+The first step is to take the input data and using a sliding window to create the sub lists.  The size of the sliding window will determine the word size in the fingerprint.  Lin uses a size of 8 for the sliding window.  The same value was chosen here.  If we have input data $[1,2,3,4,5]$ and windows size $n = 3$ then we get the sub lists as $[[1,2,3]$, $[2,3,4]$, $[3,4,5]]$
 
 The second step is to normalise each sub list.  Each sub list is normalised to be zero mean and unit variance.  This places each sub list onto the same scale.  This removes the effect of the offsets seen in Figure~\ref{fig:similar_y}.  To normalise to zero mean and unit we need the mean ($\mu$) and the standard deviation ($\sigma$).  We then have:
 
@@ -268,26 +268,37 @@ The third step is to reduce the dimensionality of the data and build the fingerp
     \label{fig:gaussian_plot}
 \end{figure}
 
-Our fingerprint of the plot is now a list of words.  Lin now calls for the removal of local duplicates of words.  If we have runs of a certain word then that should be reduced to a single instance of the word.  For example if we have the fingerprint $"AAA", "AAA", "BBA", "BBB", "BBB", "AAA", "AAA"$ it should be reduced to
-$"AAA", "BBA", "BBB", "AAA"$ not $"AAA", "BBA", "BBB"$.  We are not removing all duplicates of the word.  This reduces the number of entries in the fingerprint and provides an efficiency benefit.  It will also remove the effect seen in Figure~\ref{fig:similar_2} where Euclidean distance would fail if one line is a scaled version of the other.
+Our fingerprint of the plot is now a list of words.  Lin now calls for the removal of local duplicates of words.  If we have runs of a certain word then that should be reduced to a single instance of the word.  For example if we have the fingerprint $"AAA", "AAA", "BBA", "BBB", "BBB", "AAA", "AAA"$ it should be reduced to $"AAA"$, $"BBA"$, $"BBB"$, $"AAA"$ not $"AAA"$, $"BBA"$, $"BBB"$.  We are not removing all duplicates of the word.  This reduces the number of entries in the fingerprint and provides an efficiency benefit.  It will also remove the effect seen in Figure~\ref{fig:similar_2} where Euclidean distance would fail if one line is a scaled version of the other.
 
-This provides us with a finger print of the plot.  A string size of 8, with 3 possible value leads to a vocabulary size of 6561 possible representations.  A single plot will have very few of these, so we use a sparse representation.  For each line a dictionary is stored.  The dictionary keys are the strings in the fingerprints and the value is the count of that string in the plot's fingerprint.
+We now have a fingerprint of the plot.  The fingerprint is a list of strings.  Our strings all have a length of eight characters, the strings are composed from a three letter alphabet.  This gives us a vocabulary of $3^8$ possible words.  The fingerprint is a $3^8$ element vector where each entry in the vector contains the count of the word in the line.  This is a very wasteful representation as most of the entries in the vector will be zero.  We can replace this with a sparse representation of the fingerprint where we store what words make up the line and their count.
 
-This format of the fingerprint also solves the problem of similar features happening at different times.  The plot fingerprint is a bag-of-words, in this case a bag-of-features.  There is no order to them, it is as though we are assuming that all features appear at the same instant.
+This fingerprint representation of the plot also solves the problem of features being temporally located in the graph.  In the fingerprint there is no ordering of the words, in effect all the features happened at the same time.  This is a common representation in information retrieval and is referred to as bag-of-words.  A more suitable name in this domain would be bag-of-features.
 
 Now that we have a representation of the plot that is scale and time invariant and allows for efficient comparisons we can find a method to calculate the similarity.
 
-We could simply just use Euclidean distance again, but this does not do anything to weight rarer features that can tell us more about a graph.  An alternative distance measure would be cosine distance, but this suffers the same drawback.
+We could simply just use Euclidean distance again, using the two fingerprints as the input, but this does not do anything to weight rarer features.  If two plots have rare features in common then that is much more significant for similarity than if they share very common features.  A similarity measure that takes into account the importance of a word is therefore desirable.
 
-It was decided to implement tf.idf weighted cosine as the similarity measure.  This takes into account term frequencies to provide a higher weight to rarer vectors.  tf.idf is very well researched in the field of information retrieval and text mining.  Given the representation of the finger print is equivalent to a bag-of-words it seems sensible to apply tf.idf to this domain.
+It was decided to implement tf.idf weighted cosine as the similarity measure.  This takes into account term frequencies to provide a higher weight to rarer vectors.  tf.idf is very well researched in the field of information retrieval and text mining.  Given the representation of the finger print is equivalent to a bag-of-words it seems sensible to apply tf.idf to this domain.  A description of how tf.idf weighted cosine works can be found in Section~\ref{sec:tfidf}.
 
-\subsection{tf.idf} is a way of ranking how important a word is.  Taken into account are frequency of a word in the query, frequency of a word in the document, length of the document, average length of documents in the corpus, total number of documents and frequency of the word across all documents.
+The tf.idf weighted cosine similarity can then be calculated between the query plot and each individual plot in the database.  These similarity scores can then be ranked.
 
-The formula is: INSERT FORMULA.
+\subsection{tf.idf}
+\label{sec:tfidf}
+Tf.idf is a way of ranking how important a word is.  Taken into account are frequency of a word in the query, frequency of a word in the document, length of the document, average length of documents in the corpus, total number of documents and frequency of the word across all documents.
+
+The formula is:
+
+\begin{subequations}
+    \begin{align}
+    s(Q, D) &= \sum_{w} tf_{w,Q} \times \frac{tf_{w,D}}{tf_{w,D} + \frac{k|D|}{avg|D|}} \times \log{\frac{|C|}{df_{w}}} \\
+    D_{w} &= \frac{tf_{w,D}}{tf_{w,D} + \frac{k|D|}{avg|D|}} \times \log{\frac{|C|}{df_{w}}} \\
+    S(D_{1}, D_{2}) &= \frac{\sum_{w} D_{1,w} \times D_{2,w}}{\sqrt{\sum_{w} D_{1,w}^2} \times \sum_{w} D_{2,w}^2}
+    \end{align}
+\end{subequations}
 
 These term weights are then used in a tf.idf weighted cosine.
 
-This approach allows for effiecient search.  If we have two indexes.  One where keys are the documents and the values are the words in the document and their frequencies. Then we have another index, an inverted one.  Where the keys are the words and the values are a list of documents that contain them.  The individual components of the tf.idf equation can therefore be calculated with very little effort.  This means that a plot can be compared to the database of plots in O(n) time.
+This approach allows for efficient search.  If we have two indexes.  One where keys are the documents and the values are the words in the document and their frequencies. Then we have another index, an inverted one.  Where the keys are the words and the values are a list of documents that contain them.  The individual components of the tf.idf equation can therefore be calculated with very little effort.  This means that a plot can be compared to the database of plots in O(n) time.
 
 Initial results are very promising with the tf.idf weighted cosine providing much clearer results than with simple euclidean distance.  There is not a large enough truth set of plot similarities to be able to confidently say that it is effective.  However these early promising results seem to indicate that further research would certainly be worthwhile, but outside the scope of the project.
 
