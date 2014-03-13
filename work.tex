@@ -280,17 +280,32 @@ We could simply just use Euclidean distance again, using the two fingerprints as
 
 It was decided to implement tf.idf weighted cosine as the similarity measure.  This takes into account term frequencies to provide a higher weight to rarer vectors.  tf.idf is very well researched in the field of information retrieval and text mining.  Given the representation of the finger print is equivalent to a bag-of-words it seems sensible to apply tf.idf to this domain.  A description of how tf.idf weighted cosine works can be found in Section~\ref{sec:tfidf}.
 
-The tf.idf weighted cosine similarity can then be calculated between the query plot and each individual plot in the database.  These similarity scores can then be ranked.
+The tf.idf weighted cosine similarity~\cite[p.~243]{se_book} can then be calculated between the query plot and each individual plot in the database.  These similarity scores can then be ranked.
 
 \subsection{tf.idf}
 \label{sec:tfidf}
-Tf.idf is a way of ranking how important a word is.  Taken into account are frequency of a word in the query, frequency of a word in the document, length of the document, average length of documents in the corpus, total number of documents and frequency of the word across all documents.
 
-The formula is:
+\ac{tf.idf} is a technique for calculating how important a word is to a document.  \ac{tf.idf} requires a corpus of document vectors.  With the corpus data \ac{tf.idf} can take as input a query vector and transform that into a vector of weights, where the weights are the \ac{tf.idf} scores of each word.
+
+\tdi{Why do we care about weighting words}
+
+Equation~\ref{eq:tfidf} is the equation for finding the similarity between a short query term and a longer document.  This equation would be applied between the query term and every document in the corpus.  This would then give a similarity ranking.  Below is an explanation of the components of the equation and how they affect the weighting of a word.
+
+\begin{itemize}
+    \item $tf_{w,Q}$ -- The number of times word $w$ appears in query $Q$.  If a word is repeated in the query it is likely to be important.
+    \item $tf_{w,D}$ -- The number of times word $w$ appears in document $D$.  If a word is repeated in the document it is likey to be important.
+    \item $k$ -- A squashing factor.  The first occurrence of a word is more important than repeats.
+    \item $|D|$ -- Length of the document
+    \item $|C|$ -- Number of documents in the corpus
+    \item $df_{w}$ -- Number of documents in the corpus that contain word $w$
+    \item $avg|D|$ -- Average length of all documents in the corpus.
+    \item $tf_{w,D} + \frac{k|D|}{avg|D|}$ -- Normalising factor, repeated words are less important unless the document is longer than average.
+    \item $\log \frac{|C|}{df_{w}}$ -- Increases the weighting of words that are rare across the corpus.
+\end{itemize}
 
 \begin{subequations}
     \begin{align}
-    s(Q, D) &= \sum_{w} tf_{w,Q} \times \frac{tf_{w,D}}{tf_{w,D} + \frac{k|D|}{avg|D|}} \times \log{\frac{|C|}{df_{w}}} \\
+    s(Q, D) &= \sum_{w} tf_{w,Q} \times \frac{tf_{w,D}}{tf_{w,D} + \frac{k|D|}{avg|D|}} \times \log{\frac{|C|}{df_{w}}} \label{eq:tfidf}\\
     D_{w} &= \frac{tf_{w,D}}{tf_{w,D} + \frac{k|D|}{avg|D|}} \times \log{\frac{|C|}{df_{w}}} \\
     S(D_{1}, D_{2}) &= \frac{\sum_{w} D_{1,w} \times D_{2,w}}{\sqrt{\sum_{w} D_{1,w}^2} \times \sum_{w} D_{2,w}^2}
     \end{align}
@@ -300,6 +315,7 @@ These term weights are then used in a tf.idf weighted cosine.
 
 This approach allows for efficient search.  If we have two indexes.  One where keys are the documents and the values are the words in the document and their frequencies. Then we have another index, an inverted one.  Where the keys are the words and the values are a list of documents that contain them.  The individual components of the tf.idf equation can therefore be calculated with very little effort.  This means that a plot can be compared to the database of plots in O(n) time.
 
+\tdi{move this into evaluation?}
 Initial results are very promising with the tf.idf weighted cosine providing much clearer results than with simple euclidean distance.  There is not a large enough truth set of plot similarities to be able to confidently say that it is effective.  However these early promising results seem to indicate that further research would certainly be worthwhile, but outside the scope of the project.
 
 DISCUSSION OF THE EARLY RESULTS
