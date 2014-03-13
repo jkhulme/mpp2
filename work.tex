@@ -303,18 +303,23 @@ Equation~\ref{eq:tfidf} is the equation for finding the similarity between a sho
     \item $\log \frac{|C|}{df_{w}}$ -- Increases the weighting of words that are rare across the corpus.
 \end{itemize}
 
+Equation~\ref{eq:dw} is the equation for calculating the \ac{tfidf} weighting of a single word in document vector.  This equation would be applied to every word in the document vector and transform the document vector into the document's weight vector.
+
+Equation~\ref{eq:tfidf_cosine} is the equation for \ac{tfidf} weighted cosine similarity.  This gives a better measure of similarity when comparing the query is a document as is the case here \tdi{Citation for this is tts lecture slides is this ok?}.
+
 \begin{subequations}
     \begin{align}
     s(Q, D) &= \sum_{w} tf_{w,Q} \times \frac{tf_{w,D}}{tf_{w,D} + \frac{k|D|}{avg|D|}} \times \log{\frac{|C|}{df_{w}}} \label{eq:tfidf}\\
-    D_{w} &= \frac{tf_{w,D}}{tf_{w,D} + \frac{k|D|}{avg|D|}} \times \log{\frac{|C|}{df_{w}}} \\
-    S(D_{1}, D_{2}) &= \frac{\sum_{w} D_{1,w} \times D_{2,w}}{\sqrt{\sum_{w} D_{1,w}^2} \times \sum_{w} D_{2,w}^2}
+    D_{w} &= \frac{tf_{w,D}}{tf_{w,D} + \frac{k|D|}{avg|D|}} \times \log{\frac{|C|}{df_{w}}} \label{eq:dw}\\
+    S(D_{1}, D_{2}) &= \frac{\sum_{w} D_{1,w} \times D_{2,w}}{\sqrt{\sum_{w} D_{1,w}^2} \times \sum_{w} D_{2,w}^2} \label{eq:tfidf_cosine}
     \end{align}
 \end{subequations}
 
-These term weights are then used in a tf.idf weighted cosine.
+\tdi{Talk about indexing}
 
-This approach allows for efficient search.  If we have two indexes.  One where keys are the documents and the values are the words in the document and their frequencies. Then we have another index, an inverted one.  Where the keys are the words and the values are a list of documents that contain them.  The individual components of the tf.idf equation can therefore be calculated with very little effort.  This means that a plot can be compared to the database of plots in O(n) time.
+\ac{tf.idf} allows for efficient search through the use an index and an inverted index.  The index is a mapping from document to words and the inverted index is a mapping from words to documents.  If we look up a document we find what words are in it.  If we look up a word we find what documents contain it.  When a new plot is added to the database these two indexes are updated.  With these two indexes all the components of \ac{tfidf} can be calculated for very little cost.  For example $tf_{w,D}$ would involve looking up document D in the index, this will return to us all the words in document D and their counts.  We can then quickly find the count of word $w$ in $D$.
 
+\subsection{Results}
 \tdi{move this into evaluation?}
 Initial results are very promising with the tf.idf weighted cosine providing much clearer results than with simple euclidean distance.  There is not a large enough truth set of plot similarities to be able to confidently say that it is effective.  However these early promising results seem to indicate that further research would certainly be worthwhile, but outside the scope of the project.
 

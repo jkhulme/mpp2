@@ -1,0 +1,66 @@
+\documentclass{article}
+\usepackage{hyperref}
+\usepackage{fullpage}
+\renewcommand*{\DefaultHeightofTextMultiline}{6\baselineskip}
+\renewcommand*{\LayoutTextField}[2]{\makebox[6em][l]{#1: }%
+  \raisebox{\baselineskip}{\raisebox{-\height}{#2}}}
+%\renewcommand*{\LayoutTextField}[2]{% or this or similar ...
+  %\raisebox{-\height}{\makebox[6em][l]{#1: }}\raisebox{-\height}{#2}}
+\def\LayoutChoiceField#1#2{\makebox[6em][l]{#1: }#2}
+\newdimen\longline
+\longline=\textwidth\advance\longline-6em
+\begin{document}
+\begin{Form}
+How would you rate the appearance of the tool?
+\\
+\\
+\ChoiceMenu[borderwidth=0,radio=true,
+  backgroundcolor={.85 .85 .85}]{}{Very Bad, Bad, Average, Good, Very Good}\\
+
+\TextField[name=Comment,multiline=true,height=10\baselineskip,
+  width=\longline,borderwidth=0,backgroundcolor={.85 .85 .85}]{Comments}\\
+\\
+\\
+Do you prefer the new layout or the old layout?
+\\
+\\
+\ChoiceMenu[borderwidth=0,radio=true,
+  backgroundcolor={.85 .85 .85}]{}{New Layout, Old Layout}\\
+
+\TextField[name=Comment,multiline=true,height=10\baselineskip,
+  width=\longline,borderwidth=0,backgroundcolor={.85 .85 .85}]{Comments}\\
+\\
+\\
+How strongly do you agree with the statement: "I would use this tool instead of the Eclipse Plugin"?
+\\
+\\
+\ChoiceMenu[borderwidth=0,radio=true,
+  backgroundcolor={.85 .85 .85}]{}{Strongly Disagree, Disagree, Indifferent, Agree, Strongly Agree}\\
+
+\TextField[name=Comment,multiline=true,height=10\baselineskip,
+  width=\longline,borderwidth=0,backgroundcolor={.85 .85 .85}]{Comments}\\
+\\
+\\
+How easy did you find it to complete the task?
+\\
+\\
+\ChoiceMenu[borderwidth=0,radio=true,
+  backgroundcolor={.85 .85 .85}]{}{Very Difficult, Difficult, Neither Difficult or Easy, Easy, Very Easy}\\
+
+\TextField[name=Comment,multiline=true,height=10\baselineskip,
+  width=\longline,borderwidth=0,backgroundcolor={.85 .85 .85}]{Comments}\\
+\\
+\\
+How strongly do you agree with the statement: "I would use this tool in my workflow"?
+\\
+\\
+\ChoiceMenu[borderwidth=0,radio=true,
+  backgroundcolor={.85 .85 .85}]{}{Strongly Disagree, Disagree, Indifferent, Agree, Strongly Agree}\\
+
+\TextField[name=Comment,multiline=true,height=10\baselineskip,
+  width=\longline,borderwidth=0,backgroundcolor={.85 .85 .85}]{Comments}\\
+\\
+\\
+
+\end{Form}
+\end{document}
