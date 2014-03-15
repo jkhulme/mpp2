@@ -31,21 +31,22 @@ Do you prefer the new layout or the old layout?
   width=\longline,borderwidth=0,backgroundcolor={.85 .85 .85}]{Comments}\\
 \\
 \\
-How strongly do you agree with the statement: "I would use this tool instead of the Eclipse Plugin"?
-\\
-\\
-\ChoiceMenu[borderwidth=0,radio=true,
-  backgroundcolor={.85 .85 .85}]{}{Strongly Disagree, Disagree, Indifferent, Agree, Strongly Agree}\\
-
-\TextField[name=Comment,multiline=true,height=10\baselineskip,
-  width=\longline,borderwidth=0,backgroundcolor={.85 .85 .85}]{Comments}\\
-\\
-\\
 How easy did you find it to complete the task?
 \\
 \\
 \ChoiceMenu[borderwidth=0,radio=true,
   backgroundcolor={.85 .85 .85}]{}{Very Difficult, Difficult, Neither Difficult or Easy, Easy, Very Easy}\\
+
+\TextField[name=Comment,multiline=true,height=10\baselineskip,
+  width=\longline,borderwidth=0,backgroundcolor={.85 .85 .85}]{Comments}\\
+\\
+\\
+\newpage
+How strongly do you agree with the statement: "I would use this tool instead of the Eclipse Plugin"?
+\\
+\\
+\ChoiceMenu[borderwidth=0,radio=true,
+  backgroundcolor={.85 .85 .85}]{}{Strongly Disagree, Disagree, Indifferent, Agree, Strongly Agree}\\
 
 \TextField[name=Comment,multiline=true,height=10\baselineskip,
   width=\longline,borderwidth=0,backgroundcolor={.85 .85 .85}]{Comments}\\
@@ -61,6 +62,30 @@ How strongly do you agree with the statement: "I would use this tool in my workf
   width=\longline,borderwidth=0,backgroundcolor={.85 .85 .85}]{Comments}\\
 \\
 \\
+Are there any features missing that would limit you using the tool in your research?
+\\
+\\
+\ChoiceMenu[borderwidth=0,radio=true,
+  backgroundcolor={.85 .85 .85}]{}{Yes, No}\\
 
+\TextField[name=Comment,multiline=true,height=10\baselineskip,
+  width=\longline,borderwidth=0,backgroundcolor={.85 .85 .85}]{Comments}\\
+\\
+\\
+\newpage
+Are there any features you would like to see in the Future?
+\\
+\\
+\TextField[name=Comment,multiline=true,height=10\baselineskip,
+  width=\longline,borderwidth=0,backgroundcolor={.85 .85 .85}]{Comments}\\
+\\
+\\
+Do you have any comments from your experience today?
+\\
+\\
+\TextField[name=Comment,multiline=true,height=10\baselineskip,
+  width=\longline,borderwidth=0,backgroundcolor={.85 .85 .85}]{Comments}\\
+\\
+\\
 \end{Form}
 \end{document}
