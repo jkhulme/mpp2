@@ -4,6 +4,9 @@ This section details the development work that has been performed in the second 
 
 %For each of the below, why, how inc conceptual problems, impact, how it could be improved
 
+\section{Design Decisions}
+
+\section{Finished Product}
 
 \section{Animation}
 
@@ -325,13 +328,54 @@ Initial results are very promising with the tf.idf weighted cosine providing muc
 
 DISCUSSION OF THE EARLY RESULTS
 
-\section{Collaboration}
+\section{Real Time Collaboration}
 
-The initial step of allowing collaboration is enabling two instances of the program to talk to each other.  There are a number of techniques to allow for this.  Data could have been sent directly through sockets, another option would be to create a web server and send get requests and pass parameters.  It was decided to use an existing library to handle the communication.  The library chose was simplexmlrpc.  This allows each instance to run a client and a server.  The server has an api and this can be called.
+More and more programs are allowing their users to collaborate in real time.  Some of these pieces of software are discussed in Section~\ref{sec:review}.  Only one piece of software could be found that was biology focused.  Implementing real time collaboration in this tool is therefore a great advantage.
+
+There are two broad ways that real time collaboration could have been implemented: in a distributed manner or by having a single centralised instance.  A single centralised instance is the approach taken by all the software reviewed.  The approach taken in this tool is the distributed approach.
+
+The single centralised approach would have been simpler.  With the distributed approach you have to ensure that each instance of the program has the same ordering of events and is displaying the same state.  In the centralised approach there is a single repository which has all history of what has happened.  The order that the single program instance thinks events happens in is the order that those events happened in.
+
+Ideally the collaborative model used would have been the centralised model.  This would however have required a significant reworking of how the tool worked.  All the software reviewed was browser based.  Given the time constraints on the project and the fact that it had been developed up until this point as a standard desktop application it was felt it would be easier to implement distributed collaboration.
+
+The collaboration that has been implemented in this project is only between two program instances.
+
+The first stage in allowing distributed collaboration was enabling the different program instances to talk to each other. There are a number of techniques to allow for this.  Data could have been sent directly through sockets, another option would be to create a web server and send get requests and pass parameters.  It was decided to use an existing library to handle the communication.  The library chose was simplexmlrpc.  This allows each instance to run a client and a server.  The server has an api and this can be called.
 
 On initial connection the `master' sends its entire session state the the `slave' uses this as its initial state.  After this whenever either client performs an action it issues a call to the other clients server to perform the same action.
 
-An issue that was encountered is how to ensure that both clients are seeing everything in the same order.  Lamport clock proved to be the solution.
+This approach was not without its problems.  A fundamental problem with having the collaboration follow a distributed model is how to ensure that both program instances have the same ordering of events.  To solve this problem Lamport clocks were used.  Any action that affects the session state, an action that does this is one that will need to be sent to the collaborators, increments the Lamport clock.  The Lamport clocks are then sent with every message.  When a message arrives the program checks the Lamport clock and works out where in the history it should go.  After reordering the history all the visualisations are redrawn.  This also has to be done in the instance of the program that is sending the change.
+
+Another issue that was encountered was to do with how the program was architected.  The session data was often directly modified by methods that were bound to \ac{UI} elements.  These methods are also the ones that called the client to send the message to the collaborator, if the server on the other end then called the same method to perform the action it would have resulted in an infinite loop.  These methods would also often do more than just modify the state, for example when modifying an annotation the method will find the appropriate annotation and edit it.  The client would then send a message saying delete annotation 1.  The server would not be able to call the original method as it doesn't take a parameter.  The solution to this was to split the methods up more.  Now the more typical flow is the \ac{UI} bound method calls another method that modifies the state.  The server is able to call the same method.  This removes the need for duplicated code.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{images/minf_collab_diagram.png}
+    \caption{Collaboration handshake stage}
+    \label{fig:collab_handshake}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{images/minf_collab_mixup.png}
+    \caption{Out of sync collaboration}
+    \label{fig:collab_mixup}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{images/minf_collab_mixup_fix.png}
+    \caption{Use of Lamport clocks to keep collaboration in sync}
+    \label{fig:collab_mixup_fix}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{images/collaboration_single_instance.png}
+    \caption{Communication flow in a centralised mode}
+    \label{fig:collab_mixup_fix}
+\end{figure}
+
 
 \section{Usability}
 
@@ -362,6 +406,3 @@ Existing feedback in the project was a natural byproduct of some of the features
 The first evaluation of the second phase of the project unearthed that the users struggled to choose the correct action as there were multiple ways of doing the same action that had slightly different use cases.  There was also confusing language in the menu options.  These multiple paths have been removed. For example, now there is only one way to open results files initially.  To help guide the user further \ac{UI} elements are enabled and disabled as appropriate.  Now when the program is first loaded the only action a user can perform is to load a session or start a new session.  Afterwards other \ac{UI} elements are enabled to allow the user to start using the tool effectively.
 
 \section{Data Manipulation and Export}
-
-\section{Finished Product}
-Overview and walkthrough of tool
