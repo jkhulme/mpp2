@@ -1,11 +1,25 @@
-\chapter{Work Done}
+\chapter{Phase 2 Development}
 \label{chap:work}
 
-This section details the development work that has been performed in the second phrase of the project.  This includes conceptual problems faced, effectiveness of the result and any future work that could be performed.
+This chapter details the development work that has been performed in the second phrase of the project.  This includes conceptual problems faced and their solutions.
 
 %For each of the below, why, how inc conceptual problems, impact, how it could be improved
 
 \section{Design Decisions}
+
+During this phase of development a number of design decisions had to be made.  The decisions broadly fell into two categories:  \ac{UI} decisions and architectural decisions.  Ideally there should be a method behind such decisions.  The decisions and the reasoning behind them are below:
+
+\subsection{\ac{UI} Design}
+
+During the planning phase of the project (MPP) wireframe versions of the components of the \ac{UI} were developed.  The purpose of these wireframes was to allow for the \ac{UI} to be be evaluated somewhat before development started.  It is cheaper to fix problems early, fixing the problem before any development is particularly cheap.
+
+During the second phase of development (MPP2) the \ac{UI} was refined and new elements were added to it.  It would have been desirable to again first create wireframes and evaluate them with the users before starting development.  This approach was not feasible in this stage of development.  It would have been necessary to hold more frequent user evaluations placing a greater strain on the user's time.
+
+Instead the \ac{UI} was developed and then users evaluated it.  The \ac{UI} was then changed as required.  This iterative approach allowed for the \ac{UI} to be developed with being bottlenecked by waiting for wireframes to be  evaluated.  The improvement of the architecture outlined in Section~\ref{sec:architecture} made changes easier.  The \ac{UI} was contained much less information about the state of the tool.  The \ac{UI} effectively call an \ac{API}.  A \ac{UI} change no longer led to a reworking of logic.
+
+\subsection{Architectural Design}
+\label{sec:architecture}
+After the first stage of development
 
 \section{Finished Product}
 
