@@ -19,7 +19,44 @@ Instead the \ac{UI} was developed and then users evaluated it.  The \ac{UI} was 
 
 \subsection{Architectural Design}
 \label{sec:architecture}
-After the first stage of development
+After the first stage of development there was little architectural design.  The three main elements of the tool were the \ac{UI}, the graph visualisation and the model visualisation.   As you can see in Figure~\ref{fig:initial_architecture} each component was passing information to the other components.  Some of the items being passed around had references to to other components.  At the start of this phase of development (MPP2) the features that were to be implemented were too complex for this `lack of architecture' architecture.
+
+The program was refactored to focus on an architectural model where there all the data is centralised in a single location.  The visualisation and \ac{UI} components select what they need to display from this central location.  This greatly reduced the amount of information that was having to be passed between all the components.
+
+\tdi{talk about mvc}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.4\textwidth]{images/initial_architecture.png}
+    \caption{Architecture layout at the start of MPP2}
+    \label{fig:initial_architecture}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.6\textwidth]{images/final_architecture.png}
+    \caption{Architecture layout at the end of MPP2}
+    \label{fig:final_architecture}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.4\textwidth]{images/initial_architecture_future.png}
+    \caption{Architecture layout at the end of MPP2 if initial architecture was continued.}
+    \label{fig:initial_architecture_future}
+\end{figure}
+
+\afterpage{%
+    \clearpage% Flush earlier floats (otherwise order might not be correct)
+    \begin{landscape}
+        \begin{figure}
+            \centering
+            \includegraphics[height=0.9\textheight]{images/detailed_architecture.png}
+            \caption{Detailed breakdown of program components and how they interact}
+            \label{fig:detailed_architecture}
+        \end{figure}
+    \end{landscape}
+}
 
 \section{Finished Product}
 
@@ -189,7 +226,7 @@ On the right hand side of the tool there is a panel which lists all annotations 
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.7\textwidth]{images/annotation_list.png}
+    \includegraphics[height=0.4\textheight]{images/annotation_list.png}
     \caption{Animation Annotation List}
     \label{fig:annotation_list}
 \end{figure}
