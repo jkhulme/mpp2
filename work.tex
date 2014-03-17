@@ -25,6 +25,8 @@ The program was refactored to focus on an architectural model where there all th
 
 Figure~\ref{fig:detailed_architecture} shows a more detailed architectural diagram of the system.  The model is the session state.  This contains all the information for the visualisations such as the lines and results, the annotations and miscellaneous \ac{UI} toggles.  The controller is the \ac{UI} actions here affect the model.  The controller also triggers refreshed in the view.  The view here are the visualisations.  They display the information from the model.
 
+\tdi{talk about singleton}
+
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.4\textwidth]{images/initial_architecture.png}
@@ -66,7 +68,7 @@ Figure~\ref{fig:detailed_architecture} shows a more detailed architectural diagr
 }
 
 \section{Finished Product}
-\tdi{Not sure how necessary this is.  The plan would be a screenshot by screenshot walkthrough - may fit better in the self evaluation}
+\tdi{Not sure how necessary this is.  The plan would be a screenshot by screenshot walkthrough - may fit better in the self evaluation.  it will possibly just be duplicating screenshots that exist elsewhere}
 
 \section{Animation}
 \label{sec:animation}
@@ -74,6 +76,16 @@ Figure~\ref{fig:detailed_architecture} shows a more detailed architectural diagr
 Animation was a key goal of the project.  The core aim of the project is to help biologists who aren't comfortable with traditional time-series graphs.  The goal was to provide them with visualisations closer to what they see in their domain.  This has been accomplished by displaying spatial data in the shape of a cross-section of a cell.
 
 The animation is ideally used to display species moving through a cell.  This collapses what would be multiple different lines in a graph, that give no indication of their real position in the cell, into a single image.  This can be seen in Figure~\ref{fig:asrc_intro}.
+
+Animation is just a sequence of static images which, when viewed frame by frame at a sufficient rate, will appear to be a dynamic image.  There are two basic ways that animation can be implemented: rendering the entire animation before it is required, or generate a static image as a function of time and every frame calculate what the image should be and displaying that to the user.  Both approaches have their positives and negatives.  The most appropriate depends on the situation.  The first part of this is how will the animation be displayed.
+
+wxPython does not have built in animation support but it does, however, have built in drawing support through the paint device context.  This allows for arbitrary drawing on \ac{UI} panels.  wxPython does provide some drawing primitives.  Various primitives can be handled such as squares, circles, triangles and text.  There is also support for drawing arcs.  These regions can also be combined to form regions to form more complex shapes.  During the planning phase (MPP) it was decided to draw cell cross sections.  These cell cross sections were going to be arcs.  wxPython providing support for arcs was perfect for this.  This approach would be most suitable for generating images as a function of time.
+
+Using wxPython it would also be possible to render the animation beforehand into a video format and then play it.  wxPython has a media control widget.  This widget could be used to play the rendered video.
+
+matplotlib does have support for animation with the matplotlib.animation library.  This implements animation as a function of time.  You provide it with a function that generates the data to be plotted, which will change depending on the time value, and a time between frames.  matplotlib also has support for shapes.  Each cell segment could then be treated as a separate matplotlib animation.
+
+\tdi{why function of time over rendering and why wxPython over matplotlib}
 
 For each line in the visualisation one cell cross section is drawn.  Each cross section is split into compartments, these are parsed from the model file.  The colours in each compartment reflect the colour of the line on the graph.
 
