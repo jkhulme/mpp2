@@ -21,9 +21,7 @@ Instead the \ac{UI} was developed and then users evaluated it.  The \ac{UI} was 
 \label{sec:architecture}
 After the first stage of development there was little architectural design.  The three main elements of the tool were the \ac{UI}, the graph visualisation and the model visualisation.   As you can see in Figure~\ref{fig:initial_architecture} each component was passing information to the other components.  Some of the items being passed around had references to to other components.  At the start of this phase of development (MPP2) the features that were to be implemented were too complex for this `lack of architecture' architecture.
 
-The program was refactored to focus on an architectural model where there all the data is centralised in a single location.  The visualisation and \ac{UI} components select what they need to display from this central location.  This greatly reduced the amount of information that was having to be passed between all the components.
-
-\tdi{talk about mvc}
+The program was refactored to focus on an architectural model where there all the data is centralised in a single location.  This can be seen in Figure~\ref{fig:final_architecture}.  With these components if the original architecture was continued the interaction would look like Figure~\ref{fig:initial_architecture_future}.  The visualisation and \ac{UI} components select what they need to display from this central location.  This greatly reduced the amount of information that was having to be passed between all the components.  A refresh of the \ac{UI} components is then all that is needed to display the most update information.  This is similar to the \ac{MVC} architecture.  A simple diagram for \ac{MVC} can be seen in Figure~\ref{fig:mvc}.  With \ac{MVC}
 
 \begin{figure}[h!]
     \centering
@@ -44,6 +42,13 @@ The program was refactored to focus on an architectural model where there all th
     \includegraphics[width=0.4\textwidth]{images/initial_architecture_future.png}
     \caption{Architecture layout at the end of MPP2 if initial architecture was continued.}
     \label{fig:initial_architecture_future}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.4\textwidth]{images/mvc.png}
+    \caption{Basic \ac{MVC} architecture}
+    \label{fig:mvc}
 \end{figure}
 
 \afterpage{%
