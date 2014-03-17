@@ -21,7 +21,9 @@ Instead the \ac{UI} was developed and then users evaluated it.  The \ac{UI} was 
 \label{sec:architecture}
 After the first stage of development there was little architectural design.  The three main elements of the tool were the \ac{UI}, the graph visualisation and the model visualisation.   As you can see in Figure~\ref{fig:initial_architecture} each component was passing information to the other components.  Some of the items being passed around had references to to other components.  At the start of this phase of development (MPP2) the features that were to be implemented were too complex for this `lack of architecture' architecture.
 
-The program was refactored to focus on an architectural model where there all the data is centralised in a single location.  This can be seen in Figure~\ref{fig:final_architecture}.  With these components if the original architecture was continued the interaction would look like Figure~\ref{fig:initial_architecture_future}.  The visualisation and \ac{UI} components select what they need to display from this central location.  This greatly reduced the amount of information that was having to be passed between all the components.  A refresh of the \ac{UI} components is then all that is needed to display the most update information.  This is similar to the \ac{MVC} architecture.  A simple diagram for \ac{MVC} can be seen in Figure~\ref{fig:mvc}.  With \ac{MVC}
+The program was refactored to focus on an architectural model where there all the data is centralised in a single location.  This can be seen in Figure~\ref{fig:final_architecture}.  With these components if the original architecture was continued the interaction would look like Figure~\ref{fig:initial_architecture_future}.  The visualisation and \ac{UI} components select what they need to display from this central location.  This greatly reduced the amount of information that was having to be passed between all the components.  A refresh of the \ac{UI} components is then all that is needed to display the most update information.  This is similar to the \ac{MVC} architecture.  A simple diagram for \ac{MVC} can be seen in Figure~\ref{fig:mvc}.  With \ac{MVC} In this case the controller and the view are not entirely separated.
+
+Figure~\ref{fig:detailed_architecture} shows a more detailed architectural diagram of the system.  The model is the session state.  This contains all the information for the visualisations such as the lines and results, the annotations and miscellaneous \ac{UI} toggles.  The controller is the \ac{UI} actions here affect the model.  The controller also triggers refreshed in the view.  The view here are the visualisations.  They display the information from the model.
 
 \begin{figure}[h!]
     \centering
@@ -64,6 +66,7 @@ The program was refactored to focus on an architectural model where there all th
 }
 
 \section{Finished Product}
+\tdi{Not sure how necessary this is.  The plan would be a screenshot by screenshot walkthrough - may fit better in the self evaluation}
 
 \section{Animation}
 \label{sec:animation}
