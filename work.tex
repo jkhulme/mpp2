@@ -85,7 +85,9 @@ Using wxPython it would also be possible to render the animation beforehand into
 
 matplotlib does have support for animation with the matplotlib.animation library.  This implements animation as a function of time.  You provide it with a function that generates the data to be plotted, which will change depending on the time value, and a time between frames.  matplotlib also has support for shapes.  Each cell segment could then be treated as a separate matplotlib animation.
 
-\tdi{why function of time over rendering and why wxPython over matplotlib}
+Rendering the animation before it is needed is not the correct way to do animation in this circumstance.  One of the purposes of this tool is to allow for interactivity and customisation.  This would potentially lead to the animation having to be rerendered constantly.  The animation that was planned to be included in this tool is also not complex enough to warrant prerendering.  Prerendering would be more suitable for more realistic animations.  One would be doing this after the insight has been learned from the experimental data.  The purpose of the animation here is to help the user to find this insight.  For these reasons treating animation as generating static as a function of time was chosen.
+
+wxPython and matplotlib's animation capabilities are quite similar, both have primitives for drawing the necessary shapes and both are implemented as drawing static images as a function of time.  Given that the capabilities of each were similar wxPython was chosen for animation to avoid the scaffolding code that matplotlib would have required.
 
 For each line in the visualisation one cell cross section is drawn.  Each cross section is split into compartments, these are parsed from the model file.  The colours in each compartment reflect the colour of the line on the graph.
 
