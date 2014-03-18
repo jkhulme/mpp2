@@ -95,31 +95,41 @@ Over the course of the animation the colour of the segment changes to reflect th
 
 Animation takes advantage of the data centric model.  When the play button is pressed a thread runs whose job it is to increment the clock and refresh all the \ac{UI} elements.  When refreshed the \ac{UI} elements pick up on the change of clock and update what they display appropriately.
 
-The first step towards animation was calculating at what points the line changes colour.  This is done during the interpolation phase that was written in the first stage of development.  To do the interpolation the original plot is split into multiple separate plots with the results padded with null values to allow matplotlib to plot them as one.  The number of these null values is counted and that gives the time at which the colour should change.  This is stored as an array of time, colour tuples.  Each line also has an internal counter to say how far through this array they have gone.  When the animation clock is updated and the refresh triggered each cell segment finds the appropriate colour change point in the line and updates the segment colour.  This position is then used as the new starting point on the next refresh.  This saves looking through past points unnecessarily.
+The first step towards animation was calculating at what points the line changes colour.  This is done during the interpolation phase that was written in the first stage of development.  To do the interpolation the original plot is split into multiple separate plots with the results padded with null values to allow matplotlib to plot them as one.  The number of these null values is counted and that gives the time at which the colour should change.  This is stored as an array of time, colour tuples.  Each line also has an internal counter to say how far through this array they have gone.  When the animation clock is updated and the refresh triggered, each cell segment finds the appropriate colour change point in the line and updates the segment colour.  This position is then used as the new starting point on the next refresh.  This saves looking through past points unnecessarily.
 
-The user has can control the time through the time slider.  When the time slider is used each line has its internal clock set to 0.  Then when the animation thread triggers a refresh the whole of the lines colour change points are searched to find the appropriate point.  This is a much neater solution than keeping track of previous points and slicing the arrays.
+The user can control the time through the time slider.  Moving the time slider triggers refreshes of the cell segments to ensure that the user is seeing the up to date information.  Moving the time slider also updates the animation clock, it is set to the value of the time slider.  As described above, each line has a list of times which it changes colour.  These are sorted according to time.  During `normal' animation the previous position in the array is tracked so that the whole array is not searched every time unnecessarily.  When the time slider is used this previous position might become a future position.  To solve this when the time slider is moved the previous position is set back to the start of the array.  On the next refresh the array will be searched from the start for the appropriate time and colour.
 
-A nice \ac{UX} feature that has been added a line to the main graph panel that indicates the current time.  When the animation is running the line moves along the graph.  This again helps the user build a correspondence between the two visualisation types.
+A nice \ac{UX} feature that has been added a line to the main graph panel that indicates the current time.  When the animation is running the line moves along the graph.  This again helps the user build a correspondence between the two visualisation types and may help with their understanding of what is being displayed on the graph.
 
 The user is also given control over what is displayed.  The cell segments can be drawn in a file focussed manner or a species focussed manner.  In the file focussed manner a cell cross section is drawn for every species in that file.  The user can switch between all results files that have been added to the session.  In the species focussed manner a cell cross section is drawn for every file that contains that species.  The user can select between all species found across all the results files.  These are illustrated in Figure~\ref{fig:species_file_focussed}
+
+Figure~\ref{fig:cell_segments} shows some example cell segments.  Figures~\ref{fig:cel_seg_file_fake}~\&~\ref{fig:cell_seg_file_model} show the cell segments being drawn in the file focussed manner.  Both files contained results relating to the the species ``aSrc\_total\_MB" In Figure~\ref{fig:cell_seg_file_fake} this species was present at all locations in the cell.  In Figure~\ref{fig:cell_seg_file_model} the species is missing from the middle location in the cell, so that segment has been left white.  Figure~\ref{fig:cell_seg_species} shows the cell segments drawn in a species focussed manner.  One cell cross section has been drawn for each file which contains the species ``aSrc\_total\_MB''.  We can see that in one of the files the species wasn't present at all locations.
 
 \begin{figure}[h!]
     \centering
     \begin{subfigure}[b]{0.9\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{images/species_focussed.png}
-        \caption{Animations Drawn in Species Focussed Manner}
-        \label{fig:species_focussed}
+        \includegraphics[width=\textwidth]{images/by_file_fake.png}
+        \caption{Cell segments drawn by species from file 1}
+        \label{fig:cell_seg_file_fake}
     \end{subfigure}
 
     \begin{subfigure}[b]{0.9\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{images/file_focussed.png}
-        \caption{Animations Drawn in File Focussed Manner}
-        \label{fig:file_focussed}
+        \includegraphics[width=\textwidth]{images/by_file_model.png}
+        \caption{Cell segments drawn by species from file 2}
+        \label{fig:cell_seg_file_model}
     \end{subfigure}
-    \caption{The Two Ways of Drawing Animations:  File Focussed and Species Focussed.}
-    \label{fig:species_file_focussed}
+
+    \begin{subfigure}[b]{0.9\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/by_species_asrc.png}
+        \caption{Cell segments drawn by file from species aSrc}
+        \label{fig:cell_seg_species}
+    \end{subfigure}
+
+    \caption{Example cell segment animations}
+    \label{fig:cell_segments}
 \end{figure}
 
 It had been hoped to allow the user to save the animation.  This could have either been allowing the user to save individual frames or allowing them to save an animated gif of the whole animation.  Saving to a gif was chosen as it was felt to be more useful to a user to be able to export the entire animation rather than a single frame of it.  Allowing the user to save a single frame would be added in at a future date.  To generate the gif we need to save all frames.  As these frames are generated as needed, not prerendered it was required to run through the whole animation to save each frame.  This meant that saving all the frames took as long as the animation took to run.  At this step hundreds of static images have all been saved.  Then a shell script is required to convert the saved frames into a gif.  Given that this was a very slow and user unfriendly approach the decision was made to remove the ability to save animation from the project.  It would be implemented if future work was to be performed.
