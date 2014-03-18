@@ -122,10 +122,7 @@ The user is also given control over what is displayed.  The cell segments can be
     \label{fig:species_file_focussed}
 \end{figure}
 
-
-MOVE THIS INTO WHEREREVER SESSION CREATOR IS TALKED ABOUTThe requirement of the model file for parsing animation has also led to animation replacing the previous model visualisation.  In the set up phase after the the model and the species have been parsed the user is presented with a cell segment, similar to what is seen in the animation panel.  The cell segment is split into different regions, one for each region of the cell.  These segments are then coloured if the selected species is present in them.  The user can select between all species in the selected results files.  This has a number of benefits.  First, they can sanity check that they have matching results and model files.  Second, they can see how the model is structured.
-
-MOVE THIS INTO WHEREREVER SESSION CREATOR IS TALKED ABOUT To make setting up the animation user friendly to control required the model file so that the location hierarchy could be parsed.  Before this there was an awkward system where the user had to input where in the cell a species is.  This was time consuming, awkward and quite brittle.  At the time it assumed that there would be three compartments in the species, which is a terrible assumption to make.
+It had been hoped to allow the user to save the animation.  This could have either been allowing the user to save individual frames or allowing them to save an animated gif of the whole animation.  Saving to a gif was chosen as it was felt to be more useful to a user to be able to export the entire animation rather than a single frame of it.  Allowing the user to save a single frame would be added in at a future date.  To generate the gif we need to save all frames.  As these frames are generated as needed, not prerendered it was required to run through the whole animation to save each frame.  This meant that saving all the frames took as long as the animation took to run.  At this step hundreds of static images have all been saved.  Then a shell script is required to convert the saved frames into a gif.  Given that this was a very slow and user unfriendly approach the decision was made to remove the ability to save animation from the project.  It would be implemented if future work was to be performed.
 
 \section{Annotation}
 
@@ -480,5 +477,9 @@ Existing feedback in the project was a natural byproduct of some of the features
 \subsection{Guiding the User}
 
 The first evaluation of the second phase of the project unearthed that the users struggled to choose the correct action as there were multiple ways of doing the same action that had slightly different use cases.  There was also confusing language in the menu options.  These multiple paths have been removed. For example, now there is only one way to open results files initially.  To help guide the user further \ac{UI} elements are enabled and disabled as appropriate.  Now when the program is first loaded the only action a user can perform is to load a session or start a new session.  Afterwards other \ac{UI} elements are enabled to allow the user to start using the tool effectively.
+
+The requirement of the model file for parsing animation has also led to animation replacing the previous model visualisation.  In the set up phase after the the model and the species have been parsed the user is presented with a cell segment, similar to what is seen in the animation panel.  The cell segment is split into different regions, one for each region of the cell.  These segments are then coloured if the selected species is present in them.  The user can select between all species in the selected results files.  This has a number of benefits.  First, they can sanity check that they have matching results and model files.  Second, they can see how the model is structured.
+
+To make setting up the animation user friendly to control required the model file so that the location hierarchy could be parsed.  Before this there was an awkward system where the user had to input where in the cell a species is.  This was time consuming, awkward and quite brittle.  At the time it assumed that there would be three compartments in the species, which is a terrible assumption to make.
 
 \section{Data Manipulation and Export}
