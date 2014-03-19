@@ -407,32 +407,28 @@ Equation~\ref{eq:tfidf_cosine} is the equation for \ac{tf.idf} weighted cosine s
 \begin{subequations}
     \begin{align}
     s(Q, D) &= \sum_{w} tf_{w,Q} \times \frac{tf_{w,D}}{tf_{w,D} + \frac{k|D|}{avg|D|}} \times \log{\frac{|C|}{df_{w}}} \label{eq:tfidf}\\
-    D_{w} &= \frac{tf_{w,D}}{tf_{w,D} + \frac{k|D|}{avg|D|}} \times \log{\frac{|C|}{df_{w}}} \label{eq:dw} \\
+    D_{w} &= \frac{tf_{w,D}}{tf_{w,D} + \frac{k|D|}{avg|D|}} \times \log{\frac{|C|}{df_{w}}} \label{eq:dw}\\
     S(D_{1}, D_{2}) &= \frac{\sum_{w} D_{1,w} \times D_{2,w}}{\sqrt{\sum_{w} D_{1,w}^2} \times \sum_{w} D_{2,w}^2} \label{eq:tfidf_cosine}
     \end{align}
 \end{subequations}
 
-\ac{tf.idf} allows for efficient search through the use an index and an inverted index.  The index is a mapping from document to words and the inverted index is a mapping from words to documents.  If we look up a document we find what words are in it.  If we look up a word we find what documents contain it.  When a new plot is added to the database these two indexes are updated.  With these two indexes all the components of \ac{tfidf} can be calculated for very little cost.  For example $tf_{w,D}$ would involve looking up document D in the index, this will return to us all the words in document D and their counts.  We can then quickly find the count of word $w$ in $D$.
+\ac{tf.idf} allows for efficient search through the use an index and an inverted index.  The index is a mapping from document to words and the inverted index is a mapping from words to documents.  If we look up a document we find what words are in it.  If we look up a word we find what documents contain it.  When a new plot is added to the database these two indexes are updated.  With these two indexes all the components of \ac{tf.idf} can be calculated for very little cost.  For example $tf_{w,D}$ would involve looking up document D in the index, this will return to us all the words in document D and their counts.  We can then quickly find the count of word $w$ in $D$.
 
 \section{Real Time Collaboration}
 
-More and more programs are allowing their users to collaborate in real time.  Some of these pieces of software are discussed in Section~\ref{sec:review}.  Only one piece of software could be found that was biology focused.  Implementing real time collaboration in this tool is therefore a great advantage.
+More and more programs are allowing their users to collaborate in real time.  Some of these pieces of software are discussed in Section~\ref{sec:review}.  Only one piece of software, with real time collaboration capabilities, could be found that was biology focused.  Implementing real time collaboration in this tool is therefore a great advantage.
 
 There are two broad ways that real time collaboration could have been implemented: in a distributed manner or by having a single centralised instance.  A single centralised instance is the approach taken by all the software reviewed.  The approach taken in this tool is the distributed approach.
 
 The single centralised approach would have been simpler.  With the distributed approach you have to ensure that each instance of the program has the same ordering of events and is displaying the same state.  In the centralised approach there is a single repository which has all history of what has happened.  The order that the single program instance thinks events happens in is the order that those events happened in.
 
-Ideally the collaborative model used would have been the centralised model.  This would however have required a significant reworking of how the tool worked.  All the software reviewed was browser based.  Given the time constraints on the project and the fact that it had been developed up until this point as a standard desktop application it was felt it would be easier to implement distributed collaboration.
+Ideally the collaborative model used in this project would have been the centralised model.  This would however have required a significant refactoring of the project.  It would have required a rewrite so that all the processing would take place on the server with the users just interacting with a simple client.  Given the time constraints on the project and the fact that it had been developed, up until this point, as a standard desktop application it was felt it would be easier to implement distributed collaboration.
 
-The collaboration that has been implemented in this project is only between two program instances.
+The collaboration that has been implemented in this project is only between two program instances.  Future work would include expanding the collaboration to work for a more arbitrary number of users.
 
-The first stage in allowing distributed collaboration was enabling the different program instances to talk to each other. There are a number of techniques to allow for this.  Data could have been sent directly through sockets, another option would be to create a web server and send get requests and pass parameters.  It was decided to use an existing library to handle the communication.  The library chose was simplexmlrpc.  This allows each instance to run a client and a server.  The server has an api and this can be called.
+The first stage in allowing distributed collaboration was enabling the different program instances to talk to each other. There are a number of techniques to allow for this.  Data could have been sent directly through sockets, another option would be to create a web server and send get requests and pass parameters.  It was decided to use an existing library to handle the communication.  The library chose was simplexmlrpc.  simplexmlrpc handles the implementation of communication via sockets.  Messages sent via sockets will often be split into multiple parts.  A manual implementation has to be handle receiving of arbitrary length messages in multiple parts.  It makes sense to use a library where this is provided.  simplexmlrpc provides an \ac{RPC} server.  Methods are then registered in the server to make them publicly accessible.  simplexmlrpc also provides method for a client to connect to the server.  The client can then call and methods that the server has made public.
 
-On initial connection the `master' sends its entire session state the the `slave' uses this as its initial state.  After this whenever either client performs an action it issues a call to the other clients server to perform the same action.
-
-This approach was not without its problems.  A fundamental problem with having the collaboration follow a distributed model is how to ensure that both program instances have the same ordering of events.  To solve this problem Lamport clocks were used.  Any action that affects the session state, an action that does this is one that will need to be sent to the collaborators, increments the Lamport clock.  The Lamport clocks are then sent with every message.  When a message arrives the program checks the Lamport clock and works out where in the history it should go.  After reordering the history all the visualisations are redrawn.  This also has to be done in the instance of the program that is sending the change.
-
-Another issue that was encountered was to do with how the program was architected.  The session data was often directly modified by methods that were bound to \ac{UI} elements.  These methods are also the ones that called the client to send the message to the collaborator, if the server on the other end then called the same method to perform the action it would have resulted in an infinite loop.  These methods would also often do more than just modify the state, for example when modifying an annotation the method will find the appropriate annotation and edit it.  The client would then send a message saying delete annotation 1.  The server would not be able to call the original method as it doesn't take a parameter.  The solution to this was to split the methods up more.  Now the more typical flow is the \ac{UI} bound method calls another method that modifies the state.  The server is able to call the same method.  This removes the need for duplicated code.
+Figure~\ref{fig:collab_handshake} shows the communication required for two collaborators to work on the same visualisation session.  There is a `handshake' stage where User A sends their IP address to User B.  This allows User B to connect to User A's session.  User B's client then requests User A's session which User A's server sends back.  Both users are now working on the same session state.  Each user can now send changes back and forth.
 
 \begin{figure}[h!]
     \centering
@@ -440,6 +436,10 @@ Another issue that was encountered was to do with how the program was architecte
     \caption{Collaboration handshake stage}
     \label{fig:collab_handshake}
 \end{figure}
+
+This approach was not without its problems.  A fundamental problem with having the collaboration follow a distributed model is how to ensure that both program instances have the same ordering of events.  Figure~\ref{fig:collab_mixup} shows this.  In this example User B makes a change before receiving the change from User A.  After both changes have been received User A will see User B's change and User B will see User A's change.  To solve this problem Lamport clocks were used.  Any action that affects the session state, an action that does this is one that will need to be sent to the collaborators, increments the Lamport clock.  The Lamport clocks are then sent with every message.  When a message arrives the server checks the Lamport clock and works out where in the history it should go.  After reordering the history all the visualisations are redrawn.  This also has to be done in the instance of the program that is sending the change.  This can be seen in Figure~\ref{fig:collab_mixup_fix}.  When changes are received the history of events is reordered to ensure each user sees the same state.  User A sees User B's change and User B sees their own change.  Figure~\ref{fig:collab_mixup_fix_2} shows how using a centralised model would remove the need for reordering of events.
+
+\tdi{Should I cite Lamport clocks.}
 
 \begin{figure}[h!]
     \centering
@@ -459,9 +459,10 @@ Another issue that was encountered was to do with how the program was architecte
     \centering
     \includegraphics[width=\textwidth]{images/collaboration_single_instance.png}
     \caption{Communication flow in a centralised collaboration model.}
-    \label{fig:collab_mixup_fix}
+    \label{fig:collab_mixup_fix_2}
 \end{figure}
 
+Another issue that was encountered was to do with how the program was architected.  The session data was often directly modified by methods that were bound to \ac{UI} elements, they were called when the \ac{UI} is interacted with.  These bound methods were also the methods that called the \ac{RPC} client to send the message to the collaborator. If the server on the other end then called the original bound method to perform the action it would have resulted in an infinite loop.  These methods would also often do more than just modify the state, for example when modifying an annotation the method will find the appropriate annotation and edit it.  The client would then send a message saying delete annotation 1.  The server would not be able to call the original method as it doesn't take a parameter.  The solution to this was to split the methods up more.  Now the more typical flow is the \ac{UI} bound method calling another method that modifies the state.  The server is able to call the same method.  This removes the need for duplicated code.
 
 \section{Usability}
 
