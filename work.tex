@@ -250,7 +250,7 @@ To calculate the distance from the location of the mouse click to the annotation
     \label{fig:distance_scale}
 \end{figure}
 
-A similar issue to the difference in scale when calculating the distance from the mouse to annotation was encountered when switching the graph to display the normalised data (described in Section~\ref{sec:normalised}.  When normalised the graph in the y axis only goes between 0 and 1.  The coordinates of the annotation are likely to be very much outside this range and the annotation would not appear on the graph.  The solution, if the graph was normalised, was to normalise the positions of the annotations in the y axis when drawing them.  A side effect of this technique is that after the lines are rescaled.  The annotations could be left pointing to nothing.  This is unavoidable as the annotation has no concept of what it is pointing at.  It may be pointing to the intersection of many lines; in this case it would be impossible to keep the annotation pointing at what it was originally pointing at after rescaling the axis.  During user evaluations, when the annotation was not visible during data normalisation, the user was very confused as to why their annotation had disappeared.  It was therefore decided that having the annotation be visible but most likely incorrect is more user friendly than just not displaying the annotations.  Not displaying the annotations looks like a serious error.
+A similar issue to the difference in scale when calculating the distance from the mouse to annotation was encountered when switching the graph to display the normalised data (described in Section~\ref{sec:normalised}).  When normalised the graph in the y axis only goes between 0 and 1.  The coordinates of the annotation are likely to be very much outside this range and the annotation would not appear on the graph.  The solution, if the graph was normalised, was to normalise the positions of the annotations in the y axis when drawing them.  A side effect of this technique is that after the lines are rescaled.  The annotations could be left pointing to nothing.  This is unavoidable as the annotation has no concept of what it is pointing at.  It may be pointing to the intersection of many lines; in this case it would be impossible to keep the annotation pointing at what it was originally pointing at after rescaling the axis.  During user evaluations, when the annotation was not visible during data normalisation, the user was very confused as to why their annotation had disappeared.  It was therefore decided that having the annotation be visible but most likely incorrect is more user friendly than just not displaying the annotations.  Not displaying the annotations looks like a serious error.
 
 \begin{figure}[h!]
     \centering
@@ -277,12 +277,12 @@ A similar issue to the difference in scale when calculating the distance from th
 After completing annotation of the graph it was important to expand this to the animation panel, as this is the other visualisation option available to a user.  Annotating animations posed more of a challenge than annotation of the graph and there were a number of issues to overcome.
 
 \begin{enumerate}
-\item How to implement the annotations?  For the graph matplotlib has built in annotation support.  wxPython does have drawing support but not built in annotation support.  Annotating on the animation will need manual handling of the drawing on top of the animation visualisation.  Manual drawing means that the automatic layout functionality that wxPython provides cannot be used.
+\item How to implement the annotations?  For the graph matplotlib has built-in annotation support.  wxPython does have drawing support but not built-in annotation support.  Annotating on the animation will need manual handling of the drawing on top of the animation visualisation.  Manual drawing means that the automatic layout functionality that wxPython provides cannot be used.
 \item When to display the annotations?  When an annotation is drawn on the graph it is displayed at all times.  The appearance of the graph does not change over time.  However the appearance of the animation visualisation does change over time.  The problem faced when annotating is whether to have annotations available at only specific times in the animation, or to have them there the whole time; and if they are going to appear and disappear, how can it be done without being distracting?
 \item How to give the user control over the annotations? When a user wants to edit or delete an annotation on the graph it is always there.  However on the animation panel if the annotation is temporal, then it is not always visible for the user to edit or delete and it would be frustrating for a user to constantly have to search through the animation to look for annotations to change them.
 \end{enumerate}
 
-A platform where users are able to annotate an `animation' is YouTube~\cite{youtube}.  YouTube's annotation interface can be seen in Figure~\ref{fig:youtube}.  Youtube's approach is to allow the user to set what period of time an annotation is visible for.  There is also a management panel where the user can see all of the annotations and edit or delete them.  This approach solved issues two and three and was adapted for this tool.
+A platform where users are able to annotate an `animation' is YouTube~\cite{youtube}.  YouTube's annotation interface can be seen in Figure~\ref{fig:youtube}.  YouTube's approach is to allow the user to set what period of time an annotation is visible for.  There is also a management panel where the user can see all of the annotations and edit or delete them.  This approach solved issues two and three and was adapted for this tool.
 
 \begin{figure}[h!]
     \centering
@@ -307,7 +307,7 @@ On the right hand side of the tool there is a panel which lists all annotations 
     \label{fig:annotation_dialog}
 \end{figure}
 
-The first problem -- how to display the annotations -- has also been solved.  Drawing in wxPython takes place on panels.  Each cell cross section is placed on its own panel.  This drastically limits the available space.  The panels are not wide enough to have the annotation text drawn on.  The solution was to assign each annotation a number and that number is what is used to annotate the cell.  The number is then displayed in the annotation list box allowing the user to read the appropriate annotation.  This can be seen in Figure~\ref{fig:annotation_whole}
+The first problem -- how to display the annotations -- has also been solved.  Drawing in wxPython takes place on panels.  Each cell cross-section is placed on its own panel.  This drastically limits the available space.  The panels are not wide enough to have the annotation text drawn on.  The solution was to assign each annotation a number and that number is what is used to annotate the cell.  The number is then displayed in the annotation list box allowing the user to read the appropriate annotation.  This can be seen in Figure~\ref{fig:annotation_whole}
 
 \begin{figure}[h!]
     \centering
@@ -330,9 +330,11 @@ The first problem -- how to display the annotations -- has also been solved.  Dr
 \section{Search}
 \label{sec:search}
 
-Being able to use a time series graph as a query against a database of time series data was one of the new goals added to the project.  It was felt it would be of great use to the biologists as it would allow for discoverability within the tool.  It had been identified as a potential goal whilst researching data mining in time series data.  It was added as a definite project goal after the user group backed it as a feature they would very much like to have.  It is also a feature in the tool that incorporates cross domain knowledge in an area of active research.
+Being able to use a time series graph as a query against a database of time series data was one of the new goals added to the project.  It was felt it would be of great use to the biologists as it would allow for discoverability within the tool.  It had been identified as a potential goal whilst researching data mining in time series data.  It was added as a definite project goal after the user group backed it as a feature they would very much like to have.  It is also a feature in the tool that incorporates cross-domain knowledge in an area of active research.
 
-Some problems needed to be overcome before using plots as a query was useful:
+\tdi{Emphasize the challengingness}
+
+Some problems needed to be overcome before using plots as a query could become useful:
 \begin{itemize}
 \item How to cope with different scales?
 \item How to cope with events happening at different times?
@@ -349,7 +351,7 @@ Early techniques used simple similarity measures such as Euclidean distance, but
     \label{fig:similar}
 \end{figure}
 
-It is important to define what it means for two lines to be similar.  It is obvious that in a case such as Figure~\ref{fig:similar} that the two lines are similar.  Both lines are the same shape and they are exhibiting the same behaviour.  When determining similarity of plots we should take a time invariant approach.  Perhaps less obvious is the case where we have offset in the Y-Axis as shown in Figure~\ref{fig:similar_y}.  Figure~\ref{fig:similar_1} shows two identical lines where one line had an initial 100000 population level.  Figure~\ref{fig:similar_2} shows two lines where one line is double the other line.  Figure~\ref{fig:similar_1} is effectively the same case as Figure~\ref{fig:similar}.  Figure~\ref{fig:similar_2} is different, but it is clear looking at the graph that they are exhibiting the same behaviour. When determining the similarity of plots we should take a scale invariant approach~\cite{esling}.
+It is important to define what it means for two lines to be similar.  It is obvious that in a case such as Figure~\ref{fig:similar} that the two lines are similar.  Both lines are the same shape and they are exhibiting the same behaviour.  When determining similarity of plots we should take a time invariant approach.  Perhaps less obvious is the case where we have offset in the Y-Axis as shown in Figure~\ref{fig:similar_y}.  Figure~\ref{fig:similar_1} shows two identical lines where one line had an additional 100000 population level.  Figure~\ref{fig:similar_2} shows two lines where one line is double the other line.  Figure~\ref{fig:similar_1} is effectively the same case as Figure~\ref{fig:similar}.  Figure~\ref{fig:similar_2} is different, but it is clear looking at the graph that they are exhibiting the same behaviour. When determining the similarity of plots we should take a scale invariant approach~\cite{esling}.
 
 \begin{figure}[h!]
     \centering
@@ -370,9 +372,9 @@ It is important to define what it means for two lines to be similar.  It is obvi
     \label{fig:similar_y}
 \end{figure}
 
-Approaches that have been researched to determine similarity between time series data have included shape based approaches and dynamic programming techniques.  Not all of these approaches have included dimensionality reduction.  The dimensionality reduction transforms the input data into a vector space with fewer dimensions.  Similar values in the data space will, in theory, be transformed to the same value in the vector space.  The necessity for dimensionality reduction is explained later in this section.  After researching alternatives an approach was adapted from the work of Lin \& Li~\cite{structural_similarity}.
+Approaches that have been researched to determine similarity between time series data have included shape based approaches and dynamic programming techniques.  Not all of these approaches have included dimensionality reduction.  The dimensionality reduction transforms the input data into a vector space with fewer dimensions.  Similar values in the data space will, in theory, be transformed to the same value in the vector space.  The need for dimensionality reduction is explained later in this section.  After researching alternatives an approach was adapted from the work of Lin \& Li~\cite{structural_similarity}.
 
-Lin \& Li's approach uses normalised sub sequence data to reduce the dimensionality of the dataset.  The reduced data can then be used to efficiently find the most similar plots in the database.  The input data in converted into sub lists to ensure that all features will have been captured.  These lists are then normalised and have their dimensionality reduced.  This is where Lin \& Li's work left the topic.  Work from the field of information retrieval was then applied to provide the similarity ranking. This approach is explained in further detail below.
+Lin \& Li's approach uses normalised sub sequence data to reduce the dimensionality of the dataset.  The reduced data can then be used to efficiently find the most similar plots in the database.  The input data is converted into sub lists to ensure that all features will have been captured.  These lists are then normalised and have their dimensionality reduced.  This is where Lin \& Li's work left the topic.  Work from the field of information retrieval was then applied to provide the similarity ranking. This approach is explained in further detail below.
 
 The first step was to take the input data and return all the sub lists of this data.  To do this a sliding window was used.  The size of the sliding window will determine the feature size in the reduced vector.  Lin \& Li use a size of eight for the sliding window.  The same value was chosen in this implementation.  If we have input data $[1,2,3,4,5]$ and windows size $n = 3$ (for illustrative purposes only) then we get the sub lists as $[[1,2,3]$, $[2,3,4]$, $[3,4,5]]$.
 
@@ -393,9 +395,9 @@ After this stage each sublist has been transformed into an eight character long 
     \label{fig:gaussian_plot}
 \end{figure}
 
-Lin \& Li now call for the removal of local duplicates within the list of words.  If we have runs of a certain word then that should be reduced to a single instance of the word.  For example if we have the fingerprint $``AAA"$, $``AAA"$, $``BBA"$, $``BBB"$, $``BBB"$, $``AAA"$, $``AAA"$ it should be reduced to $``AAA"$, $``BBA"$, $``BBB"$, $``AAA"$ not $``AAA"$, $``BBA"$, $``BBB"$.  We are not removing all duplicates of the word.  This reduces the number of entries in the fingerprint and provides an efficiency benefit.  It will also remove the effect seen in Figure~\ref{fig:similar_2} where Euclidean distance would fail if one line is a scaled version of the other.  This is because we have just removed long features with the same behaviour to be unit length features.
+Lin \& Li now call for the removal of local duplicates within the list of features.  If we have runs of a certain feature then that should be reduced to a single instance of the feature.  For example, using a feature size of three, if we have the reduced representation $``AAA"$, $``AAA"$, $``BBA"$, $``BBB"$, $``BBB"$, $``AAA"$, $``AAA"$ it should be reduced to $``AAA"$, $``BBA"$, $``BBB"$, $``AAA"$ not $``AAA"$, $``BBA"$, $``BBB"$.  We are not removing all duplicates of the feature.  This reduces the number of entries in the representation and provides an efficiency benefit.  It will also remove the effect seen in Figure~\ref{fig:similar_2} where Euclidean distance would give a value indicating dissimilar if one line is a scaled version of the other.  This is because we have just removed long features with the same behaviour to be unit length features.
 
-The plot is now represented as a list of strings without local duplicates.  Our strings all have a length of eight characters, the strings are composed from a three letter alphabet.  This gives us a vocabulary of $3^8$ possible features.  The index of the plot is a $3^8$ element vector where each entry in the vector contains the count of the feature in the line.  This is a very wasteful representation as most of the entries in the vector will be zero.  We can replace this with a sparse representation of the where we store only the features that make up the line and their count.
+The plot is now represented as a list of strings without local duplicates.  Our strings all have a length of eight characters and the strings are composed from a three letter alphabet.  This gives us a vocabulary of $3^8$ possible features.  The index of the plot is a $3^8$ element vector where each entry in the vector contains the count of the feature in the line.  This is a very wasteful representation as most of the entries in the vector will be zero.  We can replace this with a sparse representation where we store only the features that make up the line and their count.
 
 This representation of the plot also solves the problem of features being temporally located in the graph.  In the plot index there is no ordering of the features, in effect all the features happened at the same time.  This is a common representation in information retrieval and is referred to as bag-of-words.  A more suitable name in this domain would be bag-of-features.
 
@@ -410,7 +412,7 @@ The tf.idf weighted cosine similarity~\cite[p.~243]{se_book} can then be calcula
 \subsection{Tf.idf}
 \label{sec:tfidf}
 
-\ac{tf.idf} is a technique for calculating how important a word is to a document.  \ac{tf.idf} requires a corpus of document vectors.  With the corpus data \ac{tf.idf} can take as input a query vector and transform that into a vector of weights, where the weights are the \ac{tf.idf} scores of each word.  We want to assign a higher \ac{tf.idf} weight to those words which are rarer.  The rarity of the word applied only within the corpus of documents that is being used.  A larger corpus of documents will lead to a more accurate scoring of the rarity of the word.
+\ac{tf.idf} is a technique for calculating how important a word is to a document.  \ac{tf.idf} requires a corpus of document vectors.  With the corpus data \ac{tf.idf} can take as input a query vector and transform that into a vector of weights, where the weights are the \ac{tf.idf} scores of each word.  We want to assign a higher \ac{tf.idf} weight to those words which are rarer.  The rarity of the word applies only within the corpus of documents that is being used.  A larger corpus of documents will lead to a more accurate scoring of the rarity of the word.
 
 Equation~\ref{eq:tfidf} is the equation for finding the similarity between a short query term and a longer document.  This equation would be applied between the query term and every document in the corpus.  This would then give a similarity ranking.  Below is an explanation of the components of the equation and how they affect the weighting of a word.
 
@@ -428,17 +430,17 @@ Equation~\ref{eq:tfidf} is the equation for finding the similarity between a sho
 
 Equation~\ref{eq:dw} is the equation for calculating the \ac{tf.idf} weighting of a single word in document vector.  This equation would be applied to every word in the document vector and transform the document vector into the document's weight vector.
 
-Equation~\ref{eq:tfidf_cosine} is the equation for \ac{tf.idf} weighted cosine similarity.  This gives a better measure of similarity when comparing the query is a document as is the case here \tdi{Citation for this is tts lecture slides is this ok?}.
+Equation~\ref{eq:tfidf_cosine} is the equation for \ac{tf.idf} weighted cosine similarity.  This gives a better measure of similarity when comparing the query is a document as is the case here \tdi{Get the citation from TTS slides}.
 
 \begin{subequations}
     \begin{align}
-    s(Q, D) &= \sum_{w} tf_{w,Q} \times \frac{tf_{w,D}}{tf_{w,D} + \frac{k|D|}{avg|D|}} \times \log{\frac{|C|}{df_{w}}} \label{eq:tfidf}\\
-    D_{w} &= \frac{tf_{w,D}}{tf_{w,D} + \frac{k|D|}{avg|D|}} \times \log{\frac{|C|}{df_{w}}} \label{eq:dw}\\
+    s(Q, D) &= \sum_{w} tf_{w,Q} \times \frac{tf_{w,D}}{tf_{w,D} + \frac{k|D|}{avg|D|}} \times \log{\frac{|C|}{df_{w}}} \label{eq:tfidf}\\[6pt]
+    D_{w} &= \frac{tf_{w,D}}{tf_{w,D} + \frac{k|D|}{avg|D|}} \times \log{\frac{|C|}{df_{w}}} \label{eq:dw}\\[6pt]
     S(D_{1}, D_{2}) &= \frac{\sum_{w} D_{1,w} \times D_{2,w}}{\sqrt{\sum_{w} D_{1,w}^2} \times \sum_{w} D_{2,w}^2} \label{eq:tfidf_cosine}
     \end{align}
 \end{subequations}
 
-\ac{tf.idf} allows for efficient search through the use an index and an inverted index.  The index is a mapping from document to words and the inverted index is a mapping from words to documents.  If we look up a document we find what words are in it.  If we look up a word we find what documents contain it.  When a new plot is added to the database these two indexes are updated.  With these two indexes all the components of \ac{tf.idf} can be calculated for very little cost.  For example $tf_{w,D}$ would involve looking up document D in the index, this will return to us all the words in document D and their counts.  We can then quickly find the count of word $w$ in $D$.
+\ac{tf.idf} allows for efficient search through the use of an index and an inverted index.  The index is a mapping from document to words and the inverted index is a mapping from words to documents.  If we look up a document we find what words are in it.  If we look up a word we find what documents contain it.  When a new plot is added to the database these two indexes are updated.  With these two indexes all the components of \ac{tf.idf} can be calculated for very little cost.  For example $tf_{w,D}$ would involve looking up document D in the index; this will return to us all the words in document D and their counts.  We can then quickly find the count of word $w$ in $D$.
 
 \section{Real Time Collaboration}
 
@@ -452,9 +454,9 @@ Ideally the collaborative model used in this project would have been the central
 
 The collaboration that has been implemented in this project is only between two program instances.  Future work would include expanding the collaboration to work for a more arbitrary number of users.
 
-The first stage in allowing distributed collaboration was enabling the different program instances to talk to each other. There are a number of techniques to allow for this.  Data could have been sent directly through sockets, another option would be to create a web server and send get requests and pass parameters.  It was decided to use an existing library to handle the communication.  The library chose was simplexmlrpc.  simplexmlrpc handles the implementation of communication via sockets.  Messages sent via sockets will often be split into multiple parts.  A manual implementation has to be handle receiving of arbitrary length messages in multiple parts.  It makes sense to use a library where this is provided.  simplexmlrpc provides an \ac{RPC} server.  Methods are then registered in the server to make them publicly accessible.  simplexmlrpc also provides method for a client to connect to the server.  The client can then call and methods that the server has made public.
+The first stage in allowing distributed collaboration was enabling the different program instances to talk to each other. There are a number of techniques to allow for this.  Data could have been sent directly through sockets. Another option would be to create a web server and send \texttt{HTTP GET} requests and pass parameters.  It was decided to use an existing library to handle the communication.  The library chosen was \texttt{simplexmlrpc}.  \texttt{simplexmlrpc} handles the implementation of communication via sockets.  Messages sent via sockets will often be split into multiple parts.  A manual implementation has to be able to handle receiving of arbitrary length messages in multiple parts.  It makes sense to use a library where this is provided.  \texttt{simplexmlrpc} provides a \ac{RPC} server.  Methods are then registered in the server to make them publicly accessible.  \texttt{simplexmlrpc} also provides a method for a client to connect to the server.  The client can then call methods that the server has made public.
 
-One problem that was encountered with the simplexmlrpc library was that when sending the entire session state during the handshake.  It was unable to serialise the more complex objects.  This was a similar problem as faced when implementing undo/redo in Section~\ref{sec:undo}.  The solution to this problem was to first serialise the data to be sent using pickle.  The pickled data is then reserialised by simplexmlrpc and is sent successfully.  Serialising the data twice is not optimal, but it was necessary for the data to be sent.
+One problem that was encountered with the \texttt{simplexmlrpc} library was that when sending the entire session state during the handshake it was unable to serialise the more complex objects.  This was a similar problem as faced when implementing undo/redo in Section~\ref{sec:undo}.  The solution to this problem was to first serialise the data to be sent using \texttt{pickle}.  The pickled data is then reserialised by \texttt{simplexmlrpc} and is sent successfully.  Serialising the data twice is not optimal, but it was necessary for the data to be sent.
 
 Figure~\ref{fig:collab_handshake} shows the communication required for two collaborators to work on the same visualisation session.  There is a `handshake' stage where User A sends their IP address to User B.  This allows User B to connect to User A's session.  User B's client then requests User A's session which User A's server sends back.  Both users are now working on the same session state.  Each user can now send changes back and forth.
 
@@ -465,9 +467,9 @@ Figure~\ref{fig:collab_handshake} shows the communication required for two colla
     \label{fig:collab_handshake}
 \end{figure}
 
-This approach was not without its problems.  A fundamental problem with having the collaboration follow a distributed model is how to ensure that both program instances have the same ordering of events.  Figure~\ref{fig:collab_mixup} shows this.  In this example User B makes a change before receiving the change from User A.  After both changes have been received User A will see User B's change and User B will see User A's change.  To solve this problem Lamport clocks were used.  Any action that affects the session state, an action that does this is one that will need to be sent to the collaborators, increments the Lamport clock.  The Lamport clocks are then sent with every message.  When a message arrives the server checks the Lamport clock and works out where in the history it should go.  After reordering the history all the visualisations are redrawn.  This also has to be done in the instance of the program that is sending the change.  This can be seen in Figure~\ref{fig:collab_mixup_fix}.  When changes are received the history of events is reordered to ensure each user sees the same state.  User A sees User B's change and User B sees their own change.  Figure~\ref{fig:collab_mixup_fix_2} shows how using a centralised model would remove the need for reordering of events.
+This approach was not without its problems.  A fundamental problem with having the collaboration follow a distributed model is how to ensure that both program instances have the same ordering of events.  Figure~\ref{fig:collab_mixup} shows this.  In this example User B makes a change before receiving the change from User A.  After both changes have been received User A will see User B's change and User B will see User A's change.  To solve this problem Lamport clocks were used.  tdi{Any action that affects the session state, an action that does this is one that will need to be sent to the collaborators, increments the Lamport clock -- Make this clearer}.  The Lamport clocks are then sent with every message.  When a message arrives the server checks the Lamport clock and works out where in the history it should go.  After reordering the history all the visualisations are redrawn.  This also has to be done in the instance of the program that is sending the change.  This can be seen in Figure~\ref{fig:collab_mixup_fix}.  When changes are received the history of events is reordered to ensure each user sees the same state.  User A sees User B's change and User B sees their own change.  Figure~\ref{fig:collab_mixup_fix_2} shows how using a centralised model would remove the need for reordering of events.
 
-\tdi{Should I cite Lamport clocks.}
+\tdi{Cite Lamport Clocks - Use the big book}
 
 \begin{figure}[h!]
     \centering
@@ -492,72 +494,11 @@ This approach was not without its problems.  A fundamental problem with having t
 
 The undo history is used to enable the event reordering.  When changes are pushed onto the undo stack they are stored as a tuple with the Lamport clock.  When a change comes in that may require events to be reordered the undo stack is searched and Lamport clocks are compared.  The new data is then inserted between the two appropriate Lamport clocks.
 
-Another issue that was encountered was to do with how the program was architected.  The session data was often directly modified by methods that were bound to \ac{UI} elements, they were called when the \ac{UI} is interacted with.  These bound methods were also the methods that called the \ac{RPC} client to send the message to the collaborator. If the server on the other end then called the original bound method to perform the action it would have resulted in an infinite loop.  These methods would also often do more than just modify the state, for example when modifying an annotation the method will find the appropriate annotation and edit it.  The client would then send a message saying delete annotation 1.  The server would not be able to call the original method as it doesn't take a parameter.  The solution to this was to split the methods up more.  Now the more typical flow is the \ac{UI} bound method calling another method that modifies the state.  The server is able to call the same method.  This removes the need for duplicated code.
+Another issue that was encountered was related to the initial lack of architecture.  The session data was often directly modified by methods that were bound to \ac{UI} elements: they were called when the \ac{UI} is interacted with.  These bound methods were also the methods that called the \ac{RPC} client to send the message to the collaborator. If the server on the other end then called the original bound method to perform the action it would have resulted in an infinite loop.  These methods would also often do more than just modify the state. For example when modifying an annotation the method will find the appropriate annotation and edit it.  The client would then send a message saying delete annotation 1.  The server would not be able to call the original method as it doesn't take a parameter.  The solution to this was to split the methods up more.  Now the more typical flow is the \ac{UI} bound method calling another method that modifies the state.  The server is able to call the same method.  This removes the need for duplicated code.
 
 \section{Usability}
 
-In all the evaluations of the project users have commented on the difficulty of using parts of the tool.  Action has been taken to make it easier to use.  Many of the changes have been guided by Shneiderman, Norman \& Nielson's guidelines~\cite{shgold}\cite{normsev}\cite{neilten}.  Specifics are detailed below.
-
-\subsection{Undo \& Redo}
-\label{sec:undo}
-Shneiderman calls for easy reversal of actions~\cite{shgold} and Nielson calls for user control and freedom -- an emergency exit from an unwanted state\cite{neilten}.  To address this, undo/redo functionality has been added.  This required refactoring of the project code, so that the session data is in one location, inside a singleton (see Section~\ref{sec:design}). Any changes to this data are picked up during the next \ac{UI} update and are reflected in the visualisations.  The session data is stored as a dictionary.  To implement undo and redo, copies of the data dictionary are pushed and popped onto the stack.  Copies are pushed onto the undo stack on any atomic change the user makes.  This gives the user a full session history to go back through and this was one of the early goals from the first project phase.
-
-A problem was encountered when trying to copy the dictionary onto the stack.  When pushing the dictionary onto the stack it would not put a new copy of it onto the stack, it was pushing a reference to the dictionary, so any changes to the dictionary after it has pushed onto the stack are also there in the stack.  Python dictionaries have a copy method.  Copy only does a shallow copy -- any objects in the original dictionary will have their reference placed in the new dictionary.  This was fine for some parts of the session dictionary, but for others it was not. Lines and annotations, which are custom objects, presented problems.  This was solved by using Python's deep copy library.  With deep copy a new copy is made of objects as well.  Some elements of wxPython and matplotlib were unable to be deep copied, but this was fixed when the project was re-architected to have the data in a single location.
-
-\subsection{Saving}
-
-It is important that a user is able to save and load the visualisation session as they may not be able to complete all their analysis in one sitting and may want to come back to their work in the future.  Without the ability to save and load the user would have to repeatedly add annotations, change preferences, and attach files.  It was possible to add Saving and loading by building on the work done to implement undo \& redo, although further work was required. Python has a module called pickle to serialise and deserialise data.  When saving, the dictionary containing the centralised session data is pickled and written to a file and when loading the reverse happens.  Because the program is now focused on the data model, once a previous session has been loaded, a \ac{UI} refresh is triggered and the visualisation reflects the loaded data.
-
-Saving the data also enables limited collaboration.  The user can customize the appearance and add annotations.  They can then save the state to a file and email that file to a colleague.  The colleague can then load the file and see the user's work.  The colleague can then correct any issues and add their own work.  The colleague can then save this and email it back to the user.  This is useful and is better than no collaboration, but it is entirely asynchronous.
-
-\subsection{Feedback}
-Norman and Shneiderman~\cite{shgold}\cite{normsev} both call for feedback to be given to the user so that the user can be sure that an action has been accomplished.  This feedback can come in a number of different forms and was in place in some parts of the project already.
-
-Existing feedback in the project was a natural byproduct of some of the features; for example, when loading a results file the feedback that the load operation has been successful is that a graph appears on the screen. If the graph does not appear then something has gone wrong.  Additional feedback has been added to the project:
-\begin{itemize}
-\item When adding annotations the cursor changes to indicate to the user that they can interact with the graph in a different way.
-\item The title bar text changes to display ``unsaved'' when the user makes a change and then changes back to ``saved'' when a successful save has been performed.
-\end{itemize}
-
-\subsection{Guiding the User}
-
-The first evaluation of the second phase of the project unearthed that the users struggled to choose the correct action as there were multiple ways of performing the same action that had slightly different use cases.  For example, at one point results files could be added via two different menu items.  There was also confusing language in the menu options.  These multiple paths have been removed. For example, now there is only one way to open results files initially.  To help guide the user further, \ac{UI} elements are enabled and disabled as appropriate.  Now when the program is first loaded the only action a user can perform is to load a session or start a new session, or join a session.  Afterwards other \ac{UI} elements are enabled to allow the user to start using the tool effectively.
-
-To help guide the user when the first use the program a session wizard was created.  This replaced a series of separate menu items that the user previously had to navigate. The new session wizard would typically be the entry route in the first time a user runs the program.  It is therefore important that it helps them understand what it is they are doing.  The process of setting up the session should also be as easy as possible so that the user does not dislike the prospect of using the program.  The session wizard can be seen in Figure~\ref{fig:session_wizard}.
-
-\begin{figure}[h!]
-    \centering
-    \begin{subfigure}[b]{0.24\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{images/wizard_page_1.png}
-        \caption{Wizard title chooser page}
-        \label{fig:page_1}
-    \end{subfigure}
-    \begin{subfigure}[b]{0.24\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{images/wizard_page_2.png}
-        \caption{Wizard results selector page}
-        \label{fig:page_2}
-    \end{subfigure}
-    \begin{subfigure}[b]{0.24\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{images/wizard_page_3.png}
-        \caption{Wizard model selector page}
-        \label{fig:page_3}
-    \end{subfigure}
-    \begin{subfigure}[b]{0.24\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{images/wizard_page_4.png}
-        \caption{Wizard model viewing page}
-        \label{fig:page_4}
-    \end{subfigure}
-    \caption{The session wizard that guides a user when setting up a session.}
-    \label{fig:session_wizard}
-\end{figure}
-
-Form validators are used on the title fields and results fields.  The validators ensure that a title and at least one results file are included.  This stops the user from creating an invalid session.  There is also help text on each page of the wizard instructing the user on what actions they should take.
-
-The model viewer page in Figure~\ref{fig:page_4} is similar to the cell cross-sections used in animation~\ref{sec:animation}.  There are two drop down boxes.  These drop down boxes control what is displayed in the cell cross-section.  Species in files can be selected.  The cell cross-section displays which compartments in the cell the species is present in.  The compartments are parsed from the model file.  This means that the model file is a requirement for model viewing and cell level animation.  This cell cross-section has replaced the previous model visualisation.  This model visualisation has two purposes. First, the user can sanity check that they have matching results and model files.  If a section of the cell has been left white then it acts as a cue to the user: if they were expecting the species to be present at that location then they know something has gone wrong.  Second, they can see how the model is structured.  The sections of the cell are labelled allowing the user to know what areas of the cell a species is present in.  This will hopefully increase their confidence with visualising and analysing the results from the models. Before the compartments were parsed from the model file automatically there was an user unfriendly system where the user had to input where in the cell a species is.  This was time consuming, difficult to use, and quite brittle.  At the time it assumed that there would be three compartments in the species, which is not a valid assumption.
+\tdi{This has been moved to evaluation.  Put a bit of text in here but not much -- Refer it to the evaluation}
 
 \section{Data Manipulation and Export}
 \label{sec:normalised}
@@ -568,8 +509,10 @@ Bio-PEPA's CSV format is non standard.  The first lines of a results file contai
 
 Another feature that the developer of Bio-DARE recommended was allowing the biologists to normalize their data.  Biologists will often normalise their data in the y-axis.  This puts all of the data on the same scale.  This makes the data much easier to analyse if there is a significant difference in the scale.  Without it the user would be required to swap between different zoom levels.  Normalising the data makes the user's analysis much easier.
 
-There are different normalisations that can be applied.  The data can be normalised to be zero mean and unit variance as it is for Section~\ref{sec:search}.  Another normalisation method is to normalize all the data to be between zero and one, this can be calculated using the minimum and maximum data values from the species in the results.  BioDARE allows the user to choose what type of normalisation they would like to use on their data.  For this project zero to one normalisation is the only normalisation that the user can have displayed on the graph.  This has been done to make the choice simpler for the users.  They do not have to think about which normalisation they should apply.  In the future if desired more normalisation options could be added.  Currently if they want to use a different normalisation the user can export the data and normalise that using their desired technique.
+There are different normalisations that can be applied.  The data can be normalised to be zero mean and unit variance as it is for Section~\ref{sec:search}.  Another normalisation method is to normalize all the data to be between zero and one. This can be calculated using the minimum and maximum data values from the species in the results.  BioDARE allows the user to choose what type of normalisation they would like to use on their data.  For this project zero to one normalisation is the only normalisation that the user can have displayed on the graph.  This has been done to make the choice simpler for the users.  They do not have to think about which normalisation they should apply.  In the future if desired more normalisation options could be added.  Currently if they want to use a different normalisation the user can export the data and normalise that using their desired technique.
 
 Figure~\ref{fig:annotation_intersection} shows the difference in appearance between a graph and its normalised version.
 
 The zero to one normalised data is also exported along with the original data.  This allows the user to manipulate the normalised data in external applications if they desire.
+
+\tdi{These last three sentences are a little lax}

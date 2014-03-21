@@ -6,6 +6,72 @@
 \section{Finished Product}
 \tdi{Not sure how necessary this is.  The plan would be a screenshot by screenshot walkthrough - may fit better in the self evaluation.  it will possibly just be duplicating screenshots that exist elsewhere}
 
+\section{Usability}
+
+In all the evaluations of the project users have commented on the difficulty of using parts of the tool.  Action has been taken to make it easier to use.  Many of the changes have been guided by Shneiderman~\cite{shgold}, Norman~\cite{normsev} \& Nielson's~\cite{neilten} guidelines.  Specifics are detailed below.
+
+\subsection{Undo \& Redo}
+\label{sec:undo}
+Shneiderman calls for easy reversal of actions~\cite{shgold} and Nielson calls for user control and freedom -- an emergency exit from an unwanted state~\cite{neilten}.  To address this, undo/redo functionality has been added.  This required refactoring of the project code, so that the session data is in one location, inside a singleton (see Section~\ref{sec:design}). Any changes to this data are picked up during the next \ac{UI} update and are reflected in the visualisations.  The session data is stored as a dictionary.  To implement undo and redo, copies of the data dictionary are pushed and popped onto the stack.  Copies are pushed onto the undo stack on any atomic change the user makes.  This gives the user a full session history to go back through and this was one of the early goals from the first project phase.
+
+A problem was encountered when trying to copy the dictionary onto the stack.  When pushing the dictionary onto the stack it would pushing a reference to the dictionary, not the dictionary itself. This meant that any changes to the dictionary after it had been pushed onto the stack were also there in the stack.  Python dictionaries have a copy method.  Copy only does a shallow copy -- any objects in the original dictionary will have their reference placed in the new dictionary.  This was fine for some parts of the session dictionary, but for others it was not. Lines and annotations, which are custom objects, presented problems.  This was solved by using Python's deep copy library.  With deep copy a new copy is made of objects as well.  Some elements of \texttt{wxPython} and \texttt{matplotlib} could not be deep copied, but this was fixed when the project architecture was changed to have the data in a single location.
+
+\subsection{Saving}
+
+It is important that a user is able to save and load the visualisation session as they may not be able to complete all their analysis in one sitting and may want to come back to their work in the future.  Without the ability to save and load the user would have to repeatedly add annotations, change preferences, and attach files.  It was possible to add saving and loading by building on the work done to implement undo \& redo, although further work was required. Python has a module called \texttt{pickle} to serialise and deserialise data.  When saving, the dictionary containing the centralised session data is pickled and written to a file and when loading the reverse happens.  Because the program is now focused on the data model, once a previous session has been loaded, a \ac{UI} refresh is triggered and the visualisation reflects the loaded data.
+
+Saving the data also enables limited collaboration.  The user can customize the appearance and add annotations.  They can then save the state to a file and email that file to a colleague.  The colleague can then load the file and see the user's work.  The colleague can then correct any issues and add their own work.  The colleague can then save this and email it back to the user.  This is useful and is better than no collaboration, but it is entirely asynchronous.
+
+\subsection{Feedback}
+Norman~\cite{normsev} and Shneiderman~\cite{shgold} both call for feedback to be given to the user so that the user can be sure that an action has been accomplished.  This feedback can come in a number of different forms and was in place in some parts of the project already.
+
+Existing feedback in the project was a natural byproduct of some of the features; for example, when loading a results file the feedback that the load operation has been successful is that a graph appears on the screen. If the graph does not appear then something has gone wrong.  Additional feedback has been added to the project:
+\begin{itemize}
+\item When adding annotations the cursor changes to indicate to the user that they can interact with the graph in a different way.
+\item The title bar text changes to display ``unsaved'' when the user makes a change and then changes back to ``saved'' when a successful save has been performed.
+\end{itemize}
+
+\subsection{Guiding the User}
+
+The first evaluation of the second phase of the project unearthed that the users struggled to choose the correct action as there were multiple ways of performing the same action that had slightly different use cases.  For example, at one point results files could be added via two different menu items.  There was also confusing language in the menu options.  These multiple paths have been removed. For example, now there is only one way to open results files initially.  To help guide the user further, \ac{UI} elements are enabled and disabled as appropriate.  Now when the program is first loaded the only action a user can perform is to load a session or start a new session, or join a session.  Afterwards other \ac{UI} elements are enabled to allow the user to start using the tool effectively.
+
+To help guide the user when they first use the program a session wizard is created.  This replaced a series of separate menu items that the user previously had to navigate. The new session wizard would typically be the entry route in the first time a user runs the program.  It is therefore important that it helps them understand what it is they are doing.  The process of setting up the session should also be as easy as possible so that the user does not dislike the prospect of using the program.  The session wizard can be seen in Figure~\ref{fig:session_wizard}.
+
+\begin{figure}[h!]
+    \centering
+    \begin{subfigure}[b]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/wizard_page_1.png}
+        \caption{Wizard title chooser page}
+        \label{fig:page_1}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/wizard_page_2.png}
+        \caption{Wizard results selector page}
+        \label{fig:page_2}
+    \end{subfigure}
+
+    \begin{subfigure}[b]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/wizard_page_3.png}
+        \caption{Wizard model selector page}
+        \label{fig:page_3}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.24\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/wizard_page_4.png}
+        \caption{Wizard model viewing page}
+        \label{fig:page_4}
+    \end{subfigure}
+    \caption{The session wizard that guides a user when setting up a session.}
+    \label{fig:session_wizard}
+\end{figure}
+
+Form validators are used on the title fields and results fields.  The validators ensure that a title and at least one results file are included.  This stops the user from creating an invalid session.  There is also help text on each page of the wizard instructing the user on what actions they should take.
+
+The model viewer page in Figure~\ref{fig:page_4} is similar to the cell cross-sections used in animation~\ref{sec:animation}.  There are two drop down boxes.  These drop down boxes control what is displayed in the cell cross-section.  Species in files can be selected.  The cell cross-section displays which compartments in the cell the species is present in.  The compartments are parsed from the model file.  This means that the model file is a requirement for model viewing and cell level animation.  This cell cross-section has replaced the previous model visualisation.  This model visualisation has two purposes. First, the user can sanity check that they have matching results and model files.  If a section of the cell has been left white then it acts as a cue to the user: if they were expecting the species to be present at that location then they know something has gone wrong.  Second, they can see how the model is structured.  The sections of the cell are labelled allowing the user to know what areas of the cell a species is present in.  This will hopefully increase their confidence with visualising and analysing the results from the models. Before the compartments were parsed from the model file automatically there was an user unfriendly system where the user had to input where in the cell a species is.  This was time consuming, difficult to use, and quite brittle.  At the time it assumed that there would be three compartments for every species, which is not a valid assumption.
+
 \section{First Evaluation}
 
 The first evaluation in the second phase of the project occurred in November 2014.  The user group was made up of two people.  One who had taken part in the first evaluation meeting and one person who had no knowledge of the project.
