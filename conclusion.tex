@@ -1,6 +1,6 @@
 \chapter{Conclusion}
 
-\tdi{Signpost text}
+This section is the conclusion.  In this section the project is compared to its initial goals and its success is discussed.  Any challenges not discussed in previous sections are discussed.  Any problems that were unable to be solved during the stage of development are discussed.  Finally areas identified for future work are discussed in detail.
 
 \section{Comparison to Objective}
 
@@ -14,17 +14,55 @@
 \tdi{cross platform attempts}
 \tdi{recreating bugs from the users (towards the end)}
 
+\section{Unsolved Problems}
+
+\tdi{Collaboration - Ordering}
+\tdi{Distributed Undo}
+\tdi{Speed of matplotlib}
+
 \section{The Future}
 
-\tdi{signposting text}
+By the end of the project the program that had been developed was a in a state that could be used by users.  There is more functionality than the Eclipse plugin and it is stable.  There is, however, work to be done if development were to continue.  This is detailed below:
 
-\tdi{Further research into search query stuff}
-\tdi{Make it browser based and way more client server}
-\tdi{Make it more MVC}
-\tdi{More testing and logging}
-\tdi{more options for users}
+\subsection{Plots as Queries}
+A prototype system for using plots as queries was developed (Section~\ref{sec:search}).  Early results were promising.~\tdi{Were they?}.  These results are not definite by any means.  Further work needs to be performed.  The first step would be working with a team of Biologists and creating a large evaluation set.  This will allow the effectiveness to be accurately measured.  This would also include tuning of the parameters used.  Other systems for using time series data as queries could also be developed and then the different systems can have their effectiveness compared.
+
+The next step would be a single online repository of time series data that was been processed to be suitable for searching.  This would be done with the technique in Section~\ref{sec:search}.  Having a single online repository has two main benefits.  One: Tf.idf, information retrieval and machine learning in general all rely on having a large amount of data.  One user will typically not have enough data to be of much use if they want to use plots as a query against their own data.  Data that is not the user's would be used for the statistics but does not have to be made available to other users, however hopefully most researchers would agree to allow their data to be accessible to others.  The second benefit is that having a central repository takes it out of the hands of the user.  Part of the reason for not integrating this feature with the \ac{UI} during this project is that it would have been difficult to guarantee to keep track of the experiment data relating to the time series data in the database.  If the data had been uploaded to a central repository then there would be no problems tracking it.
+
+\subection{More Data Mining and Machine Learning}
+
+Enabling search was an early step into what can be done with machine learning and data mining with time series data.  Other areas of interest include classification, clustering \& anomaly detection.  All of these can be built on top of the work that was done in Section ~\ref{sec:search}.
+
+These are all features that would allow the user to analyse their work in a more detailed manner.
+
+Again, all of these works best with a large amount of data and so would need to be tied into an online repository.
+
+\subsection{Put it in the Cloud}
+\label{sec:cloud}
+All of the collaboration software reviewed in Section~\ref{sec:review} worked on a model where the is a single server.  This is a much simpler model for collaboration as there is now no real distributed element to it.  Ordering is solved as the only order cared about is the ordering on the server.
+
+This would require some refactoring of the project.  The code would need to be more separated into server and client.  The server would do the majority of the work: parsing the data, performing the intensity calculations and handling the creation of annotations.  We would then need to create a much more standalone client.  This should do very little actual processing.  It should just display the information from the server.
+
+Work towards this goal would also hopefully include rewriting the project so that the client could be a browser based client.  A lot of problems were faced with wxPython not being as cross platform compatible as had been hoped.  Rewriting the client to be browser based should solve the cross platform problems.
+
+\subsection{Improve the architecture}
+
+In Section~\ref{sec:architecture} the initial lack of architecture is discussed.  The architecture was improved and now resembles a \ac{MVC} architecture.  This work on the architecture should be continued in the future.  Making the architecture fully \ac{MVC} would greatly enable the work towards moving the tool to the cloud (Section~\ref{sec:cloud}).
+
+Having a \ac{MVC} architecture would also make it much easier to change interfaces.  As trends change new platforms could easily by developed for as all that would be needed would be a new client to interact with the server.  There is a trend at the moment towards mobile applications.  A tablet version of the tool could be useful to users.  With the architectural changes a tablet version would be possible.
+
+\subsection{More customization}
+The user is given
+
+\subsection{Real World Studies}
+\tdi{There is a term for this.  What is it?}
 \tdi{long term evaluations with users in natural environment}
+
+\subsection{Change how the visualisation is calculated}
 \tdi{Rework the session state thing so that what is saved is method calls}
+
+\subsection{More collaboration}
+\tdi{Chat client, talk about email client}
 
 \section{Final Remarks}
 
