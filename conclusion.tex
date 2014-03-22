@@ -9,16 +9,26 @@ This section is the conclusion.  In this section the project is compared to its 
 
 \section{Challenges Faced}
 
-\tdi{signposting text}
+Some challenges were faced in this project that were not discussed elsewhere in this report.  These are below.
 
-\tdi{cross platform attempts}
-\tdi{recreating bugs from the users (towards the end)}
+\subsection{wxPython Being Cross-Platform}
+Python was chosen for this project to allow for the project to be run on any system.  A cross platform \ac{GUI} toolkit was chosen for the same reason.  wxPython was chosen (details of why can be found in the MPP report).  Initially this was successful.  The program was running on MacOS and Linux.  As the project was developed further some discrepancies were uncovered between wxPython on different platforms.  Initially this was coped with by writing different versions of parts of the code for each platform.  Eventually this became impractical.  Development support for Linux was halted.  Currently the project has only been tested running on MacOSX Mountain Lion.
+
+An attempt was made to test the program on Windows, but there were problems installing the necessary Python libraries.
 
 \section{Unsolved Problems}
 
-\tdi{Collaboration - Ordering}
+\subsection{Complete Ordering Across Clients}
+
+An initial version of the collaboration used blocking communication.  In a blocking mode it was possible to globally order the events.  This is described in Section~\ref{sec:collaboration}.  Blocking collaboration is far from optimal.  A slow network would make the collaboration unusable.  The program would be locked out from the user for the duration of the message and response.  Non blocking communication was added later through the use of threads when sending messages.  This had the undesirable side effect of not being able to guarantee correct ordering.
+
 \tdi{Distributed Undo}
-\tdi{Speed of matplotlib}
+
+When doing a visualisation without any collaborators the undo and redo functionality works as expected.  In the collaborative mode however there are some flaws.  If we have the user and the collaborator, changes the user makes are sent to the collaborator.  If the user issues an undo command their undo history is correct.  The collaborator's undo history appears to forget states.  This leaves the collaborator and the user seeing different visualisations.  This bug appears to be related to the issues had when first implementing undo and redo when Python's deep copy had to be introduced.  Despite numerous attempts to solve this bug a solution was unable to be find before the project deadline.
+
+\subsection{Matplotlib is Slow}
+
+matplotlib is the de facto standard for graphing in Python this, amongst other reasons (detailed in MPP report), led to it being chosen for the graph visualisations in the project.  When features such as plotting the intensity of the gradient were added matplotlib was pushed to its limits.  It was discovered that matplotlib is not optimised for speed, it is instead optimised for producing publication standard graphics.  This poses a dilemma.  Researchers want to be able to generate quality graphs, whilst one of the purposes of the tool is allowing real time interactivity and customisation.  There are tweaks that can be applied to make matplotlib be faster, or there are alternative graphing libraries that could be considered.  Threading was also looked into but caused segmentation faults.
 
 \section{The Future}
 
