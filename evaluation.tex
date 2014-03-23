@@ -1,7 +1,147 @@
 \chapter{Evaluation}
 \label{chap:eval}
 
-\tdi{Signposting text}
+This section relates to the evaluation of various aspects of the project.  The Src researcher whom the project focused around was off on maternity leave for the duration of this phase of the project so no evaluations were able to be performed with them.
+
+\section{First Evaluation}
+
+The first evaluation in the second phase of the project occurred in November 2014.  The user group was made up of two people.  One who had taken part in the first evaluation meeting and one person who had no knowledge of the project.
+
+\subsection{User Group}
+
+As I did not have a domain expert available I was not able to do insight based evaluation.  I took a more traditional approach.  Before the evaluation I prepared a typical scenario that a user might encounter.  The task was to open a file, annotate it and run the animation visualisation, and attach supporting documentation.  The task was prepared at two levels of instruction.  The first level was a paragraph of text that described what was to be done.  The second level was a step-by-step list of instructions to perform.  I observed the user group as they attempted the task and offered assistance when required.  Afterwards the user group was given a questionnaire to fill in about their experience. After filling in the questionnaire we went through and discussed their answers and any further thoughts that they had.
+
+The task was prepared at two levels to try and gauge how easy the program is to use.  The users were first presented with the textual description and if they had been unable to complete the task with this then they would have been given the step-by-step instructions instead.  The users were able to complete the task from the textual description alone.  This is a good sign that the new tool is usable.
+
+Some issues were encountered:
+
+\begin{itemize}
+\item The users were unfamiliar with MacOS -- Both users were unable to locate the menu bar as it is not attached to the program as in Windows.  Future evaluations will use Windows.
+\item The users were unclear as to what was going to happen when annotating.  When annotating the graph with an arrow the user has to click twice to place it but there is no indication of this, nor was it clear to them which way the arrow would be drawn.  This has now been fixed. Different cursors are used to give feedback to the user that they should click, and rather than just relying on two clicks with no information as to where the arrow is going to point, after the first click (which places the tail of the arrow) an arrow will be drawn that follows the cursor until the second click placing the annotation.
+\item Lack of ability to edit, move, or delete annotations -- Once an annotation was placed it was there permanently.  The ability to edit annotations was always planned, but had not been implemented in time.  But the amount of frustration it gave the users was very high.  It was a principle in all three of Norman, Neilson and Schniederman's lists that a user should be able to fix mistakes.  Since the evaluation, editing and deleting of annotations have been implemented.  This means any mistakes can be corrected.
+\item Initially they were confused by what all the buttons on the matplotlib toolbar did.  After discovering the tooltips and seeing what effect the buttons had they were comfortable with them.  If a user were to do something they did not intend they are able to undo it. All the matplotlib built-in buttons on the toolbar can be undone and redone from the toolbar.  Any buttons implemented for this tool are covered by the undo and redo functionality implemented across the whole program.  Being able to recover from their actions on the toolbar means no hindrance to discovery and so needs no further action.  It would be desirable to have the two undo methods unified but a way to do this could not be found.
+\item The users were confused by some of the terminology.  In particular ``save graph'' and ``save model''. These items in the menu have now been grouped more carefully to help the user distinguish them.  A related issue was worrying that ``save graph'' was going to override the results file.  To rectify this the menu items that create new files have been renamed ``export ...''.
+\item The users struggled to start a new session.  When asked for a title they did not know what the title was going to be used for.  When trying to add files, rather than use the add files button in the dialogue, they tried to use the file menu.  Having two routes into the visualisation seemed to be confusing them.  Now the file menu open file has been removed.  To create a visualisation the user has to go through the new session wizard.
+\item When placing species in the cell one of the users did not understand what they were being asked to do.  One of the users did understand.  To fix this user input has been removed from the equation.  This has required the model file to also be chosen, but then species locations are parsed automatically.
+\item They liked the animation feature and thought it would be very useful (One of the users did their PhD in transport and expressed a desire to have had this feature during the PhD).  They did feel that it wouldn't be useful directly for papers, but that it would be useful when deciding what to include in a paper.
+\item One of the users asked if there was a map of the cell.  When presented with the model visualisation they thought that it did look nice, but they were unsure of its usefulness.  The model viewing has since been merged into the animation visualisation.
+\item The results from the questionnaire indicated that both users thought the tool's appearance was good.  The tool was average in difficulty to use -- neither easy nor difficult. The annotation buttons on the toolbar were clear as to what they did. It was obvious how to attach supporting files.  Both users thought that it is very useful to attach files to the session so that they can be easily emailed to a colleague.  They thought it would be useful to have the graph automatically annotated, but they wanted to the ability to disable any automatic annotations.  Both users found the animation useful.
+\end{itemize}
+
+\subsection{Personal}
+
+\tdi{probably needs a big going over}
+
+At this stage in the development the program was in a state where some existing functionality had been broken and gone unnoticed during the implementation of the new features.  This highlighted architectural flaws in the code.  There were multiple paths through the program that data was taking, and duplicated code in places.  Since then a majority of these bugs have been ironed out and the duplications removed. The code much better architected.  At the time of the evaluation with the users not all the features could be tested with them -- mainly the plot preferences dialogue.  These features have now been fixed and they will be evaluated by the users at the next meeting.
+
+Having the users use the program has also highlighted a number of usability problems: menus being badly organised and named, features such as annotation rely on assumed knowledge to work them.  All this created an unfriendly environment for the user.  This was due to losing sight of the need for usability during development and when testing new features not removing the knowledge of the code from my mind.  Since this evaluation the three lists of usability have been refocused on and the code gone through and the principles applied.
+
+I am pleased with the positive feedback on animation and annotation -- two of the core new features.
+
+\section{Evaluation 2 - Start of Second Semester}
+\subsection{User Group}
+
+As with the first evaluation a task was prepared at two levels of instruction.  One a paragraph of text, slightly vague.  The other a very prescriptive step by step set of instructions.  Afterwords the users were given a questionnaire to fill in.  They were also given a chance to use the program without following a task, giving them a chance to explore.
+
+Since the last evaluation work had been done to fix the issues encountered since the last time and two new features had been added: annotation of the animation and data normalisation and export.
+
+The findings of the evaluation were as follows:
+
+\begin{itemize}
+\item There was inconsistency in the text giving instructions to the user in places
+\item The users kept trying to drag annotations on the graph after creation
+\item Model visualisation in session wizard should have species labels
+\item Thought the appearance was good -- This is with the addition of the annotation animation panel on the right hand side.
+\item Users thought the task was easy to complete.
+\item Users found the new session wizard much easier to use
+\item Users found the new model visualisation more intuitive
+\item Users found annotating the animation useful, Users found it easy to add annotations
+\item The users uncovered some bugs in the program
+\item Very much in favour of plots as queries
+\item Very much in favour of collaboration
+\item Suggested they would much rather the program be more stable before new features are added
+\item Very easy and useful to normalise and export data
+\item Found being able to undo very useful
+\item Pleased to be able to modify or delete the annotations
+\end{itemize}
+
+\subsection{Bio-PEPA Developer}
+
+\begin{itemize}
+\item Didn't realise what the model visualisation was saying
+\item Uncovered a flaw with annotations and normalisation
+\item Had no significant difficulty
+\item Bug when trying to annotate outside of graph area, but in the frame.
+\end{itemize}
+
+\subsection{Personal}
+
+Seemed much more user friendly
+Still too many bugs
+animation annotation much more user friendly
+Please about reception to ideas of collaboration and search.
+
+\tdi{do it like above}
+
+\section{Evaluation 3 - End of Second Semester}
+
+\subsection{User Group}
+
+Like the other evaluations the users were given a task to complete.  Afterwards there was a questionnaire.  Given that this was the final evaluation a further focus was placed on evaluating the users preferences between this new tool and the Eclipse plugin.
+
+Since the previous evaluation changes had been made to fix issues from the previous evaluation.  The new features that had been added were plots as queries and real time collaboration.  These were unable to tested by the users.  The layout of the program had changed and this was tested by the users.
+
+The findings are as follows:
+
+\begin{itemize}
+\item The users like the appearance of the tool
+\item The users preferred the new layout.
+\item The users found it possible to complete the task
+\item Both users indicated they would rather use this than the Eclipse plugin (proviso, they do not use the eclipse plugin, their experience with it is very limited)
+\item Both indicated they would be willing to use it in their workflow
+\item Were not able to give feedback on missing features as they had not used the tool for long enough, or in real enough circumstances.
+\item Same on any features they would like to see in the future
+\item Were confused when annotation wasn't present after setting the start time to be after 0.
+\item slowness of the tool at times caused confusion - clicking things multiple times
+\item model visualisation was more useful to them with labels
+\item text was helpful in ui elements
+\end{itemize}
+
+\subsection{Bio-PEPA developer}
+
+\begin{itemize}
+\item Thought the appearance of the tool was average.  There was a quality on the tip of their tongue.  They did not have anything negative to say.  More headings in sections.
+\item Much preferes the new interface
+\item Found it difficult to complete the task, but easier than previous times.  The speed did not help.  More of a help functionality
+\item Would use the tool rather than the eclipse plugin, but depends on the task.  Preparing a presentation - this, analysing models - eclipse
+\item Would like model visualisation to not necessarily be heirarchical, problem with Bio-PEPA.  Could be looked at in future.
+\item Would have liked to have evaluated the tool with more models -- ethnographic.
+\end{itemize}
+
+\subsection{Personal}
+
+Pleased that fewer bugs discovered - a promising sign
+New user interface is good
+Good sign that the users would be willing to use the tool instead of eclipse
+valid point about evaluation, discussed later.
+
+\section{Overall Self Evaluation}
+Scribble over lots of stuff talk about changes
+
+\tdi{final ui}
+
+\tdi{talk about the architecture}
+\tdi{talk about perhaps being more strictly mvc}
+\tdi{evaluate the evaluation strategy}
+
+\tdi{evaluate collaboration}
+
+\subsection{Search Results}
+\tdi{move this into evaluation?}
+Initial results are very promising with the tf.idf weighted cosine providing much clearer results than with simple euclidean distance.  There is not a large enough truth set of plot similarities to be able to confidently say that it is effective.  However these early promising results seem to indicate that further research would certainly be worthwhile, but outside the scope of the project.
+
+\subsection{Testing}
+\tdi{More testing and logging}
 
 \section{Finished Product}
 \tdi{Not sure how necessary this is.  The plan would be a screenshot by screenshot walkthrough - may fit better in the self evaluation.  it will possibly just be duplicating screenshots that exist elsewhere}
@@ -71,77 +211,3 @@ To help guide the user when they first use the program a session wizard is creat
 Form validators are used on the title fields and results fields.  The validators ensure that a title and at least one results file are included.  This stops the user from creating an invalid session.  There is also help text on each page of the wizard instructing the user on what actions they should take.
 
 The model viewer page in Figure~\ref{fig:page_4} is similar to the cell cross-sections used in animation~\ref{sec:animation}.  There are two drop down boxes.  These drop down boxes control what is displayed in the cell cross-section.  Species in files can be selected.  The cell cross-section displays which compartments in the cell the species is present in.  The compartments are parsed from the model file.  This means that the model file is a requirement for model viewing and cell level animation.  This cell cross-section has replaced the previous model visualisation.  This model visualisation has two purposes. First, the user can sanity check that they have matching results and model files.  If a section of the cell has been left white then it acts as a cue to the user: if they were expecting the species to be present at that location then they know something has gone wrong.  Second, they can see how the model is structured.  The sections of the cell are labelled allowing the user to know what areas of the cell a species is present in.  This will hopefully increase their confidence with visualising and analysing the results from the models. Before the compartments were parsed from the model file automatically there was an user unfriendly system where the user had to input where in the cell a species is.  This was time consuming, difficult to use, and quite brittle.  At the time it assumed that there would be three compartments for every species, which is not a valid assumption.
-
-\section{First Evaluation}
-
-The first evaluation in the second phase of the project occurred in November 2014.  The user group was made up of two people.  One who had taken part in the first evaluation meeting and one person who had no knowledge of the project.
-
-\subsection{User Group}
-
-As I did not have a domain expert available I was not able to do insight based evaluation.  I took a more traditional approach.  Before the evaluation I prepared a typical scenario that a user might encounter.  The task was to open a file, annotate it and run the animation visualisation, and attach supporting documentation.  The task was prepared at two levels of instruction.  The first level was a paragraph of text that described what was to be done.  The second level was a step-by-step list of instructions to perform.  I observed the user group as they attempted the task and offered assistance when required.  Afterwards the user group was given a questionnaire to fill in about their experience. After filling in the questionnaire we went through and discussed their answers and any further thoughts that they had.
-
-The task was prepared at two levels to try and gauge how easy the program is to use.  The users were first presented with the textual description and if they had been unable to complete the task with this then they would have been given the step-by-step instructions instead.  The users were able to complete the task from the textual description alone.  This is a good sign that the new tool is usable.
-
-Some issues were encountered:
-
-\begin{itemize}
-\item The users were unfamiliar with MacOS -- Both users were unable to locate the menu bar as it is not attached to the program as in Windows.  Future evaluations will use Windows.
-\item The users were unclear as to what was going to happen when annotating.  When annotating the graph with an arrow the user has to click twice to place it but there is no indication of this, nor was it clear to them which way the arrow would be drawn.  This has now been fixed. Different cursors are used to give feedback to the user that they should click, and rather than just relying on two clicks with no information as to where the arrow is going to point, after the first click (which places the tail of the arrow) an arrow will be drawn that follows the cursor until the second click placing the annotation.
-\item Lack of ability to edit, move, or delete annotations -- Once an annotation was placed it was there permanently.  The ability to edit annotations was always planned, but had not been implemented in time.  But the amount of frustration it gave the users was very high.  It was a principle in all three of Norman, Neilson and Schniederman's lists that a user should be able to fix mistakes.  Since the evaluation, editing and deleting of annotations have been implemented.  This means any mistakes can be corrected.
-\item Initially they were confused by what all the buttons on the matplotlib toolbar did.  After discovering the tooltips and seeing what effect the buttons had they were comfortable with them.  If a user were to do something they did not intend they are able to undo it. All the matplotlib built-in buttons on the toolbar can be undone and redone from the toolbar.  Any buttons implemented for this tool are covered by the undo and redo functionality implemented across the whole program.  Being able to recover from their actions on the toolbar means no hindrance to discovery and so needs no further action.  It would be desirable to have the two undo methods unified but a way to do this could not be found.
-\item The users were confused by some of the terminology.  In particular ``save graph'' and ``save model''. These items in the menu have now been grouped more carefully to help the user distinguish them.  A related issue was worrying that ``save graph'' was going to override the results file.  To rectify this the menu items that create new files have been renamed ``export ...''.
-\item The users struggled to start a new session.  When asked for a title they did not know what the title was going to be used for.  When trying to add files, rather than use the add files button in the dialogue, they tried to use the file menu.  Having two routes into the visualisation seemed to be confusing them.  Now the file menu open file has been removed.  To create a visualisation the user has to go through the new session wizard.
-\item When placing species in the cell one of the users did not understand what they were being asked to do.  One of the users did understand.  To fix this user input has been removed from the equation.  This has required the model file to also be chosen, but then species locations are parsed automatically.
-\item They liked the animation feature and thought it would be very useful (One of the users did their PhD in transport and expressed a desire to have had this feature during the PhD).  They did feel that it wouldn't be useful directly for papers, but that it would be useful when deciding what to include in a paper.
-\item One of the users asked if there was a map of the cell.  When presented with the model visualisation they thought that it did look nice, but they were unsure of its usefulness.  The model viewing has since been merged into the animation visualisation.
-\item The results from the questionnaire indicated that both users thought the tool's appearance was good.  The tool was average in difficulty to use -- neither easy nor difficult. The annotation buttons on the toolbar were clear as to what they did. It was obvious how to attach supporting files.  Both users thought that it is very useful to attach files to the session so that they can be easily emailed to a colleague.  They thought it would be useful to have the graph automatically annotated, but they wanted to the ability to disable any automatic annotations.  Both users found the animation useful.
-\end{itemize}
-
-\subsection{Personal}
-
-\tdi{probably needs a big going over}
-
-At this stage in the development the program was in a state where some existing functionality had been broken and gone unnoticed during the implementation of the new features.  This highlighted architectural flaws in the code.  There were multiple paths through the program that data was taking, and duplicated code in places.  Since then a majority of these bugs have been ironed out and the duplications removed. The code much better architected.  At the time of the evaluation with the users not all the features could be tested with them -- mainly the plot preferences dialogue.  These features have now been fixed and they will be evaluated by the users at the next meeting.
-
-Having the users use the program has also highlighted a number of usability problems: menus being badly organised and named, features such as annotation rely on assumed knowledge to work them.  All this created an unfriendly environment for the user.  This was due to losing sight of the need for usability during development and when testing new features not removing the knowledge of the code from my mind.  Since this evaluation the three lists of usability have been refocused on and the code gone through and the principles applied.
-
-I am pleased with the positive feedback on animation and annotation -- two of the core new features.
-
-\section{Evaluation 2 - Start of Second Semester}
-\subsection{User Group}
-
-\tdi{do it like above}
-
-\subsection{Personal}
-
-\subsection{vashti}
-
-\tdi{do it like above}
-
-\section{Evaluation 3 - End of Second Semester}
-\subsection{User Group}
-\subsection{Expert User}
-
-\tdi{why not happening }
-
-\tdi{vashti}
-
-\subsection{Personal}
-
-\section{Overall Self Evaluation}
-Scribble over lots of stuff talk about changes
-
-\tdi{final ui}
-
-\tdi{talk about the architecture}
-\tdi{talk about perhaps being more strictly mvc}
-\tdi{evaluate the evaluation strategy}
-
-\tdi{evaluate collaboration}
-
-\subsection{Search Results}
-\tdi{move this into evaluation?}
-Initial results are very promising with the tf.idf weighted cosine providing much clearer results than with simple euclidean distance.  There is not a large enough truth set of plot similarities to be able to confidently say that it is effective.  However these early promising results seem to indicate that further research would certainly be worthwhile, but outside the scope of the project.
-
-\subsection{Testing}
-\tdi{More testing and logging}

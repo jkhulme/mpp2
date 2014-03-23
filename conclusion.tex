@@ -4,8 +4,9 @@ This section is the conclusion.  In this section the project is compared to its 
 
 \section{Comparison to Objective}
 
-\tdi{restate the objective}
-\tdi{how met is the objective}
+The aim of the project was to develop a tool to visualise the results of dynamic time-series models of intra-cellular behaviour based on biochemical reactions.  This goal has been met.  The results can be visualised statically and dynamically.  The cell level visualisation applies domain knowledge familiar to biologist's to help them understand their results.  In addition to these visualisation features, features to help the user work more efficiently and effectively have been added.  With respect to meeting the project goal the tool has been successful.
+
+\tdi{should maybe talk a bit more about results}
 
 \section{Challenges Faced}
 
@@ -29,6 +30,8 @@ When doing a visualisation without any collaborators the undo and redo functiona
 \subsection{Matplotlib is Slow}
 
 matplotlib is the de facto standard for graphing in Python this, amongst other reasons (detailed in MPP report), led to it being chosen for the graph visualisations in the project.  When features such as plotting the intensity of the gradient were added matplotlib was pushed to its limits.  It was discovered that matplotlib is not optimised for speed, it is instead optimised for producing publication standard graphics.  This poses a dilemma.  Researchers want to be able to generate quality graphs, whilst one of the purposes of the tool is allowing real time interactivity and customisation.  There are tweaks that can be applied to make matplotlib be faster, or there are alternative graphing libraries that could be considered.  Threading was also looked into but caused segmentation faults.
+
+\tdi{Became more noticable once collaboration was added and things were being redrawn more}
 
 \section{The Future}
 
@@ -78,4 +81,4 @@ In addition to changing the model of collaboration from being distributed to cen
 
 \section{Final Remarks}
 
-\tdi{think up some final remarks}
+The tool that has been developed through this project is a suitable substitute for the Bio-PEPA Eclipse plug-in for visualising data.  The additional features of search and real time collaboration are at the stage of being solid proof of concept.  Work is needed to make them ready to be made available to a user.
