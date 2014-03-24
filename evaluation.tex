@@ -89,20 +89,19 @@ The findings are as follows:
 \item Both users indicated they would rather use this than the Eclipse plugin.  They did both give the proviso that they have zero experience with the Eclipse plugin beyond what they were shown in the evaluation.  In the evaluation they were shown an example of a graph the the plugin generated.
 \item Both users were unable to give feedback as to what features they felt were missing or features they would like to see as they had not spent enough time with the tool.  Further evaluation time with ethnographic studies would be required for this.
 \item When creating an animation annotation the users set the duration to be after time zero.  They were confused afterwards as to why the annotation was not immediately visible on the cell.  It had been hoped that it would be obvious that if the current clock was not in the duration of the annotation that it would not be visible.  In response to this placing an animation annotation now updates the clock to be that start time of the annotation.  This means it is always visible to the user that an annotation has been successfully placed.
-\item slowness of the tool at times caused confusion - clicking things multiple times
-\item model visualisation was more useful to them with labels
-\item text was helpful in ui elements
+\item The slowness of the tool caused the users some frustrations.  They would frequently be wanting to perform the next actions -- adding more annotations -- but the program was still trying to update the visualisations.  This is a problem that has been discovered with matplotlib that it is quite slow.  This has not been resolved.
+\item The users found the model visualisation more helpful now that labels had been added.
+\item The users appreciated the addition of helper text to various parts of the \ac{UI}.
 \end{itemize}
 
 \subsection{Bio-PEPA developer}
 
 \begin{itemize}
-\item Thought the appearance of the tool was average.  There was a quality on the tip of their tongue.  They did not have anything negative to say.  More headings in sections.
-\item Much preferes the new interface
-\item Found it difficult to complete the task, but easier than previous times.  The speed did not help.  More of a help functionality
-\item Would use the tool rather than the eclipse plugin, but depends on the task.  Preparing a presentation - this, analysing models - eclipse
-\item Would like model visualisation to not necessarily be heirarchical, problem with Bio-PEPA.  Could be looked at in future.
-\item Would have liked to have evaluated the tool with more models -- ethnographic.
+\item The user felt that the appearance of the tool was adequate, although they far preferred the new \ac{UI}.  They did not rate appearance as highly as the biologist users.  They were unable to explain why the had not scored it higher in appearance.  They would like to see more headings on the different parts of the \ac{UI} in the future.
+\item The user indicated that they found it difficult to complete the task.  In previous evaluations they did not find it as difficult.  This is due to the lag in the \ac{UI} when updating the visualisations.
+\item When asked whether they would use this tool instead of the Eclipse plugin they said it depended on what task they were trying to perform.  If they were preparing images for publication they would use this new tool.  If they were just analysing the model they would use the Eclipse plugin.  This was to be expected.  Future work would hopefully be done to integrate the workflow between the Eclipse plugin and this new tool.
+\item They would have liked to see the model visualisation being able to handle models that were not necessarily hierarchical.  This would hopefully be looked into for future work.
+\item They would have liked to have been able to evaluate the tool with more models which covered a variety of scenarios.  This was not possible in this evaluation strategy, but one direction for future evaluations would be ethnographic studies which would allow for this.
 \item Had to be told about right clicking
 \item Struggled when selecting text or circle annotations.
 \end{itemize}
