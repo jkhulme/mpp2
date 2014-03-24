@@ -65,21 +65,13 @@ The findings of the evaluation were as follows:
 \subsection{Bio-PEPA Developer}
 
 \begin{itemize}
-\item Didn't realise what the model visualisation was saying
-\item Uncovered a flaw with annotations and normalisation
-\item Had no significant difficulty
-\item Bug when trying to annotate outside of graph area, but in the frame.
-
+\item It was not clear to the user what the new model visualisation was displaying.  Text has been added to the model visualisation page explaining what the user is seeing.
+\item The user uncovered a bug in how annotations are rendered when the graph is viewed with the data normalised.  The problem and the solution are discussed in Section~\ref{sec:annotation_graph}.
 \end{itemize}
 
 \subsection{Personal}
 
-Seemed much more user friendly
-Still too many bugs
-animation annotation much more user friendly
-Please about reception to ideas of collaboration and search.
-
-\tdi{do it like above}
+The results from this evaluation were positive.  The users seemed much more comfortable using the tool.  This is hopefully down to the efforts made to improve the usability.  There are still too many bugs being discovered by the user.  This will be addressed.  The positive reception to the ideas for plots as queries and real time collaboration led to them being added as project goals.
 
 \section{Evaluation 3 - End of Second Semester}
 
@@ -92,14 +84,11 @@ Since the previous evaluation changes had been made to fix issues from the previ
 The findings are as follows:
 
 \begin{itemize}
-\item The users like the appearance of the tool
-\item The users preferred the new layout.
-\item The users found it possible to complete the task
-\item Both users indicated they would rather use this than the Eclipse plugin (proviso, they do not use the eclipse plugin, their experience with it is very limited)
-\item Both indicated they would be willing to use it in their workflow
-\item Were not able to give feedback on missing features as they had not used the tool for long enough, or in real enough circumstances.
-\item Same on any features they would like to see in the future
-\item Were confused when annotation wasn't present after setting the start time to be after 0.
+\item The users like the appearance of the tool.  Since the previous evaluation significant effort had been placed into making the user interface more aesthetically pleasing.  The users strongly preferred the new \ac{UI}.  This justifies the effort into the \ac{UI}.
+\item The users indicated that they found the task easy to complete.  They were not confused by the new layout.
+\item Both users indicated they would rather use this than the Eclipse plugin.  They did both give the proviso that they have zero experience with the Eclipse plugin beyond what they were shown in the evaluation.  In the evaluation they were shown an example of a graph the the plugin generated.
+\item Both users were unable to give feedback as to what features they felt were missing or features they would like to see as they had not spent enough time with the tool.  Further evaluation time with ethnographic studies would be required for this.
+\item When creating an animation annotation the users set the duration to be after time zero.  They were confused afterwards as to why the annotation was not immediately visible on the cell.  It had been hoped that it would be obvious that if the current clock was not in the duration of the annotation that it would not be visible.  In response to this placing an animation annotation now updates the clock to be that start time of the annotation.  This means it is always visible to the user that an annotation has been successfully placed.
 \item slowness of the tool at times caused confusion - clicking things multiple times
 \item model visualisation was more useful to them with labels
 \item text was helpful in ui elements
@@ -179,26 +168,26 @@ To help guide the user when they first use the program a session wizard is creat
 
 \begin{figure}[h!]
     \centering
-    \begin{subfigure}[b]{0.24\textwidth}
+    \begin{subfigure}[b]{0.4\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/wizard_page_1.png}
         \caption{Wizard title chooser page}
         \label{fig:page_1}
     \end{subfigure}
-    \begin{subfigure}[b]{0.24\textwidth}
+    \begin{subfigure}[b]{0.4\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/wizard_page_2.png}
         \caption{Wizard results selector page}
         \label{fig:page_2}
     \end{subfigure}
 
-    \begin{subfigure}[b]{0.24\textwidth}
+    \begin{subfigure}[b]{0.4\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/wizard_page_3.png}
         \caption{Wizard model selector page}
         \label{fig:page_3}
     \end{subfigure}
-    \begin{subfigure}[b]{0.24\textwidth}
+    \begin{subfigure}[b]{0.4\textwidth}
         \centering
         \includegraphics[width=\textwidth]{images/wizard_page_4.png}
         \caption{Wizard model viewing page}
