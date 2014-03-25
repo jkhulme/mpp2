@@ -5,7 +5,7 @@ This section relates to the evaluation of various aspects of the project.  The S
 
 \section{First Evaluation}
 
-The first evaluation in the second phase of the project occurred in November 2014.  The user group was made up of two people.  One who had taken part in the first evaluation meeting and one person who had no knowledge of the project.
+The first evaluation in the second phase of the project occurred in November 2014.  The user group was made up of two biologists.  One who had taken part in the first evaluation meeting and one person who had no knowledge of the project.
 
 \subsection{User Group}
 
@@ -203,3 +203,10 @@ The model viewer page in Figure~\ref{fig:page_4} is similar to the cell cross-se
 matplotlib is the de facto standard for graphing in Python this, amongst other reasons (detailed in the MPP report), led to it being chosen for the graph visualisations in the project.  When features such as plotting the intensity of the gradient were added matplotlib was pushed to its limits as it was being asked to plot hundreds of lines.  It was discovered that matplotlib is not optimised for speed, it is instead optimised for producing graphs of a publication standard.  This poses a dilemma: researchers want to be able to generate quality graphs, whilst the tool wants to offer real time interactivity and customisation.  There are tweaks that can be applied to make matplotlib be faster. There are also alternative graphing libraries that could be considered.  Threading was also looked into but caused segmentation faults.
 
 \tdi{Became more noticable once collaboration was added and things were being redrawn more}
+
+\subsection{Real World Studies}
+More in depth evaluations should be performed.  An ethnographic study should be the goal.  As discussed in Section~\ref{chap:evaluation} the evaluation techniques used could only provide so much information.  An ethnographic study would bring to light truly how fit for purpose the tool is.
+\tdi{could this go in the evaluation}
+
+\subsection{Change how the visualisation is calculated}
+Currently the visualisation is stored as a snapshot of the entire state.  The undo functionality is built around taking copies of this snapshot. When the visualisations are being displayed the \ac{UI} components look at this single snapshot.  Making copies of a large snapshot is not a cheap operation.  A more efficient approach would be to store operations.  To draw the latest visualisation the tool would simply traverse this list from the start.  Undoing an action would simply then be removing the last operation.

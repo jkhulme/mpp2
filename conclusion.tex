@@ -54,33 +54,30 @@ Again, all of these work best with a large amount of data and so would need to b
 
 \subsection{Put it in the Cloud}
 \label{sec:cloud}
-All of the collaboration software reviewed in Section~\ref{sec:review} worked on a model where the is a single server.  This is a much simpler model for collaboration as there is now no real distributed element to it.  Ordering is solved as the only order cared about is the ordering on the server.
+All of the collaboration software reviewed in Section~\ref{sec:review} worked using a model where there is a single server.  This is a much simpler model for collaboration as the only ordering is the ordering on the server.
 
-This would require some refactoring of the project.  The code would need to be more separated into server and client.  The server would do the majority of the work: parsing the data, performing the intensity calculations and handling the creation of annotations.  We would then need to create a much more standalone client.  This should do very little actual processing.  It should just display the information from the server.
+This would require some refactoring of the project.  The code would need to be separated completely into a server and a client.  The server would do the the work: parsing the data, performing the intensity calculations and handling the creation of annotations.  The client would just display the information from the server.
 
 Work towards this goal would also hopefully include rewriting the project so that the client could be a browser based client.  A lot of problems were faced with wxPython not being as cross platform compatible as had been hoped.  Rewriting the client to be browser based should solve the cross platform problems.
 
-The cloud backend would also, hopefully, include a repository for storing the attached files.  Currently there is no way for attached files to be sent to a collaborator.  They were considered too large to be able to be sent through the implementation of collaboration described in Section~\ref{sec:collaboration}.  Without a central file repository we would some other way of sending files.  This comes close to violating both Lett's and Zawinski's laws~\cite{atwoord}.  These laws state, respectively, the all software evolves until it can send email and that all software evolves until it can read email.  They are a sign of feature creep in software.  Email would have been a potential solution on how to transfer the files between users.  A central file repository avoids the need for feature creep.  Previews of the files, title and thumbnail, could be part of the real time features.  The collaborators can upload and download files as necessary.
+The cloud backend would also, hopefully, include a repository for storing the attached files.  Currently there is no way for attached files to be sent to a collaborator.  They were considered too large to be able to be sent through the implementation of collaboration described in Section~\ref{sec:collaboration}.  Without a central file repository we would some other way of sending files.  This comes close to violating both Lett's and Zawinski's laws~\cite{atwood}.  These laws state, respectively, that all software evolves until it can send email and that all software evolves until it can read email.  They are a sign of feature creep in software.  Email would have been a potential solution on how to transfer the files between users, by building an email client into the program.  A central file repository avoids the need for feature creep.  Previews of the files could be part of the real time features with thumbnails and title being transmitted.  The collaborators can upload and download the full file as necessary.
 
-\subsection{Improve the architecture}
+\subsection{Improve the Architecture}
 
 In Section~\ref{sec:architecture} the initial lack of architecture is discussed.  The architecture was improved and now resembles a \ac{MVC} architecture.  This work on the architecture should be continued in the future.  Making the architecture fully \ac{MVC} would greatly enable the work towards moving the tool to the cloud (Section~\ref{sec:cloud}).
 
-Having a \ac{MVC} architecture would also make it much easier to change interfaces.  As trends change new platforms could easily by developed for as all that would be needed would be a new client to interact with the server.  There is a trend at the moment towards mobile applications.  A tablet version of the tool could be useful to users.  With the architectural changes a tablet version would be possible.
+Having a \ac{MVC} architecture would also make it much easier to change interfaces.  New \acp{UI} can be developed and just connected to the model which would be running in the cloud.
 
-\subsection{More customization}
-The user is given control over the appearance of lines on the graph.  This could be expanded further into the tool.  Currently annotations cannot be customized, they can only be black.  More annotation options could be offered.  As discussed in Section~\ref{sec:normalised}, different normalisation methods could be included.
-
-\subsection{Real World Studies}
-More in depth evaluations should be performed.  An ethnographic study should be the goal.  As discussed in Section~\ref{sec:evaluation} the evaluation techniques used could only provide so much information.  An ethnographic study would bring to light truly how fit for purpose the tool is.
-\tdi{could this go in the evaluation}
-
-\subsection{Change how the visualisation is calculated}
-Currently the visualisation is stored as a snapshot of the entire state.  The undo functionality is built around taking copies of this snapshot. When the visualisations are being displayed the \ac{UI} components look at this single snapshot.  Making copies of a large snapshot is not a cheap operation.  A more efficient approach would be to store operations.  To draw the latest visualisation the tool would simply traverse this list from the start.  Undoing an action would simply then be removing the last operation.
+\subsection{More Customization}
+The user is given control over the appearance of lines on the graph.  This could be expanded further into the tool.  Currently annotations cannot be customized, they can only be black.  More annotation options could be offered.  Different normalisation methods could be included as discussed in Section~\ref{sec:normalised}.
 
 \subsection{More collaboration}
-In addition to changing the model of collaboration from being distributed to centralised, further work should be done towards enabling communication between users.  Currently collaborators will have to use a phone or an external chat client to discuss the work.  A chat client could be integrated into the program, allowing the collaborate to discuss without having to also run a secondary program.  This chat client could also then be specialised to include features that would be relevant to visualising data.
+In addition to changing the model of collaboration from being distributed to centralised, further work should be done towards enabling communication between users.  Currently collaborators will have to use a phone or an external chat client to discuss the work.  A chat client could be integrated into the program.  This would enable communication without needing to switch between applications.  This chat client could also be specialised to include features that would be relevant to visualising data.
 
 \section{Final Remarks}
 
-The tool that has been developed through this project is a suitable substitute for the Bio-PEPA Eclipse plug-in for visualising data.  The additional features of search and real time collaboration are at the stage of being solid proof of concept.  Work is needed to make them ready to be made available to a user.
+The tool that has been developed through this project is a suitable substitute for the Bio-PEPA Eclipse plug-in for visualising data.  There are innovative features in the form of plots as queries and real time collaboration, although these are at the prototype stage.  Further work is needed before they are ready for the user.
+
+There is still work to be done if the project was to be taken forward.  These range from minor usability tweaks to substantial rewrites.
+
+\tdi{Don't really like this section -- Is it necessary?}
