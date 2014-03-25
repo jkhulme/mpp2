@@ -117,6 +117,20 @@ The user was presented with the same task as the user group.  After completing t
 
 The final evaluation definitely revealed that project has had positive outcomes.  The user were all in favour of the project and would use it in their workflow.  The reception to the new \ac{UI} layout was very positive.  Fewer bugs were discovered than in previous evaluations.  There are still usability flaws and further, more in depth evaluation is needed.
 
+\iffalse
+ .----------------.  .----------------.  .----------------.  .----------------.
+| .--------------. || .--------------. || .--------------. || .--------------. |
+| |  ____  ____  | || |  _________   | || |  _______     | || |  _________   | |
+| | |_   ||   _| | || | |_   ___  |  | || | |_   __ \    | || | |_   ___  |  | |
+| |   | |__| |   | || |   | |_  \_|  | || |   | |__) |   | || |   | |_  \_|  | |
+| |   |  __  |   | || |   |  _|  _   | || |   |  __ /    | || |   |  _|  _   | |
+| |  _| |  | |_  | || |  _| |___/ |  | || |  _| |  \ \_  | || |  _| |___/ |  | |
+| | |____||____| | || | |_________|  | || | |____| |___| | || | |_________|  | |
+| |              | || |              | || |              | || |              | |
+| '--------------' || '--------------' || '--------------' || '--------------' |
+ '----------------'  '----------------'  '----------------'  '----------------'
+\fi
+
 \section{Overall Self Evaluation}
 Scribble over lots of stuff talk about changes
 
@@ -124,9 +138,20 @@ Scribble over lots of stuff talk about changes
 
 \tdi{talk about the architecture}
 \tdi{talk about perhaps being more strictly mvc}
-\tdi{evaluate the evaluation strategy}
+
 
 \tdi{evaluate collaboration}
+\tdi{compare to the golden lists}
+\tdi{compare to tufte}
+\tdi{compare to goals}
+\tdi{Any other evaluation criteria I outlined?}
+
+\subsection{Meta Evaluation}
+\tdi{evaluate the evaluation strategy}
+\subsubsection{Real World Studies}
+More in depth evaluations should be performed.  An ethnographic study should be the goal.  As discussed in Section~\ref{chap:evaluation} the evaluation techniques used could only provide so much information.  An ethnographic study would bring to light truly how fit for purpose the tool is.
+\tdi{could this go in the evaluation}
+
 
 \subsection{Search Results}
 \tdi{move this into evaluation?}
@@ -211,9 +236,6 @@ matplotlib is the de facto standard for graphing in Python this, amongst other r
 
 \tdi{Became more noticable once collaboration was added and things were being redrawn more}
 
-\subsection{Real World Studies}
-More in depth evaluations should be performed.  An ethnographic study should be the goal.  As discussed in Section~\ref{chap:evaluation} the evaluation techniques used could only provide so much information.  An ethnographic study would bring to light truly how fit for purpose the tool is.
-\tdi{could this go in the evaluation}
 
 \subsection{Change how the visualisation is calculated}
 Currently the visualisation is stored as a snapshot of the entire state.  The undo functionality is built around taking copies of this snapshot. When the visualisations are being displayed the \ac{UI} components look at this single snapshot.  Making copies of a large snapshot is not a cheap operation.  A more efficient approach would be to store operations.  To draw the latest visualisation the tool would simply traverse this list from the start.  Undoing an action would simply then be removing the last operation.
