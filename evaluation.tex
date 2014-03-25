@@ -18,7 +18,7 @@ Some issues were encountered:
 \begin{itemize}
 \item The users were unfamiliar with MacOS -- Both users were unable to locate the menu bar as it is not attached to the program as in Windows.  Future evaluations will use Windows.
 \item The users were unclear as to what was going to happen when annotating.  When annotating the graph with an arrow the user had to click twice to place it but there was no indication of this, nor was it clear to them which way the arrow would be drawn.  This has now been fixed. Different cursors are used to give feedback to the user that they should click, and rather than just relying on two clicks with no information as to where the arrow is going to point, after the first click (which places the tail of the arrow) an arrow will be drawn that follows the cursor until the second click placing the annotation.
-\item Lack of ability to edit, move, or delete annotations -- Once an annotation was placed it was there permanently.  The ability to edit annotations was always planned, but had not been implemented in time.  But the amount of frustration it gave the users was very high.  It was a principle in all three of Norman~\cite[normsev], Neilson~\cite[neilten] and Schniederman's~\cite[shgold] lists that a user should be able to fix mistakes.  Since the evaluation, editing and deleting of annotations has been implemented.  This means any mistakes can be corrected.
+\item Lack of ability to edit, move, or delete annotations -- Once an annotation was placed it was there permanently.  The ability to edit annotations was always planned, but had not been implemented in time.  But the amount of frustration it gave the users was very high.  It was a principle in all three of Norman~\cite{normsev}, Neilson~\cite{neilten} and Schniederman's~\cite{shgold} lists that a user should be able to fix mistakes.  Since the evaluation, editing and deleting of annotations has been implemented.  This means any mistakes can be corrected.
 \item Initially the users were confused by what all the buttons on the matplotlib toolbar did.  After discovering the tooltips, and seeing what effect the buttons had, they were comfortable with them.  If a user were to do something they did not intend they are able to undo it. All the matplotlib built-in buttons on the toolbar can be undone and redone from the toolbar.  Any buttons implemented for this tool are covered by the undo and redo functionality implemented across the whole program.  Being able to recover from their actions on the toolbar means no hindrance to discovery and so needs no further action.  It would be desirable to have the two undo methods unified but a way to do this could not be found.
 \item The users were confused by some of the terminology.  In particular the could not distinguish between ``save graph'' and ``save model''. These items in the menu have now been grouped more carefully to help the user distinguish them.  A related issue was worrying that ``save graph'' was going to override the results file.  To rectify this the menu items that create new files have been renamed ``export ...''.
 \item The users struggled to start a new session.  When asked for a title they did not know what the title was going to be used for.  When trying to add files, rather than use the add files button in the dialogue, they tried to use the file menu.  Having two routes into the visualisation seemed to be confusing them.  Now the file menu open file has been removed.  To create a visualisation the user has to go through the new session wizard.
@@ -32,7 +32,7 @@ Some issues were encountered:
 
 At this stage in the development the program was in a state where some existing functionality had been broken.  This had not been noticed during development.  This highlighted architectural flaws in the code.  There were multiple paths through the program that data was taking.  Code was also duplicated across the program.  Since then a majority of these bugs have been ironed out and the duplications removed. The code is now better architected.  At the time of the evaluation with the users not all the features could be tested with them -- mainly the plot preferences dialogue.  These features have now been fixed and they will be evaluated by the users at the next meeting.
 
-Having the users use the program has also highlighted a number of usability problems: menus being badly organised and named, features such as annotation rely on assumed knowledge to work them.  All this created an unfriendly environment for the user.  This was due to losing sight of the need for usability during development and when testing new features not removing the knowledge of the code from my mind.  Since this evaluation the three lists of usability~\cite[shgold]\cite[normeval]\cite[neilten] have been refocused on and the code gone through and the principles applied.
+Having the users use the program has also highlighted a number of usability problems: menus being badly organised and named, features such as annotation rely on assumed knowledge to work them.  All this created an unfriendly environment for the user.  This was due to losing sight of the need for usability during development and when testing new features not removing the knowledge of the code from my mind.  Since this evaluation the three lists of usability~\cite{shgold}\cite{normeval}\cite{neilten} have been refocused on and the code gone through and the principles applied.
 
 The positive feedback on animation and annotation, two of the core new features, is excellent validation of the new work.
 
@@ -40,11 +40,11 @@ The positive feedback on animation and annotation, two of the core new features,
 
 The second evaluation in the second phase of the project occurred in February 2014.  There were two evaluations this time.  One with the same group of biologists as before and another with an Informatics researcher who uses Bio-PEPA.
 
+Since the last evaluation work had been done to fix the issues encountered since the last time and two new features had been added: annotation of the animation and data normalisation and export.
+
 \subsection{User Group}
 
 As with the first evaluation a task was prepared at two levels of instruction.  Afterwords the users were given a questionnaire to fill in.  They were also given a chance to use the program without following a task, giving them a chance to explore.  Again, after the questionnaire a discussion was held.
-
-Since the last evaluation work had been done to fix the issues encountered since the last time and two new features had been added: annotation of the animation and data normalisation and export.
 
 The findings of the evaluation were as follows:
 
@@ -78,40 +78,44 @@ The results from this evaluation were positive.  The users seemed much more comf
 
 \section{Evaluation 3 - End of Second Semester}
 
+The third and final evaluation in the second phase of the project occurred in March 2014.  There were two evaluations this time.  These were the same as the previous evaluation: the user group and an Informatics researcher who uses Bio-PEPA.  Given that this was the final evaluation a further focus was placed on evaluating the users preferences between this new tool and the Eclipse plugin.
+
+Since the previous evaluation a sizeable amount of work had gone into improving the stability.  The new features that had been added were plots as queries and real time collaboration.  These were unable to be evaluated by the users. Plots as queries could not be evaluated as it has not been tied into the \ac{UI}.  Real time collaboration could not be evaluated with the users as it would have required another laptop.  The layout of the program had changed and this was tested by the users.
+
 \subsection{User Group}
 
-Like the other evaluations the users were given a task to complete.  Afterwards there was a questionnaire.  Given that this was the final evaluation a further focus was placed on evaluating the users preferences between this new tool and the Eclipse plugin.
-
-Since the previous evaluation changes had been made to fix issues from the previous evaluation.  The new features that had been added were plots as queries and real time collaboration.  These were unable to tested by the users.  The layout of the program had changed and this was tested by the users.
+Like the other evaluations the users were given a task to complete.  Afterwards there was a questionnaire and a discussion.
 
 The findings are as follows:
 
 \begin{itemize}
-\item The users like the appearance of the tool.  Since the previous evaluation significant effort had been placed into making the user interface more aesthetically pleasing.  The users strongly preferred the new \ac{UI}.  This justifies the effort into the \ac{UI}.
+\item The users liked the appearance of the tool.  Since the previous evaluation significant effort had been placed into making the user interface more aesthetically pleasing.  The users strongly preferred the new \ac{UI}.  This justifies the effort into the \ac{UI}.
 \item The users indicated that they found the task easy to complete.  They were not confused by the new layout.
-\item Both users indicated they would rather use this than the Eclipse plugin.  They did both give the proviso that they have zero experience with the Eclipse plugin beyond what they were shown in the evaluation.  In the evaluation they were shown an example of a graph the the plugin generated.
+\item Both users indicated that they would rather use this than the Eclipse plugin.  They did both give the proviso that they have zero experience with the Eclipse plugin beyond what they were shown in the evaluation.  In the evaluation they were shown an example of a graph the the plugin generated.  Both users being willing to use this new tool instead of the Eclipse plugin is excellent validation of the project aims.
 \item Both users were unable to give feedback as to what features they felt were missing or features they would like to see as they had not spent enough time with the tool.  Further evaluation time with ethnographic studies would be required for this.
-\item When creating an animation annotation the users set the duration to be after time zero.  They were confused afterwards as to why the annotation was not immediately visible on the cell.  It had been hoped that it would be obvious that if the current clock was not in the duration of the annotation that it would not be visible.  In response to this placing an animation annotation now updates the clock to be that start time of the annotation.  This means it is always visible to the user that an annotation has been successfully placed.
-\item The slowness of the tool caused the users some frustrations.  They would frequently be wanting to perform the next actions -- adding more annotations -- but the program was still trying to update the visualisations.  This is a problem that has been discovered with matplotlib that it is quite slow.  This has not been resolved.
+\item When creating an animation annotation the users set the duration to be after time zero.  They were confused afterwards as to why the annotation was not immediately visible on the cell.  It had been hoped that it would be obvious that if the current clock was not in the duration of the annotation that it would not be visible.  This was solved by updating the clock to be the start time of the annotation being created. This means it is always visible to the user that an annotation has been successfully placed.
+\item The slowness of the tool caused the users some frustration.  They would frequently be wanting to perform the next action, but the program was still trying to update the visualisations.  This is a problem that has been discovered with matplotlib -- it is quite slow.  This has not been resolved.
 \item The users found the model visualisation more helpful now that labels had been added.
 \item The users appreciated the addition of helper text to various parts of the \ac{UI}.
 \end{itemize}
 
 \subsection{Bio-PEPA developer}
 
+The user was presented with the same task as the user group.  After completing the task they were asked to fill in a questionnaire.  After filling in the questionnaire there was a discussion about their performance.
+
 \begin{itemize}
-\item The user felt that the appearance of the tool was adequate, although they far preferred the new \ac{UI}.  They did not rate appearance as highly as the biologist users.  They were unable to explain why the had not scored it higher in appearance.  They would like to see more headings on the different parts of the \ac{UI} in the future.
-\item The user indicated that they found it difficult to complete the task.  In previous evaluations they did not find it as difficult.  This is due to the lag in the \ac{UI} when updating the visualisations.
-\item When asked whether they would use this tool instead of the Eclipse plugin they said it depended on what task they were trying to perform.  If they were preparing images for publication they would use this new tool.  If they were just analysing the model they would use the Eclipse plugin.  This was to be expected.  Future work would hopefully be done to integrate the workflow between the Eclipse plugin and this new tool.
-\item They would have liked to see the model visualisation being able to handle models that were not necessarily hierarchical.  This would hopefully be looked into for future work.
-\item They would have liked to have been able to evaluate the tool with more models which covered a variety of scenarios.  This was not possible in this evaluation strategy, but one direction for future evaluations would be ethnographic studies which would allow for this.
+\item The user felt that the appearance of the tool was adequate, although they far preferred the new \ac{UI}.  They did not rate the appearance as highly as the biologist users.  They were unable to explain why they had not scored it higher in appearance.  They said would like to see more headings on the different parts of the \ac{UI} in the future.  This would be resolved if development were to continue.
+\item The user indicated that they found it difficult to complete the task.  In previous evaluations they did not find it as difficult.  This was due to the lag in the \ac{UI} when updating the visualisations.
+\item When asked whether they would use this tool instead of the Eclipse plugin the user said it depended on what task they were trying to perform.  If they were preparing images for publication they would use this new tool.  If they were just analysing the model they would use the Eclipse plugin.  This was to be expected.  Future work would hopefully be done to integrate the workflow between the Eclipse plugin and this new tool.
+\item The user would have liked to see the model visualisation being able to handle models that were not necessarily hierarchical.  This would hopefully be looked into for future work.
+\item The user would have liked to have been able to evaluate the tool with more models which covered a variety of scenarios.  This was not possible in this evaluation strategy. A direction for future evaluations would be ethnographic studies.
 \item The user did not discover the context menu for annotations, they had to be told of this.  No solution has been found to make this feature more discoverable.
-\item When attempting to right click on a text or circle annotation the problem was discovered that it is almost impossible.  These annotation types use point to point Euclidean distance.  This meant that the user had to right click near the start point of the annotation.  This start point is not obvious at all.  This problem has not been fixed.  For the circle annotation it would be possible.  For the text annotation it would be very difficult to solve.
+\item The user uncovered an issue that made it very difficult to right click on text or circle annotations.  These annotation types use point to point Euclidean distance.  This meant that the user had to right click near the start point of the annotation.  This start point is not obvious at all.  This problem has not been fixed.  For the circle annotation it would be possible to use the equation of a circle to check if the mouse click is near any point in the circle.  For the text annotation it would be very difficult to solve as the text annotation has no concept of its size.
 \end{itemize}
 
 \subsection{Personal}
 
-The final evaluation definitely revealed that project has had positive outcomes.  The user were all in favour of the project and would use it in their workflow.  The reception to the new \ac{UI} layout was very positive.  Fewer bugs were discovered than in previous evaluations.  There are still usability flaws and further more in depth evaluation is needed.
+The final evaluation definitely revealed that project has had positive outcomes.  The user were all in favour of the project and would use it in their workflow.  The reception to the new \ac{UI} layout was very positive.  Fewer bugs were discovered than in previous evaluations.  There are still usability flaws and further, more in depth evaluation is needed.
 
 \section{Overall Self Evaluation}
 Scribble over lots of stuff talk about changes
