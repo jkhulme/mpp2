@@ -1,12 +1,20 @@
 \chapter{Conclusion}
 
-This section is the conclusion.  In this section the project is compared to its initial goals and its success is discussed.  Any challenges not discussed in previous sections are discussed.  Any problems that were unable to be solved during the stage of development are discussed.  Finally areas identified for future work are discussed in detail.
+In this section the project is compared to its initial goals and its success is discussed.  Any challenges not previously covered are discussed.  Any problems that were unable to be solved during development are discussed.  Finally areas identified for future work are discussed in detail.
 
 \section{Comparison to Objective}
 
-The aim of the project was to develop a tool to visualise the results of dynamic time-series models of intra-cellular behaviour based on biochemical reactions.  This goal has been met.  The results can be visualised statically and dynamically.  The cell level visualisation applies domain knowledge familiar to biologist's to help them understand their results.  In addition to these visualisation features, features to help the user work more efficiently and effectively have been added.  With respect to meeting the project goal the tool has been successful.
+The aim of the project was: ``to develop a tool to visualise the results of dynamic time-series models of intra-cellular behaviour based on biochemical reactions".  This goal has been met.  The results can be visualised statically and dynamically.  The cell level visualisation applies domain knowledge familiar to biologists to help them understand their results.  Additional features to help the user work more efficiently and effectively have been added.  With respect to meeting the project goal the tool has been successful.
 
-\tdi{should maybe talk a bit more about results}
+The users are now able to load the results from their dynamic time-series models of intra-cellular behaviour based on biochemical reactions into the program to be visualised.  Their are static and dynamic visualisations.  These take the form of standard graphs and animations of an abstract view of cells.
+
+The user is able to interact with these visualisations.  They can customise them and attach additional information not present in the results files.
+
+The user is also able to manipulate their data and export that.
+
+Prototype features have been added for applying data mining techniques to allow the user to use their data to search databases of time series data and allowing users to collaborate in real time.
+
+Evaluations with potential users has shown positive reception to this new tool and its features and a willingness to use this tool instead of the Eclipse plugin.
 
 \section{Challenges Faced}
 
@@ -19,36 +27,30 @@ An attempt was made to test the program on Windows, but there were problems inst
 
 \section{Unsolved Problems}
 
-\subsection{Complete Ordering Across Clients}
+\subsection{Complete Ordering Without Blocking}
 
-An initial version of the collaboration used blocking communication.  In a blocking mode it was possible to globally order the events.  This is described in Section~\ref{sec:collaboration}.  Blocking collaboration is far from optimal.  A slow network would make the collaboration unusable.  The program would be locked out from the user for the duration of the message and response.  Non blocking communication was added later through the use of threads when sending messages.  This had the undesirable side effect of not being able to guarantee correct ordering.
+An initial version of the collaboration used blocking communication.  In a blocking mode it was possible to globally order the events.  This is described in Section~\ref{sec:collaboration}.  Blocking collaboration is far from optimal.  A slow network would make the collaboration unusable.  The program would be locked out from the user for the duration of the message and response.  Non blocking communication was added later through the use of threads when sending messages.  Now a thread is spawned for each message sent between the client and the server.  This prevents the \ac{UI} from being locked out during the communication process.  This had the undesirable side effect of not being able to guarantee correct ordering.  No solution was able to found for this, apart from switching to a centralised model as described in Section~\ref{sec:cloud}
 
-\tdi{Distributed Undo}
+\subsection{Distributed Undo Forgetting States}
 
-When doing a visualisation without any collaborators the undo and redo functionality works as expected.  In the collaborative mode however there are some flaws.  If we have the user and the collaborator, changes the user makes are sent to the collaborator.  If the user issues an undo command their undo history is correct.  The collaborator's undo history appears to forget states.  This leaves the collaborator and the user seeing different visualisations.  This bug appears to be related to the issues had when first implementing undo and redo when Python's deep copy had to be introduced.  Despite numerous attempts to solve this bug a solution was unable to be find before the project deadline.
-
-\subsection{Matplotlib is Slow}
-
-matplotlib is the de facto standard for graphing in Python this, amongst other reasons (detailed in MPP report), led to it being chosen for the graph visualisations in the project.  When features such as plotting the intensity of the gradient were added matplotlib was pushed to its limits.  It was discovered that matplotlib is not optimised for speed, it is instead optimised for producing publication standard graphics.  This poses a dilemma.  Researchers want to be able to generate quality graphs, whilst one of the purposes of the tool is allowing real time interactivity and customisation.  There are tweaks that can be applied to make matplotlib be faster, or there are alternative graphing libraries that could be considered.  Threading was also looked into but caused segmentation faults.
-
-\tdi{Became more noticable once collaboration was added and things were being redrawn more}
+When doing a visualisation without any collaborators the undo and redo functionality works as expected.  In the collaborative mode however there is a bug.  If we have the user and the collaborator, changes the user makes are sent to the collaborator.  If the user issues an undo command their undo history is correct.  The collaborator's undo history appears to forget states.  This leaves the collaborator and the user seeing different visualisations.  This bug appears to be related to the issues had when first implementing undo and redo when Python's deep copy had to be introduced.  Despite numerous attempts to solve this bug a solution was unable to be find before the project deadline.
 
 \section{The Future}
 
-By the end of the project the program that had been developed was a in a state that could be used by users.  There is more functionality than the Eclipse plugin and it is stable.  There is, however, work to be done if development were to continue.  This is detailed below:
+By the end of the project the program that had been developed was a in a state that could be used by users.  There is more functionality than the Eclipse plugin and it is stable.  There is, however, work to be done if development were to continue.  This is detailed below.
 
 \subsection{Plots as Queries}
-A prototype system for using plots as queries was developed (Section~\ref{sec:search}).  Early results were promising.~\tdi{Were they?}.  These results are not definite by any means.  Further work needs to be performed.  The first step would be working with a team of Biologists and creating a large evaluation set.  This will allow the effectiveness to be accurately measured.  This would also include tuning of the parameters used.  Other systems for using time series data as queries could also be developed and then the different systems can have their effectiveness compared.
+A prototype system for using plots as queries was developed (Section~\ref{sec:search}).  Early results were promising.\tdi{Were they?}, but further work needs to be performed.  The first step would be working with a team of biologists and creating a large evaluation set, this would be a labelled set of plots that are similar or not similar.  This will allow the effectiveness to be accurately measured.  This would also include tuning of the parameters used, such as feature size and vocabulary size.  Other systems for using time series data as queries could also be developed and then the different systems can have their effectiveness compared.
 
-The next step would be a single online repository of time series data that was been processed to be suitable for searching.  This would be done with the technique in Section~\ref{sec:search}.  Having a single online repository has two main benefits.  One: Tf.idf, information retrieval and machine learning in general all rely on having a large amount of data.  One user will typically not have enough data to be of much use if they want to use plots as a query against their own data.  Data that is not the user's would be used for the statistics but does not have to be made available to other users, however hopefully most researchers would agree to allow their data to be accessible to others.  The second benefit is that having a central repository takes it out of the hands of the user.  Part of the reason for not integrating this feature with the \ac{UI} during this project is that it would have been difficult to guarantee to keep track of the experiment data relating to the time series data in the database.  If the data had been uploaded to a central repository then there would be no problems tracking it.
+There should also be an online repository of time-series data.  This would be processed to be used in the search algorithms.  This would be done with the technique in Section~\ref{sec:search}.  \ac{tfidf}, information retrieval and machine learning in general all rely on having a large amount of data.  One user will typically not have enough data to give the best results.  A central repository of data would allow all user's data to be used to gather statistics on the data to be used in the algorithms.  Other user's data could also be displayed in the results.  This would allow users to discover related work and potential collaborators.  Having a central repository also takes some control of the data out of the hands of the user.  Part of the reason for not integrating this feature with the \ac{UI} during this project was that it would have been difficult to track the location of the experiment data.  If the data had been uploaded to a central repository then there would be no problems tracking it.  As the user would have no say in the location.
 
 \subsection{More Data Mining and Machine Learning}
 
-Enabling search was an early step into what can be done with machine learning and data mining with time series data.  Other areas of interest include classification, clustering \& anomaly detection.  All of these can be built on top of the work that was done in Section ~\ref{sec:search}.
+Enabling search was an early step into what can be done with machine learning and data mining applied to time series data.  Other areas of interest include classification, clustering \& anomaly detection.  All of these can be built on top of the work that was done in Section ~\ref{sec:search}.
 
 These are all features that would allow the user to analyse their work in a more detailed manner.
 
-Again, all of these works best with a large amount of data and so would need to be tied into an online repository.
+Again, all of these work best with a large amount of data and so would need to be tied into an online repository.
 
 \subsection{Put it in the Cloud}
 \label{sec:cloud}
