@@ -63,6 +63,7 @@ Work towards this goal would also hopefully include rewriting the project so tha
 The cloud backend would also, hopefully, include a repository for storing the attached files.  Currently there is no way for attached files to be sent to a collaborator.  They were considered too large to be able to be sent through the implementation of collaboration described in Section~\ref{sec:collaboration}.  Without a central file repository we would some other way of sending files.  This comes close to violating both Lett's and Zawinski's laws~\cite{atwood}.  These laws state, respectively, that all software evolves until it can send email and that all software evolves until it can read email.  They are a sign of feature creep in software.  Email would have been a potential solution on how to transfer the files between users, by building an email client into the program.  A central file repository avoids the need for feature creep.  Previews of the files could be part of the real time features with thumbnails and title being transmitted.  The collaborators can upload and download the full file as necessary.
 
 \subsection{Improve the Architecture}
+\label{sec:conc_architect}
 
 In Section~\ref{sec:architecture} the initial lack of architecture is discussed.  The architecture was improved and now resembles a \ac{MVC} architecture.  This work on the architecture should be continued in the future.  Making the architecture fully \ac{MVC} would greatly enable the work towards moving the tool to the cloud (Section~\ref{sec:cloud}).
 

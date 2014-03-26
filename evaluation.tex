@@ -134,25 +134,59 @@ The final evaluation definitely revealed that project has had positive outcomes.
 \section{Overall Self Evaluation}
 Scribble over lots of stuff talk about changes
 
-\tdi{final ui}
-
-\tdi{talk about the architecture}
-\tdi{talk about perhaps being more strictly mvc}
 
 
-\tdi{evaluate collaboration}
-\tdi{compare to the golden lists}
+\subsection{Evaluation of the Architecture}
+
+In Section~\ref{sec:architecture}, the architecture of the tool is discussed.  During the second phase of development the program was given an architecture similar to \ac{MVC} but with little distinction between the view and the controller.  This was a step in the right direction.  The program would, however, have a much better architecture if it was fully \ac{MVC}.  This would have the implementation of real time collaboration much easier. Having a \ac{MVC} architecture would also make future development easier.  This is discussed in Section~\ref{sec:conc_architect}.
+
+The program architecture suffered towards the end of development when real time collaboration was added as a feature.  The code was not fully \ac{MVC} and collaboration had not been a potential feature during any the architectural design.  This feature introduced an entirely new route through the program.  Due to the project time table there was no time to refactor the architecture.  This led to collaboration being somewhat bolted on.  Some of the functionality necessary for real time collaboration was put into the singleton object.
+
+\tdi{Does this contradict too much of what I said in the implementation chapter?}
+
+
+\subsection{Meeting HCI Principles}
+
+Norman~\cite{normsev}, Schneiderman~\cite{shgold} and Neilson~\cite{neilten} each have a set of principles for \ac{UI} design.  Whilst planning this project is was decided that these principles would form a useful evaluation metric.  The principles and how this project meets or does not meet them are detailed in the section.  There are overlaps between the sets of principles.  If there is an overlap it has been indicated.
+
+\begin{itemize}
+\item Striving for consistency is a principle in all three lists.  It suggests that platform conventions should be followed, similar actions should have similar effects and terminology should not change across the \ac{UI}.  Conforming to platform conventions has not been strictly followed in this project.  The intention was to be cross platform.  An attempt was made, with respect to the menubar, to follow MacOS guidelines.  However there are not enough menu options to make this obvious.  Terminology has been kept as consistent as possible across the \ac{UI}.  Efforts were made for similar actions to elicit similar results, however this was not always successful.  There is a big inconsistency between built-in matplotlib functionality and functionality implemented by this tool.  For example there are two different undo mechanisms.
+\item Enabling shortcuts is principle in Schneiderman's and Neilson's principles.  Shortcuts are there for expert users to save them time.  There are standard shortcuts, i.e. Ctrl-S for save.  Standard shortcuts can be considered user friendly.  Custom shortcuts are not user friendly, but they enable an experienced user to speed up their workflow.  Standard and custom shortcuts were implemented in this tool according to wxPython specification.
+\item Offer informative feedback is in all three lists of principles.  This is so the user is kept aware of system state.  They should be receiving feedback from every action.  This is detailed in Section~\ref{sec:feedback}
+\item Design dialogue to yield closure is a principle in Shneiderman's principles.  It calls for encapsulating sequences of actions with dialogues.  Finishing the dialogues allows the user to clear their mind.  The new tool makes significant use of dialogues to improve the user experience.
+\item Offer simple error handling is a principle of Shneiderman's and Neilson's principles.  The user should be prevented from arriving at an error state.  This was a problem throughout the project.  During development the found error states were removed, this was done through exception catching and more defensive programming.  If new error states were discovered the same techniques would be applied.  If the user performs and action they did not mean to, which could be classed as an error, they are able to undo it.
+\item Permit easy reversal of action - sh, neil
+\item Support internal locus of control - sh
+\item Reduce short-term memory load - sh
+\item Make functions visible - sh
+\item Constrain the user - norm
+\item Map to the real world - norm, neil
+\item Affordances - norm
+\item user control - neil
+\item aesthetic and minimalist design - neil
+\item help and documentation - neil
+\end{itemize}
+
+\subsection{Visualisation Quality}
+
 \tdi{compare to tufte}
+
+\subsection{How Well are the Goals Met?}
 \tdi{compare to goals}
+
+
 \tdi{Any other evaluation criteria I outlined?}
-\tdi{The problem tacking on collaboration at the end with 0 planning for it ever}
+
 
 \subsection{Meta Evaluation}
-\tdi{evaluate the evaluation strategy}
-\subsubsection{Real World Studies}
-More in depth evaluations should be performed.  An ethnographic study should be the goal.  As discussed in Section~\ref{chap:evaluation} the evaluation techniques used could only provide so much information.  An ethnographic study would bring to light truly how fit for purpose the tool is.
-\tdi{could this go in the evaluation}
+The findings from the user evaluations should be taken with a pinch of salt.  The tool was evaluated by a small number of users.  They did not spend a significant amount of time using the tool.  This limits the meaningfulness of the findings.  There were not enough biologists or potential users available to perform a significant number of evaluations.
 
+In particular the user's opinions on whether the tool was easy to use or not, and their ease with completing the task are not independent between evaluations.  Asking a set of users to repeatedly use a tool and perform a task will lead to them becoming more familiar with the tool and the task and future attempts will be easier for them.  Their opinion on ease of use may be built on the experience across evaluations.  This is an unavoidable problem with evaluating multiple times with the same set of users.  There were not enough biologists available to use different users in each evaluation.
+
+The users were also not able to spend a significant amount of time using the tool.  The evaluations performed were a good initial set of evaluations and uncovered a lot of the usability flaws.  An ethnographic study would involve users in their natural environment using the tool over a long period of time.  This would be a very in depth and time consuming evaluation technique.
+
+\subsection{Collaboration}
+\tdi{evaluate collaboration}
 
 \subsection{Search Results}
 \tdi{move this into evaluation?}
@@ -160,11 +194,15 @@ Initial results are very promising with the tf.idf weighted cosine providing muc
 
 \tdi{Id I generate some data talk about the limitations of generating artificial data}
 
-\subsection{Testing}
-\tdi{More testing and logging}
+\subsection{Testing and Logging}
 
-\section{Finished Product}
-\tdi{Not sure how necessary this is.  The plan would be a screenshot by screenshot walkthrough - may fit better in the self evaluation.  it will possibly just be duplicating screenshots that exist elsewhere}
+The development of the project involved little formal testing and logging.  The intention had been to develop tests, but these tests never came to fruition.  The development work was too tempting. The lack of tests caused problems later in development.  New features being implemented, which would often involve refactoring, would often break existing functionality.  These bugs would then sometimes not be discovered until user testing.  This was not what the users wanted to be presented with.  Having tests would potentially have revealed these bugs.
+
+Another oversight was the lack of logging in the program.  This only became a problem towards the end of the project as it got more complex.  It would, sometimes, be difficult to recreate the bug that the users had discovered.  This made it harder to fix.  The problem reached its peak during the implementation of real time collaboration.  Trying to debug the distributed communication without formal logging was challenging.  Print statements were used as a simple form of logging that was somewhat helpful.  Having a more structured logging framework in place from the start would have eased debugging throughout the development process.
+
+\subsection{Finished Product}
+
+\tdi{Add the rest of the tool to this section?}
 
 \tdi{The bits below were blindly moved from work done.  They may need some changes to make them fit with evaluation}
 
@@ -185,6 +223,7 @@ It is important that a user is able to save and load the visualisation session a
 Saving the data also enables limited collaboration.  The user can customize the appearance and add annotations.  They can then save the state to a file and email that file to a colleague.  The colleague can then load the file and see the user's work.  The colleague can then correct any issues and add their own work.  The colleague can then save this and email it back to the user.  This is useful and is better than no collaboration, but it is entirely asynchronous.
 
 \subsection{Feedback}
+\label{sec:feedback}
 Norman~\cite{normsev} and Shneiderman~\cite{shgold} both call for feedback to be given to the user so that the user can be sure that an action has been accomplished.  This feedback can come in a number of different forms and was in place in some parts of the project already.
 
 Existing feedback in the project was a natural byproduct of some of the features; for example, when loading a results file the feedback that the load operation has been successful is that a graph appears on the screen. If the graph does not appear then something has gone wrong.  Additional feedback has been added to the project:
