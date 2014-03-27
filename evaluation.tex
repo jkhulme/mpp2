@@ -182,7 +182,10 @@ In particular the user's opinions on whether the tool was easy to use or not, an
 The users were also not able to spend a significant amount of time using the tool.  The evaluations performed were a good initial set of evaluations and uncovered a lot of the usability flaws.  An ethnographic study would involve users in their natural environment using the tool over a long period of time.  This would be a very in depth and time consuming evaluation technique.
 
 \subsection{Collaboration}
-\tdi{evaluate collaboration}
+
+The implementation of real time collaboration is quite effective.  Almost all functionality that can be in a solo session has been implemented for collaborative work.  The only features that haven't are the large plot \tdi{Is this correct.} \tdi{Why was this not done in real time}.  This means that users are not limited in the actions that they can perform.
+
+The initial implementation of collaboration was note responsive enough.  It used blocking communication, effectively providing a lock around each action that affects the visualisation.  This involved waiting for a response from the collaborator to say that the change had been applied.  This meant having the user locked out of the \ac{UI} for duration of the round trip of the message.  The collaboration features were only tested on internal networks where that duration would be minimal.  Even with minimal duration it was a frustrating experience being locked out of the \ac{UI}.  Communication to users across non internal networks could only slower and therefore more frustrating to the user.  For this reason non blocking communication was implemented.  A thread is now created for each message sent.  This allows the \ac{UI} to not be locked out.
 
 \subsection{Search Results}
 \tdi{move this into evaluation?}
