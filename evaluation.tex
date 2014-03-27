@@ -155,11 +155,10 @@ Norman~\cite{normsev}, Schneiderman~\cite{shgold} and Neilson~\cite{neilten} eac
 \item Offer informative feedback is in all three lists of principles.  This is so the user is kept aware of system state.  They should be receiving feedback from every action.  This is detailed in Section~\ref{sec:feedback}
 \item Design dialogue to yield closure is a principle in Shneiderman's principles.  It calls for encapsulating sequences of actions with dialogues.  Finishing the dialogues allows the user to clear their mind.  The new tool makes significant use of dialogues to improve the user experience.
 \item Offer simple error handling is a principle of Shneiderman's and Neilson's principles.  The user should be prevented from arriving at an error state.  This was a problem throughout the project.  During development the found error states were removed, this was done through exception catching and more defensive programming.  If new error states were discovered the same techniques would be applied.  If the user performs and action they did not mean to, which could be classed as an error, they are able to undo it.
-\item Permit easy reversal of action - sh, neil
-\item Support internal locus of control - sh
-\item Reduce short-term memory load - sh
-\item Make functions visible - sh
-\item Constrain the user - norm
+\item Permit easy reversal of action is a principle in Shneiderman's and Neilson's lists.  It is intended to give users a way of escaping error states by reverting to previously working states.  This has been implemented through undo and redo.  This is discussed in Section~\ref{sec:undo}.
+\item Support internal locus of control is one of Shneiderman's principles.  It calls for making the user feel in control of the system and having the user instigate actions rather than respond to actions.  The user is the instigator of all actions in the tool.  The sense of control will be lost when collaborating as actions will be perform that they did not instigate.  This is unavoidable and is also mitigated by the fact that the users have to instigate a collaborative session.
+\item Reduce short-term memory load is a principle in Schneiderman's and Neilson's lists.  It calls for keeping \acp{UI} simple.  It is important that users should be able to recognize what action needs to be performed, not remembering what action has to be performed.  This has been done by clearly and effectively labelling \ac{UI} elements and by having a shallow structure.  The user is not forced to go through deep menus and dialogues to perform actions.  When implementing recognisable \acp{UI} it is important not to end up in a Norman's door situation \tdi{Cite Norman's Doors}.  A Norman door is a door that has been particularly poorly designed and is labelled push or pull, rather than made clear through the design of the door, usually the handles.  Some minor Norman door situations have found their way into the project.  The most obvious one is in the session wizard on the results file selector page.  The user is able to select multiple files.  The user did not discover this, so helper text was added telling the user that multiple files can be selected.  It had been assumed to be obvious, as it is a feature in many programs that you can select multiple files.
+\item Constrain the user is one of Norman's principles.  It suggests finding ways to restrict what actions a user can perform during use of the program.  This can be used to help guide the user through the program.  This has been accomplished in this project through the use of wizards and by enabling and disabling various \ac{UI} elements.  This is discussed further in Section~\ref{sec:guiding}
 \item Map to the real world - norm, neil
 \item Affordances - norm
 \item user control - neil
@@ -233,6 +232,7 @@ Existing feedback in the project was a natural byproduct of some of the features
 \end{itemize}
 
 \subsection{Guiding the User}
+\label{sec:guiding}
 
 The first evaluation of the second phase of the project unearthed that the users struggled to choose the correct action as there were multiple ways of performing the same action that had slightly different use cases.  For example, at one point results files could be added via two different menu items.  There was also confusing language in the menu options.  These multiple paths have been removed. For example, now there is only one way to open results files initially.  To help guide the user further, \ac{UI} elements are enabled and disabled as appropriate.  Now when the program is first loaded the only action a user can perform is to load a session or start a new session, or join a session.  Afterwards other \ac{UI} elements are enabled to allow the user to start using the tool effectively.
 
