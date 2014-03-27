@@ -183,9 +183,13 @@ The users were also not able to spend a significant amount of time using the too
 
 \subsection{Collaboration}
 
+It was unfortunately not possible to test this feature with the users.  Only one laptop was available for the evaluation sessions.  Although it is possible to run two instances of the program and start the collaboration feature, it is is not a representative demonstration as the two instances must be switched between and the changes are not seen in real time.
+
+The evaluation has therefore been focussed on the responsiveness and functionality covered
+
 The implementation of real time collaboration is quite effective.  Almost all functionality that can be in a solo session has been implemented for collaborative work.  The only features that haven't are the large plot \tdi{Is this correct.} \tdi{Why was this not done in real time}.  This means that users are not limited in the actions that they can perform.
 
-The initial implementation of collaboration was note responsive enough.  It used blocking communication, effectively providing a lock around each action that affects the visualisation.  This involved waiting for a response from the collaborator to say that the change had been applied.  This meant having the user locked out of the \ac{UI} for duration of the round trip of the message.  The collaboration features were only tested on internal networks where that duration would be minimal.  Even with minimal duration it was a frustrating experience being locked out of the \ac{UI}.  Communication to users across non internal networks could only slower and therefore more frustrating to the user.  For this reason non blocking communication was implemented.  A thread is now created for each message sent.  This allows the \ac{UI} to not be locked out.
+The initial implementation of collaboration was note responsive enough.  It used blocking communication, effectively providing a lock around each action that affects the visualisation.  This involved waiting for a response from the collaborator to say that the change had been applied.  This meant having the user locked out of the \ac{UI} for duration of the round trip of the message.  The collaboration features were only tested on internal networks where that duration would be minimal.  Even with minimal duration it was a frustrating experience being locked out of the \ac{UI}.  Communication to users across non internal networks could only slower and therefore more frustrating to the user.  For this reason non blocking communication was implemented.  A thread is now created for each message sent.  This allows the \ac{UI} to not be locked out.  It did require losing the mutual exclusion guarantee.  This made the \ac{UI} more responsive, but sacrificed guaranteed correctness.
 
 \subsection{Search Results}
 \tdi{move this into evaluation?}
