@@ -42,7 +42,7 @@ When doing a visualisation without any collaborators the undo and redo functiona
 By the end of the project the program that had been developed was in a state that could be used by users.  There is more functionality than the Eclipse plugin and it is stable.  There is, however, work which could be done if development were to continue.  This is detailed below.
 
 \subsection{Plots as Queries}
-A prototype system for using plots as queries was developed (Section~\ref{sec:search}).  Early results were promising \tdi{Were they?}, but further work needs to be performed.  The first step would be working with a team of biologists and creating a large evaluation set. This would be a labelled set of plots that are similar or not similar.  This will allow the effectiveness to be accurately measured.  This would also include tuning of the parameters used, such as feature size and vocabulary size.  Other systems for using time series data as queries could also be developed and then the different systems can have their effectiveness compared.
+A prototype system for using plots as queries was developed (Section~\ref{sec:search}).  Early results were promising, but further work needs to be performed.  The first step would be working with a team of biologists and creating a large evaluation set. This would be a labelled set of plots that are similar or not similar.  This will allow the effectiveness to be accurately measured.  This would also include tuning of the parameters used, such as feature size and vocabulary size.  Other systems for using time series data as queries could also be developed and then the different systems can have their effectiveness compared.
 
 There should also be an online repository of time-series data.  This would be processed for use in the search algorithms.  This would be done with the technique in Section~\ref{sec:search}.  \ac{tf.idf}, information retrieval, and machine learning in general, all rely on having a large amount of data.  One user will typically not have enough data to give the best results.  A central repository of data would allow all users' data to be used to gather statistics on the data to be used in the algorithms.  Other users' data could also be displayed in the results.  This would allow users to discover related work and potential collaborators.  Having a central repository also takes some control of the data out of the hands of the user.  Part of the reason for not integrating this feature with the \ac{UI} during this project was that it would have been difficult to track the location of the experiment data.  If the data had been uploaded to a central repository then there would be no problems tracking it, as the user would have no say in the location.
 
@@ -79,8 +79,10 @@ In addition to changing the model of collaboration from being distributed to cen
 
 \section{Final Remarks}
 
-The tool that has been developed through this project is a suitable substitute for the Bio-PEPA Eclipse plug-in for visualising data.  There are innovative features in the form of plots as queries and real time collaboration, although these are at the prototype stage.  Further work is needed before they are ready for the user.
+The goal which was ``to develop a tool to visualise the results of dynamic time-series models of intra-cellular behaviour based on biochemical reactions" has been met.  This has made it a suitable replacement for the Eclipse plugin.
 
-There is still work to be done if the project was to be taken forward.  These range from minor usability tweaks to substantial rewrites.
+On top of the visualisation functionality, a suite of innovative features have been implemented to allow users to analyse their data quicker and more effectively.  They are also now able to collaborate in real time.
 
-\tdi{Don't really like this section -- Is it necessary?}
+The functionality now offered by the tool is unique in the field.  No other software aimed at biologists allowed for real time collaboration, and no software allowed them to use their data to find similar data.
+
+There is work required in these innovative features before they are fully ready for the user, but the effectiveness of these of the prototypes demonstrate the potential.  The new software can be considered a significant improvement for biologists.
