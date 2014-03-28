@@ -1,52 +1,54 @@
 \chapter{Conclusion}
 
-In this section the project is compared to its initial goals and its success is discussed.  Any challenges not previously covered are discussed.  Any problems that were unable to be solved during development are discussed.  Finally areas identified for future work are discussed in detail.
+This section contains a final look at the project.  The goals were looked at and it was decided whether or not the project met them.  There is also a detailed analysis of where future work in the project should be focussed.  There is also a discussion of any challenges that were faced and any problems that were unable to be resolved.
 
 \section{Comparison to Objective}
 
 The aim of the project was: ``to develop a tool to visualise the results of dynamic time-series models of intra-cellular behaviour based on biochemical reactions".  This goal has been met.  The results can be visualised statically and dynamically.  The cell level visualisation applies domain knowledge familiar to biologists to help them understand their results.  Additional features to help the user work more efficiently and effectively have been added.  With respect to meeting the project goal the tool has been successful.
 
-The users are now able to load the results from their dynamic time-series models of intra-cellular behaviour based on biochemical reactions into the program to be visualised.  Their are static and dynamic visualisations.  These take the form of standard graphs and animations of an abstract view of cells.
+The users are now able to load the results from their dynamic time-series models of intra-cellular behaviour based on biochemical reactions into the program to be visualised.  There are static and dynamic visualisations.  These take the form of standard graphs and animations of an abstract view of cells.
 
 The user is able to interact with these visualisations.  They can customise them and attach additional information not present in the results files.
 
-The user is also able to manipulate their data and export that.
+The user is also able to manipulate their data and export it.
 
 Prototype features have been added for applying data mining techniques to allow the user to use their data to search databases of time series data and allowing users to collaborate in real time.
 
-Evaluations with potential users has shown positive reception to this new tool and its features and a willingness to use this tool instead of the Eclipse plugin.
+Evaluations with potential users have shown positive reception to this new tool and its features and a willingness to use this tool instead of the Eclipse plugin.
 
 \section{Challenges Faced}
 
-Some challenges were faced in this project that were not discussed elsewhere in this report.  These are below.
+Some challenges were faced in this project that were not discussed elsewhere in this report.  These are presented below.
 
 \subsection{wxPython Being Cross-Platform}
 Python was chosen for this project to allow for the project to be run on any system.  A cross platform \ac{GUI} toolkit was chosen for the same reason.  wxPython was chosen (details of why can be found in the MPP report).  Initially this was successful.  The program was running on MacOS and Linux.  As the project was developed further some discrepancies were uncovered between wxPython on different platforms.  Initially this was coped with by writing different versions of parts of the code for each platform.  Eventually this became impractical.  Development support for Linux was halted.  Currently the project has only been tested running on MacOSX Mountain Lion.
 
 An attempt was made to test the program on Windows, but there were problems installing the necessary Python libraries.
 
+If this project was to be undertaken again, a different approach for the \ac{UI} would be chosen.  A browser based approach would be most suitable.  This is discussed Section~\ref{sec:cloud}.  HTML would become the primary source of the \ac{UI}.  The users browser would render the \ac{UI}.  Different browsers should be able to render the same \ac{UI} on different platforms, as long as the HTML is standards compliant.
+
 \section{Unsolved Problems}
 
 \subsection{Complete Ordering Without Blocking}
 
-An initial version of the collaboration used blocking communication.  In a blocking mode it was possible to globally order the events.  This is described in Section~\ref{sec:collaboration}.  Blocking collaboration is far from optimal.  A slow network would make the collaboration unusable.  The program would be locked out from the user for the duration of the message and response.  Non blocking communication was added later through the use of threads when sending messages.  Now a thread is spawned for each message sent between the client and the server.  This prevents the \ac{UI} from being locked out during the communication process.  This had the undesirable side effect of not being able to guarantee correct ordering.  No solution was able to found for this, apart from switching to a centralised model as described in Section~\ref{sec:cloud}
+An initial version of the collaboration used blocking communication.  In a blocking mode it was possible to globally order the events.  This is described in Section~\ref{sec:collaboration}.  Blocking collaboration is far from optimal.  A slow network would make the collaboration unusable.  The program would lock out the user for the duration of the message and response.  Non blocking communication was added later through the use of threads when sending messages.  Now a thread is spawned for each message sent between the client and the server.  This prevents the \ac{UI} from being locked out during the communication process.  This had the undesirable side effect of not being able to guarantee correct ordering.  No solution has been found for this, apart from switching to a centralised model as described in Section~\ref{sec:cloud}.
 
 \subsection{Distributed Undo Forgetting States}
 
-When doing a visualisation without any collaborators the undo and redo functionality works as expected.  In the collaborative mode however there is a bug.  If we have the user and the collaborator, changes the user makes are sent to the collaborator.  If the user issues an undo command their undo history is correct.  The collaborator's undo history appears to forget states.  This leaves the collaborator and the user seeing different visualisations.  This bug appears to be related to the issues had when first implementing undo and redo when Python's deep copy had to be introduced.  Despite numerous attempts to solve this bug a solution was unable to be find before the project deadline.
+When doing a visualisation without any collaborators the undo and redo functionality works as expected.  In the collaborative mode however there is a bug.  If we have the user and the collaborator, changes the user makes are sent to the collaborator.  If the user issues an undo command their undo history is correct.  The collaborator's undo history appears to forget states.  This leaves the collaborator and the user seeing different visualisations.  This bug appears to be related to the issues that arose when first implementing undo and redo. Python's deep copy had to be introduced.  Despite numerous attempts to solve this bug a solution has not been found to resolve the issue before the project deadline.
 
 \section{The Future}
 
-By the end of the project the program that had been developed was a in a state that could be used by users.  There is more functionality than the Eclipse plugin and it is stable.  There is, however, work to be done if development were to continue.  This is detailed below.
+By the end of the project the program that had been developed was in a state that could be used by users.  There is more functionality than the Eclipse plugin and it is stable.  There is, however, work which could be done if development were to continue.  This is detailed below.
 
 \subsection{Plots as Queries}
-A prototype system for using plots as queries was developed (Section~\ref{sec:search}).  Early results were promising.\tdi{Were they?}, but further work needs to be performed.  The first step would be working with a team of biologists and creating a large evaluation set, this would be a labelled set of plots that are similar or not similar.  This will allow the effectiveness to be accurately measured.  This would also include tuning of the parameters used, such as feature size and vocabulary size.  Other systems for using time series data as queries could also be developed and then the different systems can have their effectiveness compared.
+A prototype system for using plots as queries was developed (Section~\ref{sec:search}).  Early results were promising \tdi{Were they?}, but further work needs to be performed.  The first step would be working with a team of biologists and creating a large evaluation set. This would be a labelled set of plots that are similar or not similar.  This will allow the effectiveness to be accurately measured.  This would also include tuning of the parameters used, such as feature size and vocabulary size.  Other systems for using time series data as queries could also be developed and then the different systems can have their effectiveness compared.
 
-There should also be an online repository of time-series data.  This would be processed to be used in the search algorithms.  This would be done with the technique in Section~\ref{sec:search}.  \ac{tfidf}, information retrieval and machine learning in general all rely on having a large amount of data.  One user will typically not have enough data to give the best results.  A central repository of data would allow all user's data to be used to gather statistics on the data to be used in the algorithms.  Other user's data could also be displayed in the results.  This would allow users to discover related work and potential collaborators.  Having a central repository also takes some control of the data out of the hands of the user.  Part of the reason for not integrating this feature with the \ac{UI} during this project was that it would have been difficult to track the location of the experiment data.  If the data had been uploaded to a central repository then there would be no problems tracking it.  As the user would have no say in the location.
+There should also be an online repository of time-series data.  This would be processed for use in the search algorithms.  This would be done with the technique in Section~\ref{sec:search}.  \ac{tf.idf}, information retrieval, and machine learning in general, all rely on having a large amount of data.  One user will typically not have enough data to give the best results.  A central repository of data would allow all users' data to be used to gather statistics on the data to be used in the algorithms.  Other users' data could also be displayed in the results.  This would allow users to discover related work and potential collaborators.  Having a central repository also takes some control of the data out of the hands of the user.  Part of the reason for not integrating this feature with the \ac{UI} during this project was that it would have been difficult to track the location of the experiment data.  If the data had been uploaded to a central repository then there would be no problems tracking it, as the user would have no say in the location.
 
 \subsection{More Data Mining and Machine Learning}
 
-Enabling search was an early step into what can be done with machine learning and data mining applied to time series data.  Other areas of interest include classification, clustering \& anomaly detection.  All of these can be built on top of the work that was done in Section ~\ref{sec:search}.
+Enabling search was an early step into what can be done with machine learning and data mining applied to time series data.  Other areas of interest include classification, clustering and anomaly detection.  All of these can be built on top of the work that was done in Section ~\ref{sec:search}.
 
 These are all features that would allow the user to analyse their work in a more detailed manner.
 
@@ -54,23 +56,23 @@ Again, all of these work best with a large amount of data and so would need to b
 
 \subsection{Put it in the Cloud}
 \label{sec:cloud}
-All of the collaboration software reviewed in Section~\ref{sec:review} worked using a model where there is a single server.  This is a much simpler model for collaboration as the only ordering is the ordering on the server.
+All of the collaboration software reviewed (see Section~\ref{sec:review}) worked using a model where there is a single server.  This is a much simpler model for collaboration as the only ordering is the ordering on the server.
 
-This would require some refactoring of the project.  The code would need to be separated completely into a server and a client.  The server would do the the work: parsing the data, performing the intensity calculations and handling the creation of annotations.  The client would just display the information from the server.
+Adopting this model the for tool's architecture would require some refactoring of the project.  The code would need to be separated completely into a server and a client.  The server would do the the work: parsing the data, performing the intensity calculations and handling the creation of annotations.  The client would just display the information from the server.
 
-Work towards this goal would also hopefully include rewriting the project so that the client could be a browser based client.  A lot of problems were faced with wxPython not being as cross platform compatible as had been hoped.  Rewriting the client to be browser based should solve the cross platform problems.
+Work towards this goal would also hopefully include rewriting the project so that the client could be a browser-based client.  A lot of problems arose from wxPython not being as cross platform compatible as had been hoped.  Rewriting the client to be browser-based should solve the cross platform problems.
 
-The cloud backend would also, hopefully, include a repository for storing the attached files.  Currently there is no way for attached files to be sent to a collaborator.  They were considered too large to be able to be sent through the implementation of collaboration described in Section~\ref{sec:collaboration}.  Without a central file repository we would some other way of sending files.  This comes close to violating both Lett's and Zawinski's laws~\cite{atwood}.  These laws state, respectively, that all software evolves until it can send email and that all software evolves until it can read email.  They are a sign of feature creep in software.  Email would have been a potential solution on how to transfer the files between users, by building an email client into the program.  A central file repository avoids the need for feature creep.  Previews of the files could be part of the real time features with thumbnails and title being transmitted.  The collaborators can upload and download the full file as necessary.
+The cloud backend would also, hopefully, include a repository for storing the attached files.  Currently there is no way for attached files to be sent to a collaborator.  They were considered too large to be sent through the implementation of collaboration described in Section~\ref{sec:collaboration}.  Without a central file repository we would need some other way of sending files.  This comes close to violating both Lett's and Zawinski's laws~\cite{atwood}.  These laws state, respectively, that all software evolves until it can send email and that all software evolves until it can read email.  They are a sign of feature creep in software.  Email would have been a potential solution on how to transfer the files between users, by building an email client into the program.  A central file repository avoids the need for this feature creep.  Previews of the files could be part of the real time features with thumbnails and title being transmitted.  The collaborators can upload and download the full file as necessary.
 
 \subsection{Improve the Architecture}
 \label{sec:conc_architect}
 
-In Section~\ref{sec:architecture} the initial lack of architecture is discussed.  The architecture was improved and now resembles a \ac{MVC} architecture.  This work on the architecture should be continued in the future.  Making the architecture fully \ac{MVC} would greatly enable the work towards moving the tool to the cloud (Section~\ref{sec:cloud}).
+In Section~\ref{sec:architecture} the initial lack of architecture is discussed.  The architecture was improved and now resembles a \ac{MVC} architecture.  This work on the architecture should be continued in the future.  Making the architecture fully \ac{MVC} would greatly enhance the work towards moving the tool to the cloud (Section~\ref{sec:cloud}).
 
-Having a \ac{MVC} architecture would also make it much easier to change interfaces.  New \acp{UI} can be developed and just connected to the model which would be running in the cloud.
+Having a \ac{MVC} architecture would also make it much easier to change interfaces.  New \acp{UI} could be developed and just connected to the model which would be running in the cloud.
 
 \subsection{More Customization}
-The user is given control over the appearance of lines on the graph.  This could be expanded further into the tool.  Currently annotations cannot be customized, they can only be black.  More annotation options could be offered.  Different normalisation methods could be included as discussed in Section~\ref{sec:normalised}.
+Currently, the user is given control over the appearance of lines on the graph.  This could be expanded further into the tool.  Currently annotations cannot be customized, they can only be black.  More annotation options could be offered.  Also, different normalisation methods could be included as discussed in Section~\ref{sec:normalised}.
 
 \subsection{More collaboration}
 In addition to changing the model of collaboration from being distributed to centralised, further work should be done towards enabling communication between users.  Currently collaborators will have to use a phone or an external chat client to discuss the work.  A chat client could be integrated into the program.  This would enable communication without needing to switch between applications.  This chat client could also be specialised to include features that would be relevant to visualising data.
