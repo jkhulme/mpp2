@@ -239,6 +239,8 @@ Editing text and deleting provide the user with control over the annotation, but
 
 Placing annotations is reasonably user friendly.  The dialogue acts a guide to the user.  Having to click on a cell cross-section to place the annotation was hoped to be obvious as it follows the same behaviour as with the graph annotations.  This was not the case.  Text has been added to the dialogue to make this more obvious.
 
+There is also more of disjoint than would be desirable between the cell cross-sections and the animation annotation panel.  This was felt necessary due to space constraints.  A more desirable approach would be like the graph annotations where they are handled entirely from the toolbar.  Not a separate panel on the \ac{UI}.
+
 \subsection{Normalisation and Export}
 
 This is quite a user friendly feature.  This has been evidenced by the users having no trouble with the feature.  Normalising the data uses a checkbox menu item to toggle on or off.  This provides a visual clue to the user that is toggle-able state.  It should indicate as well that if they press the menu item and do not like the results that they can press the menu item again and revert to the previous appearance.
@@ -252,6 +254,10 @@ The development of the project involved little formal testing and logging.  The 
 Another oversight was the lack of logging in the program.  This only became a problem towards the end of the project as it got more complex.  It would, sometimes, be difficult to recreate the bug that the users had discovered.  This made it harder to fix.  The problem reached its peak during the implementation of real time collaboration.  Trying to debug the distributed communication without formal logging was challenging.  Print statements were used as a simple form of logging that was somewhat helpful.  Having a more structured logging framework in place from the start would have eased debugging throughout the development process.
 
 \subsection{Finished Product}
+
+Figure~\ref{fig:main_ui} shows the main body of the \ac{UI} at the end of the development phase.  Figure~\ref{fig:old_ui} shows the previous version of the \ac{UI}.  The widgets have been placed in a more organised and consistent manner.  This style has been continued through the rest of the screens in the \ac{UI}.  A heading to the legend panel has been added.  This indicates to the user from the start where the legend will be placed.  It has also been much more prominent in an effort to draw the users attention to it.  The legend panel has been moved over to the right hand side to remove the boxed in feeling that the previous \ac{UI} gave.
+
+Figures~\ref{fig:add_anime_annotation}~and~\ref{fig:plot_prefs_dialogue} show the dialogues that are presented to the user for creating an animation annotation and changing the preferences of a line.  There is a consistent style to the dialogues to help the user feel comfortable.  In both dialogues related widgets are grouped together.  It was not felt necessary to use wizards for these functions.  Wizards imply a set of steps that need to be followed.  For the plot preferences dialogue there is no concept of order.  For the annotation dialogue there are not enough steps to warrant a wizard.
 
 \begin{figure}[h!]
     \centering
@@ -280,6 +286,8 @@ Another oversight was the lack of logging in the program.  This only became a pr
     \caption{Line preferences dialogue}
     \label{fig:plot_prefs_dialogue}
 \end{figure}
+
+\tdi{get figure of what session wizard used to look like}
 
 \tdi{The bits below were blindly moved from work done.  They may need some changes to make them fit with evaluation}
 
