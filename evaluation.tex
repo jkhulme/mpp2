@@ -115,25 +115,10 @@ The user was presented with the same task as the user group.  After completing t
 
 \subsection{Personal}
 
-The final evaluation definitely revealed that project has had positive outcomes.  The user were all in favour of the project and would use it in their workflow.  The reception to the new \ac{UI} layout was very positive.  Fewer bugs were discovered than in previous evaluations.  There are still usability flaws and further, more in depth evaluation is needed.
+The final evaluation definitely revealed that project has had positive outcomes.  The user were all in favour of the project and would use it in their workflow.  The reception to the new \ac{UI} layout was very positive.  Fewer bugs were discovered than in previous evaluations. There are still usability flaws and further, more in depth evaluation is needed.
 
-\iffalse
- .----------------.  .----------------.  .----------------.  .----------------.
-| .--------------. || .--------------. || .--------------. || .--------------. |
-| |  ____  ____  | || |  _________   | || |  _______     | || |  _________   | |
-| | |_   ||   _| | || | |_   ___  |  | || | |_   __ \    | || | |_   ___  |  | |
-| |   | |__| |   | || |   | |_  \_|  | || |   | |__) |   | || |   | |_  \_|  | |
-| |   |  __  |   | || |   |  _|  _   | || |   |  __ /    | || |   |  _|  _   | |
-| |  _| |  | |_  | || |  _| |___/ |  | || |  _| |  \ \_  | || |  _| |___/ |  | |
-| | |____||____| | || | |_________|  | || | |____| |___| | || | |_________|  | |
-| |              | || |              | || |              | || |              | |
-| '--------------' || '--------------' || '--------------' || '--------------' |
- '----------------'  '----------------'  '----------------'  '----------------'
-\fi
-
-\section{Overall Self Evaluation}
-Scribble over lots of stuff talk about changes
-
+\section{Self Evaluation}
+The feedback from potential users was a very important part of the evaluation.  There are other important aspects of the evaluation.  There are other metrics for what constitutes a good, usable piece of software.  The performance must be evaluated.  We must also consider the validity of any results.  These aspects, and more, are discussed in this section.
 
 
 \subsection{Evaluation of the Architecture}
@@ -149,30 +134,59 @@ The program architecture suffered towards the end of development when real time 
 
 Norman~\cite{normsev}, Schneiderman~\cite{shgold} and Neilson~\cite{neilten} each have a set of principles for \ac{UI} design.  Whilst planning this project is was decided that these principles would form a useful evaluation metric.  The principles and how this project meets or does not meet them are detailed in the section.  There are overlaps between the sets of principles.  If there is an overlap it has been indicated.
 
-\begin{itemize}
-\item Striving for consistency is a principle in all three lists.  It suggests that platform conventions should be followed, similar actions should have similar effects and terminology should not change across the \ac{UI}.  Conforming to platform conventions has not been strictly followed in this project.  The intention was to be cross platform.  An attempt was made, with respect to the menubar, to follow MacOS guidelines.  However there are not enough menu options to make this obvious.  Terminology has been kept as consistent as possible across the \ac{UI}.  Efforts were made for similar actions to elicit similar results, however this was not always successful.  There is a big inconsistency between built-in matplotlib functionality and functionality implemented by this tool.  For example there are two different undo mechanisms.
-\item Enabling shortcuts is principle in Schneiderman's and Neilson's principles.  Shortcuts are there for expert users to save them time.  There are standard shortcuts, i.e. Ctrl-S for save.  Standard shortcuts can be considered user friendly.  Custom shortcuts are not user friendly, but they enable an experienced user to speed up their workflow.  Standard and custom shortcuts were implemented in this tool according to wxPython specification.
-\item Offer informative feedback is in all three lists of principles.  This is so the user is kept aware of system state.  They should be receiving feedback from every action.  This is detailed in Section~\ref{sec:feedback}
-\item Design dialogue to yield closure is a principle in Shneiderman's principles.  It calls for encapsulating sequences of actions with dialogues.  Finishing the dialogues allows the user to clear their mind.  The new tool makes significant use of dialogues to improve the user experience.
-\item Offer simple error handling is a principle of Shneiderman's and Neilson's principles.  The user should be prevented from arriving at an error state.  This was a problem throughout the project.  During development the found error states were removed, this was done through exception catching and more defensive programming.  If new error states were discovered the same techniques would be applied.  If the user performs and action they did not mean to, which could be classed as an error, they are able to undo it.
-\item Permit easy reversal of action is a principle in Shneiderman's and Neilson's lists.  It is intended to give users a way of escaping error states by reverting to previously working states.  This has been implemented through undo and redo.  This is discussed in Section~\ref{sec:undo}.
-\item Support internal locus of control is one of Shneiderman's principles.  It calls for making the user feel in control of the system and having the user instigate actions rather than respond to actions.  The user is the instigator of all actions in the tool.  The sense of control will be lost when collaborating as actions will be perform that they did not instigate.  This is unavoidable and is also mitigated by the fact that the users have to instigate a collaborative session.
-\item Reduce short-term memory load is a principle in Schneiderman's and Neilson's lists.  It calls for keeping \acp{UI} simple.  It is important that users should be able to recognize what action needs to be performed, not remembering what action has to be performed.  This has been done by clearly and effectively labelling \ac{UI} elements and by having a shallow structure.  The user is not forced to go through deep menus and dialogues to perform actions.  When implementing recognisable \acp{UI} it is important not to end up in a Norman's door situation \tdi{Cite Norman's Doors}.  A Norman door is a door that has been particularly poorly designed and is labelled push or pull, rather than made clear through the design of the door, usually the handles.  Some minor Norman door situations have found their way into the project.  The most obvious one is in the session wizard on the results file selector page.  The user is able to select multiple files.  The user did not discover this, so helper text was added telling the user that multiple files can be selected.  It had been assumed to be obvious, as it is a feature in many programs that you can select multiple files.
-\item Constrain the user is one of Norman's principles.  It suggests finding ways to restrict what actions a user can perform during use of the program.  This can be used to help guide the user through the program.  This has been accomplished in this project through the use of wizards and by enabling and disabling various \ac{UI} elements.  This is discussed further in Section~\ref{sec:guiding}
-\item Providing mappings to the real world is one of Norman's and Neilson's principles.  It suggests that the program should `speak the user's language' and use words phrases and concepts that are familiar to them.  The cell cross-section animations are an example of that in this program.  It maps the results data into a form that is more familiar to biologists.
-\item Making use of affordances is one of Norman's principles.  Is calls for using visual clues to help guide the user.  Different mouse cursors were used to indicate to the user that different functionality could be performed.  This is detailed further in Section~\ref{sec:guiding}.
-\item Having an aesthetic and minimalistic design is one of Neilson's principles.  It calls for not having unnecessary in the \ac{UI} as it competes with the relevant information for the users attention.  This is quite a subjective criteria, however the user feedback would seem to indicate that it has been met.
-\item Providing help and documentation is one of Neilson's principles.  It calls for having documentation be available for the user in case they need it.  This project has no user documentation.  This is because the time that could have spent writing documentation was better spent implementing innovative features.  If time was not a factor in the project then user documentation would have been written.
-\end{itemize}
+\paragraph*{Striving for consistency} is a principle in all three lists.  It suggests that platform conventions should be followed, similar actions should have similar effects and terminology should not change across the \ac{UI}.  Conforming to platform conventions has not been strictly followed in this project.  The intention was to be cross platform.  An attempt was made, with respect to the menubar, to follow MacOS guidelines.  However there are not enough menu options to make this obvious.  Terminology has been kept as consistent as possible across the \ac{UI}.  Efforts were made for similar actions to elicit similar results, however this was not always successful.  There is a big inconsistency between built-in matplotlib functionality and functionality implemented by this tool.  For example there are two different undo mechanisms.
+
+\paragraph*{Enabling shortcuts} is principle in Schneiderman's and Neilson's principles.  Shortcuts are there for expert users to save them time.  There are standard shortcuts, i.e. Ctrl-S for save.  Standard shortcuts can be considered user friendly.  Custom shortcuts are not user friendly, but they enable an experienced user to speed up their workflow.  Standard and custom shortcuts were implemented in this tool according to wxPython specification.
+
+\paragraph*{Offering informative feedback} is in all three lists of principles.  This is so the user is kept aware of system state.  They should be receiving feedback from every action.  This is detailed in Section~\ref{sec:feedback}
+
+\paragraph*{Designing dialogues to yield closure} is a principle in Shneiderman's principles.  It calls for encapsulating sequences of actions with dialogues.  Finishing the dialogues allows the user to clear their mind.  The new tool makes significant use of dialogues to improve the user experience.
+
+\paragraph*{Offering simple error handling} is a principle of Shneiderman's and Neilson's principles.  The user should be prevented from arriving at an error state.  This was a problem throughout the project.  During development the found error states were removed, this was done through exception catching and more defensive programming.  If new error states were discovered the same techniques would be applied.  If the user performs and action they did not mean to, which could be classed as an error, they are able to undo it.
+
+\paragraph*{Permitting easy reversal of actions} is a principle in Shneiderman's and Neilson's lists.  It is intended to give users a way of escaping error states by reverting to previously working states.  This has been implemented through undo and redo.  This is discussed in Section~\ref{sec:undo}.
+
+\paragraph*{Supporting internal locus of control} is one of Shneiderman's principles.  It calls for making the user feel in control of the system and having the user instigate actions rather than respond to actions.  The user is the instigator of all actions in the tool.  The sense of control will be lost when collaborating as actions will be perform that they did not instigate.  This is unavoidable and is also mitigated by the fact that the users have to instigate a collaborative session.
+
+\paragraph*{Reducing short-term memory load} is a principle in Schneiderman's and Neilson's lists.  It calls for keeping \acp{UI} simple.  It is important that users should be able to recognize what action needs to be performed, not remembering what action has to be performed.  This has been done by clearly and effectively labelling \ac{UI} elements and by having a shallow structure.  The user is not forced to go through deep menus and dialogues to perform actions.  When implementing recognisable \acp{UI} it is important not to end up in a Norman's door situation \tdi{Cite Norman's Doors}.  A Norman door is a door that has been particularly poorly designed and is labelled push or pull, rather than made clear through the design of the door, usually the handles.  Some minor Norman door situations have found their way into the project.  The most obvious one is in the session wizard on the results file selector page.  The user is able to select multiple files.  The user did not discover this, so helper text was added telling the user that multiple files can be selected.  It had been assumed to be obvious, as it is a feature in many programs that you can select multiple files.
+
+\paragraph*{Constraining the user} is one of Norman's principles.  It suggests finding ways to restrict what actions a user can perform during use of the program.  This can be used to help guide the user through the program.  This has been accomplished in this project through the use of wizards and by enabling and disabling various \ac{UI} elements.  This is discussed further in Section~\ref{sec:guiding}
+
+\paragraph*{Providing mappings to the real world} is one of Norman's and Neilson's principles.  It suggests that the program should `speak the user's language' and use words phrases and concepts that are familiar to them.  The cell cross-section animations are an example of that in this program.  It maps the results data into a form that is more familiar to biologists.
+
+\paragraph*{Making use of affordances} is one of Norman's principles.  Is calls for using visual clues to help guide the user.  Different mouse cursors were used to indicate to the user that different functionality could be performed.  This is detailed further in Section~\ref{sec:guiding}.
+
+\paragraph*{Having an aesthetic and minimalistic design} is one of Neilson's principles.  It calls for not having unnecessary in the \ac{UI} as it competes with the relevant information for the users attention.  This is quite a subjective criteria, however the user feedback would seem to indicate that it has been met.
+
+\paragraph*{Providing help and documentation} is one of Neilson's principles.  It calls for having documentation be available for the user in case they need it.  This project has no user documentation.  This is because the time that could have spent writing documentation was better spent implementing innovative features.  If time was not a factor in the project then user documentation would have been written.
+
+The new tool has been quite successful at meeting these principles.  We can consider therefore to be good interface, with room for improvement.
 
 \subsection{Visualisation Quality}
 
 Edward Tufte's The Visual Display of Quantitative Information~\cite{tufte} is a seminal work in the data visualisation field.  In this book he outlines a number of metrics that can be used to evaluate the quality of a visualisation.  Given that this project is primarily a data visualisation tool it is important that visualisations are of a high quality.  Tufte's metrics have been used for evaluation.
 
-\tdi{compare to tufte}
-Checklist for graphical excellence - p13
-Data ink - p93
-Lie factor - p57
+Tufte provides a checklist for graphical excellence~\cite{tufte}[p.13].  These are set of points that describe what a visualisation should be.  They therefore can be a useful evaluation metric for visualisations.
+
+According Tufte graphical displays should:
+\begin{itemize}
+\item Display the data.  This is accomplished in the new tool.
+\item Make the user think about the visualisation, not how it was created.  This is a very subjective metric.  It is, believed to be, more relevant to more complex infographics rather than graphs.
+\item Avoid distorting the data.  This is accomplished in the new tool.  Data is not distorted.
+\item Present many numbers in a small space.  This accomplished.  Thousands of data points are plotted on the graph.
+\item Make large datasets coherent.  This is believed to have been accomplished, the data is plotted in line graph form, which is easy to interpret.
+\item Encourage the eye to compare different pieces of data.  This is another metric that seems more relevant to complex infographics.  It has been accomplished in this tool.  Multiple species can be plotted on the same graph.  It is then natural to compare the data.
+\item Reveal the data at several levels of detail.  This has been accomplished.
+We have the traditional graphs and cell cross-sections.  The graph provides detail on the structure and the cell cross-sections provide a broader overview of the data.
+\item Serve a clear purpose.  This tool does have a clear purpose.  Visualising the results of dynamic time-series models of intra-cellular behaviour based on biochemical reactions.  As has been discussed this goal has been met.
+\item Be closely integrated with statistical and verbal descriptions of the dataset.  The ability to add annotations to the visualisations accomplishes this goal.  The annotations provide the verbal description and the the graphs provide the statistical description.
+\end{itemize}
+
+\paragraph{The Golden Ratio} is suggested by Tufte as the proportion to use for the size of a graph~\cite{tufte}[p.189].  The golden ratio is also believed to be aesthetically to humans.  The graph in this tool approximates the golden ratio.
+
+\paragraph{Data Ink}~\cite{tufte}[p.93] is a metric for determining how much redundant information is in a visualisation.  This has not been formally calculated as it would have involved image analysis and the definition of redundant information is not strict, especially with annotations.  The concept of reducing redundant information is still an important aspect and was taken into consideration.  There is no unnecessary decoration on the graphics.  The only information displayed is relevant.
+
+\paragraph{Lie Factor}~\cite{tufte}[p.57] is a metric for whether a visualisation is misrepresenting the information.  It is calculated by $\frac{\text{size of effect in graph}}{\text{size of effect in data}}$.  This was identified as an evaluation metric because correctly representing the data is vital.  The visualisations available in this tool do not misrepresent data in any way.  They are plotting the data.  Lie factor is more of an issue in fancier graphics.
 
 \subsection{Meta Evaluation}
 The findings from the user evaluations should be taken with a pinch of salt.  The tool was evaluated by a small number of users.  They did not spend a significant amount of time using the tool.  This limits the meaningfulness of the findings.  There were not enough biologists or potential users available to perform a significant number of evaluations.
@@ -197,6 +211,40 @@ Initial results are very promising with the tf.idf weighted cosine providing muc
 
 \tdi{Id I generate some data talk about the limitations of generating artificial data}
 
+\subsection{Animation}
+
+During the session wizard it is indicated to the user that they need the model file to be added to the session for animation.  This is for beginner users.  Advanced users will be able to use the model viewer to preview animation.  Once a session has been started the animation toolbar is made available.  The toolbar contains a play/pause button.  This enables discovery of two features.  The line drawn on the graph indicating current time and the time slider.  The user can see the time slider moving.  This provides a cue to them that they can move the slider to control time.
+
+The species/file selectors and the button to switch between file-focussed and species-focussed modes are less obvious in their behaviour.  Users were unable to work out what these features did.  After being prompted they were comfortable with them.  Discoverability is the issue.  User documentation would be a fix for this.
+
+The appearance of the time slider in the \ac{UI} is a particular weak point.  Many attempts were made to stretch the appearance of the slider widget but these were fruitless.
+
+The performance of the animation has been more than adequate.  In the cell segments the animation is smooth.  The animation of the line on the graph is also fairly smooth, although choppiness in frame transitions has been noticed.  The performance is better than the usual graph speed as the entire graph is not continuously being redrawn.  Only the single vertical line.
+
+Feedback from the users has been very positive for the animation feature.  It meets the goal of providing visualisations more familiar to the users.
+
+\subsection{Annotation}
+
+Annotation of the graph and the animation had to be implemented separately.  They also have to be evaluated separately.  One of the flaws of the current annotation implementation is the separation between the different annotations.  This is not user friendly as they have to learn two different systems, each with different behaviours.
+
+\subsubsection{Graph Annotations}
+
+Placing annotations is now quite user friendly.  The annotation type is chosen from the toolbar and then the graph is clicked to place.  Arrow annotations have an arrow that follows the mouse allowing the user to see the appearance before placing the annotation.  This was not possible for the text and circle annotations.
+
+Selecting annotations is not user friendly enough.  The need to right click to select an annotation is assumed knowledge.  It has not been made obvious enough to the user.
+
+Editing text and deleting provide the user with control over the annotation, but more needs to be provided in the future, in particular the ability to move annotations.
+
+\subsubsection{Animation Annotations}
+
+Placing annotations is reasonably user friendly.  The dialogue acts a guide to the user.  Having to click on a cell cross-section to place the annotation was hoped to be obvious as it follows the same behaviour as with the graph annotations.  This was not the case.  Text has been added to the dialogue to make this more obvious.
+
+\subsection{Normalisation and Export}
+
+This is quite a user friendly feature.  This has been evidenced by the users having no trouble with the feature.  Normalising the data uses a checkbox menu item to toggle on or off.  This provides a visual clue to the user that is toggle-able state.  It should indicate as well that if they press the menu item and do not like the results that they can press the menu item again and revert to the previous appearance.
+
+Normalisation and export are both operations on the data and so have been grouped together on the menu.  The main issue with normalisation was how annotations should behave.  The approach was described in Section~\ref{sec:normalize}.  This was an adequate solution and keeps the state visible to the user.
+
 \subsection{Testing and Logging}
 
 The development of the project involved little formal testing and logging.  The intention had been to develop tests, but these tests never came to fruition.  The development work was too tempting. The lack of tests caused problems later in development.  New features being implemented, which would often involve refactoring, would often break existing functionality.  These bugs would then sometimes not be discovered until user testing.  This was not what the users wanted to be presented with.  Having tests would potentially have revealed these bugs.
@@ -205,7 +253,33 @@ Another oversight was the lack of logging in the program.  This only became a pr
 
 \subsection{Finished Product}
 
-\tdi{Add the rest of the tool to this section?}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{images/main_ui.png}
+    \caption{Final \ac{UI}}
+    \label{fig:main_ui}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\textwidth]{images/old_ui.png}
+    \caption{Earlier \ac{UI}}
+    \label{fig:old_ui}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/add_annotation_dialogue.png}
+    \caption{Add animation annotation dialogue}
+    \label{fig:add_anime_annotation}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/plot_preferences_dialogue.png}
+    \caption{Line preferences dialogue}
+    \label{fig:plot_prefs_dialogue}
+\end{figure}
 
 \tdi{The bits below were blindly moved from work done.  They may need some changes to make them fit with evaluation}
 
