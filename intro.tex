@@ -27,6 +27,27 @@ A significant problem with Bio-PEPA's visualisation capability is that it is dif
 
 Over the course of the project the scope has been expanded.  The original objective was to assess which forms of visual representation are most helpful and informative to laboratory science.  At the end of the first project phase the objective changed (to reflect that the project was about delivering a finished program and not about the results of many experiments) to be to develop a tool to visualise the results of dynamic time-series models of intra-cellular behaviour based on biochemical reactions.  This objective was focused on visualisation to aid those researchers who are not numerically confident.  The second phase of the project has added to this objective to also aid interpretation and collaboration.  This change in objective is to make the tool better for all users.  To reflect these changes the focus on the original Src team has been generalised.  Evaluations are performed with other potential users who are also biologists.  Another factor in deciding to focus more on these other potential users was one of the key Src researchers going on maternity leave during the second phase of the project.  This made it infeasible to evaluate the tool with them.  It had been hoped to still evaluate the tool with them at the end of the second phase of development but they were still on maternity leave.
 
+\section{This Document}
+
+This document details the work that was undertaken during the second phase of this project (MPP2).  This is split into separate chapters.
+
+Chapter~\ref{chap:goals} discusses the goals that had been identified and the new goals that have been added.  This discussion includes what goals have been refined and why certain goals have been dropped.
+
+Chapter~\ref{chap:work} discusses the implementation work that has been performed as part of this project phase.  The discussion includes challenges faced and solutions for those challenges.
+
+Chapter~\ref{chap:eval} discusses the evaluation of the project.  This is spread over multiple evaluation sessions and includes evaluations with potential users as well as self evaluations.
+
+This chapter, the introduction, discusses the aims of the this project and gives a brief overview of the results.  The current landscape of similar software is evaluated.  There is also a brief introduction to the major external libraries that were used in this project.
+
+The work that was implemented in this phase of the project consisted of:
+\begin{itemize}
+\item Animation of species moving through a cell.
+\item Enabling annotation of the visualisations.
+\item The ability to normalise and export the results data.
+\item A system for using plots as queries against a database of plots to obtain a similarity ranking.
+\item Enabling real time collaboration between two instances of the tool.
+\end{itemize}
+
 \section{Where Does This Tool Fit In?}
 \label{sec:review}
 
@@ -38,7 +59,7 @@ Four products were chosen for this second review: Google Drive~\cite{g_drive}, P
 
 \subsection{Previously Reviewed Software}
 
-The software packages reviewed at the start of the project were: Bio-PEPA, Uppaal~\cite{uppaal}, V-Cell~\cite{vcell}, Cell-O~\cite{cello}, Copasi~\cite{copasi}, Cell Designer~\cite{celldesigner} and WEAVE~\cite{weave}.  Bio-PEPA, V-Cell, Cell-O, Copasi and Cell Designer have been written for biological modelling.  Uppaal is modelling software for general use, and WEAVE is a general data visualisation tool.  A review of these tools can be find in MPP1 report for this project. \tdi{cite this?}
+The software packages reviewed at the start of the project were: Bio-PEPA, Uppaal~\cite{uppaal}, V-Cell~\cite{vcell}, Cell-O~\cite{cello}, Copasi~\cite{copasi}, Cell Designer~\cite{celldesigner} and WEAVE~\cite{weave}.  Bio-PEPA, V-Cell, Cell-O, Copasi and Cell Designer have been written for biological modelling.  Uppaal is modelling software for general use, and WEAVE is a general data visualisation tool.  A review of these tools can be found in the report for the first phase of development (MPP1).
 
 All offered some level of visualisation, some simply graphs, others more complex visualisations.  Bio-PEPA offered only line graphs.  Uppaal had visualisations that highlighted where in a finite state machine view of the model the current state is.  V-Cell had visualisation of the model in a hierarchical set of circles. It could also display spatial elements of the results data by displaying a heat model view of the cell.  Cell-O was aimed more at multi-cell models and was able to show them moving and splitting; it also had visualisation of the model as a finite state machine.  Copasi only had graphs, although the user had more control over the display of the plots.  WEAVE had the largest visualisation capacity being able to display a variety of standard graph types along with more interesting ones, such as geographical maps, but it did not appear to have anything specialised for biological models.  WEAVE is also the tool that gave the user the most control over the visualisation.
 
@@ -83,7 +104,6 @@ The next stage of the project was to extend the functionality.  The first new fe
 Over the course of the first stage of work a number of evaluations were carried out with potential and actual users of Bio-PEPA.  The findings from these evaluations were used to improve the tool.
 
 \section{Results}
-\tdi{should this go after libraries used?}
 
 The tool that has been developed for this project is a fully featured tool with innovative features.  It has been positively received by potential users.
 The tool offers more visualisation and analysis capabilities than the Eclipse plug-in.  Users can fully customize the appearance of the visualisation.  There is also the ability to add supporting information to the visualisation with annotations and the ability to attach files.  Sessions can be saved and loaded allowing users to spread their work over time.
@@ -95,16 +115,6 @@ Innovative features include using plots as queries to find similar plots allowin
 Their is focus on ease of use in the finished product with all features made as easy as possible to use with little guidance.  Relying on recognition not recall.
 
 By implementing more advanced visualisation features this tool should make Bio-PEPA a more attractive modelling tool. The visualisation features have been brought into line with the features in alternative modelling tools.
-
-\subsection{This Document}
-
-The rest of this document details the work that was undertaken during the second phase of this project (MPP2).  This is split into separate sections.
-
-Chapter~\ref{chap:goals} discusses the goals that had been identified and the new goals that have been added.  This discussion includes what goals have been refined and why certain goals have been dropped.
-
-Chapter~\ref{chap:work} discusses the implementation work that has been performed as part of this project phase.  The discussion includes challenges faced and solutions for those challenges.
-
-Chapter~\ref{chap:eval} discuss the evaluation of the project.  This is spread over multiple evaluation sessions and includes evaluations with potential users as well as self evaluations.
 
 \section{Libraries Used}
 
@@ -143,7 +153,10 @@ Built on top of this library is
 \end{itemize}
 
 \subsection{Singleton}
-\tdi{talk about the singleton}
+
+A singleton was used to act as a central repository for the data that visualisation session needs.  A singleton was useful for this as only one instance of this repository was required.  Pre-existing code was used for these to save time.
+
+Over the course of the project two different singleton implementations were used.  The first was taken from Paul Manta in this StackOverflow post - \url{http://stackoverflow.com/questions/6760685/creating-a-singleton-in-python}.  This was not threadsafe.  Towards the end of the project a different implementation was chosen.  The code for this second singleton can be found here: \url{https://gist.github.com/werediver/4396488}.  This implementation was threadsafe.
 
 \subsection{Miscellaneous}
 A number of other Python libraries were utilised in the project.  They are all part of the standard Python library.  They did not provide any significant relevant behaviour, instead they were used to aid implementation of the features in this project.  More significant discussion of how any of these libraries were used can be found around the discussion of the features that utilised them.  The libraries are: uuid, re, platform, os, time, threading, subprocess, copy, random, numpy, itertools, collections, math, pickle, sys, inspect.
