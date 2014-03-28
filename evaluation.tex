@@ -127,6 +127,9 @@ In Section~\ref{sec:architecture}, the architecture of the tool is discussed.  D
 
 The program architecture suffered towards the end of development when real time collaboration was added as a feature.  The code was not fully \ac{MVC} and collaboration had not been a potential feature during any the architectural design.  This feature introduced an entirely new route through the program.  Due to the project time table there was no time to refactor the architecture.  This led to collaboration being somewhat bolted on.  Some of the functionality necessary for real time collaboration was put into the singleton object.
 
+\subsection{Change how the visualisation is calculated}
+Currently the visualisation is stored as a snapshot of the entire state.  The undo functionality is built around taking copies of this snapshot. When the visualisations are being displayed the \ac{UI} components look at this single snapshot.  Making copies of a large snapshot is not a cheap operation.  A more efficient approach would be to store operations.  To draw the latest visualisation the tool would simply traverse this list from the start.  Undoing an action would simply then be removing the last operation.
+
 \tdi{Does this contradict too much of what I said in the implementation chapter?}
 
 
@@ -138,13 +141,23 @@ Norman~\cite{normsev}, Schneiderman~\cite{shgold} and Neilson~\cite{neilten} eac
 
 \paragraph*{Enabling shortcuts} is principle in Schneiderman's and Neilson's principles.  Shortcuts are there for expert users to save them time.  There are standard shortcuts, i.e. Ctrl-S for save.  Standard shortcuts can be considered user friendly.  Custom shortcuts are not user friendly, but they enable an experienced user to speed up their workflow.  Standard and custom shortcuts were implemented in this tool according to wxPython specification.
 
-\paragraph*{Offering informative feedback} is in all three lists of principles.  This is so the user is kept aware of system state.  They should be receiving feedback from every action.  This is detailed in Section~\ref{sec:feedback}
+\paragraph*{Offering informative feedback} is in all three lists of principles.  This is so the user is kept aware of system state.  They should be receiving feedback from every action.  This is detailed in Section~\ref{sec:feedback}.
+
+Norman~\cite{normsev} and Shneiderman~\cite{shgold} both call for feedback to be given to the user so that the user can be sure that an action has been accomplished.  This feedback can come in a number of different forms and was in place in some parts of the project already.
+
+Existing feedback in the project was a natural byproduct of some of the features; for example, when loading a results file the feedback that the load operation has been successful is that a graph appears on the screen. If the graph does not appear then something has gone wrong.  Additional feedback has been added to the project:
+\begin{itemize}
+\item When adding annotations the cursor changes to indicate to the user that they can interact with the graph in a different way.
+\item The title bar text changes to display ``unsaved'' when the user makes a change and then changes back to ``saved'' when a successful save has been performed.
+\end{itemize}
 
 \paragraph*{Designing dialogues to yield closure} is a principle in Shneiderman's principles.  It calls for encapsulating sequences of actions with dialogues.  Finishing the dialogues allows the user to clear their mind.  The new tool makes significant use of dialogues to improve the user experience.
 
 \paragraph*{Offering simple error handling} is a principle of Shneiderman's and Neilson's principles.  The user should be prevented from arriving at an error state.  This was a problem throughout the project.  During development the found error states were removed, this was done through exception catching and more defensive programming.  If new error states were discovered the same techniques would be applied.  If the user performs and action they did not mean to, which could be classed as an error, they are able to undo it.
 
 \paragraph*{Permitting easy reversal of actions} is a principle in Shneiderman's and Neilson's lists.  It is intended to give users a way of escaping error states by reverting to previously working states.  This has been implemented through undo and redo.  This is discussed in Section~\ref{sec:undo}.
+
+copies of the data dictionary are pushed and popped onto the stack.  Copies are pushed onto the undo stack on any atomic change the user makes.  This gives the user a full session history to go back through
 
 \paragraph*{Supporting internal locus of control} is one of Shneiderman's principles.  It calls for making the user feel in control of the system and having the user instigate actions rather than respond to actions.  The user is the instigator of all actions in the tool.  The sense of control will be lost when collaborating as actions will be perform that they did not instigate.  This is unavoidable and is also mitigated by the fact that the users have to instigate a collaborative session.
 
@@ -291,34 +304,16 @@ Figures~\ref{fig:add_anime_annotation}~and~\ref{fig:plot_prefs_dialogue} show th
 
 \tdi{The bits below were blindly moved from work done.  They may need some changes to make them fit with evaluation}
 
-\section{Usability}
+\subsection{Matplotlib is Slow}
 
-In all the evaluations of the project users have commented on the difficulty of using parts of the tool.  Action has been taken to make it easier to use.  Many of the changes have been guided by Shneiderman~\cite{shgold}, Norman~\cite{normsev} \& Nielson's~\cite{neilten} guidelines.  Specifics are detailed below.
+matplotlib is the de facto standard for graphing in Python this, amongst other reasons (detailed in the MPP report), led to it being chosen for the graph visualisations in the project.  When features such as plotting the intensity of the gradient were added matplotlib was pushed to its limits as it was being asked to plot hundreds of lines.  It was discovered that matplotlib is not optimised for speed, it is instead optimised for producing graphs of a publication standard.  This poses a dilemma: researchers want to be able to generate quality graphs, whilst the tool wants to offer real time interactivity and customisation.  There are tweaks that can be applied to make matplotlib be faster. There are also alternative graphing libraries that could be considered.  Threading was also looked into but caused segmentation faults.
 
-\subsection{Undo \& Redo}
-\label{sec:undo}
-Shneiderman calls for easy reversal of actions~\cite{shgold} and Nielson calls for user control and freedom -- an emergency exit from an unwanted state~\cite{neilten}.  To address this, undo/redo functionality has been added.  This required refactoring of the project code, so that the session data is in one location, inside a singleton (see Section~\ref{sec:design}). Any changes to this data are picked up during the next \ac{UI} update and are reflected in the visualisations.  The session data is stored as a dictionary.  To implement undo and redo, copies of the data dictionary are pushed and popped onto the stack.  Copies are pushed onto the undo stack on any atomic change the user makes.  This gives the user a full session history to go back through and this was one of the early goals from the first project phase.
-
-A problem was encountered when trying to copy the dictionary onto the stack.  When pushing the dictionary onto the stack it would pushing a reference to the dictionary, not the dictionary itself. This meant that any changes to the dictionary after it had been pushed onto the stack were also there in the stack.  Python dictionaries have a copy method.  Copy only does a shallow copy -- any objects in the original dictionary will have their reference placed in the new dictionary.  This was fine for some parts of the session dictionary, but for others it was not. Lines and annotations, which are custom objects, presented problems.  This was solved by using Python's deep copy library.  With deep copy a new copy is made of objects as well.  Some elements of \texttt{wxPython} and \texttt{matplotlib} could not be deep copied, but this was fixed when the project architecture was changed to have the data in a single location.
-
-\subsection{Saving}
-
-It is important that a user is able to save and load the visualisation session as they may not be able to complete all their analysis in one sitting and may want to come back to their work in the future.  Without the ability to save and load the user would have to repeatedly add annotations, change preferences, and attach files.  It was possible to add saving and loading by building on the work done to implement undo \& redo, although further work was required. Python has a module called \texttt{pickle} to serialise and deserialise data.  When saving, the dictionary containing the centralised session data is pickled and written to a file and when loading the reverse happens.  Because the program is now focused on the data model, once a previous session has been loaded, a \ac{UI} refresh is triggered and the visualisation reflects the loaded data.
-
-Saving the data also enables limited collaboration.  The user can customize the appearance and add annotations.  They can then save the state to a file and email that file to a colleague.  The colleague can then load the file and see the user's work.  The colleague can then correct any issues and add their own work.  The colleague can then save this and email it back to the user.  This is useful and is better than no collaboration, but it is entirely asynchronous.
-
-\subsection{Feedback}
-\label{sec:feedback}
-Norman~\cite{normsev} and Shneiderman~\cite{shgold} both call for feedback to be given to the user so that the user can be sure that an action has been accomplished.  This feedback can come in a number of different forms and was in place in some parts of the project already.
-
-Existing feedback in the project was a natural byproduct of some of the features; for example, when loading a results file the feedback that the load operation has been successful is that a graph appears on the screen. If the graph does not appear then something has gone wrong.  Additional feedback has been added to the project:
-\begin{itemize}
-\item When adding annotations the cursor changes to indicate to the user that they can interact with the graph in a different way.
-\item The title bar text changes to display ``unsaved'' when the user makes a change and then changes back to ``saved'' when a successful save has been performed.
-\end{itemize}
+\tdi{Became more noticable once collaboration was added and things were being redrawn more}
 
 \subsection{Guiding the User}
 \label{sec:guiding}
+
+\tdi{This needs breaking up to split between ui evaluation and hci principles}
 
 The first evaluation of the second phase of the project unearthed that the users struggled to choose the correct action as there were multiple ways of performing the same action that had slightly different use cases.  For example, at one point results files could be added via two different menu items.  There was also confusing language in the menu options.  These multiple paths have been removed. For example, now there is only one way to open results files initially.  To help guide the user further, \ac{UI} elements are enabled and disabled as appropriate.  Now when the program is first loaded the only action a user can perform is to load a session or start a new session, or join a session.  Afterwards other \ac{UI} elements are enabled to allow the user to start using the tool effectively.
 
@@ -360,12 +355,7 @@ Form validators are used on the title fields and results fields.  The validators
 The model viewer page in Figure~\ref{fig:page_4} is similar to the cell cross-sections used in animation~\ref{sec:animation}.  There are two drop down boxes.  These drop down boxes control what is displayed in the cell cross-section.  Species in files can be selected.  The cell cross-section displays which compartments in the cell the species is present in.  The compartments are parsed from the model file.  This means that the model file is a requirement for model viewing and cell level animation.  This cell cross-section has replaced the previous model visualisation.  This model visualisation has two purposes. First, the user can sanity check that they have matching results and model files.  If a section of the cell has been left white then it acts as a cue to the user: if they were expecting the species to be present at that location then they know something has gone wrong.  Second, they can see how the model is structured.  The sections of the cell are labelled allowing the user to know what areas of the cell a species is present in.  This will hopefully increase their confidence with visualising and analysing the results from the models. Before the compartments were parsed from the model file automatically there was an user unfriendly system where the user had to input where in the cell a species is.  This was time consuming, difficult to use, and quite brittle.  At the time it assumed that there would be three compartments for every species, which is not a valid assumption.
 
 
-\subsection{Matplotlib is Slow}
-
-matplotlib is the de facto standard for graphing in Python this, amongst other reasons (detailed in the MPP report), led to it being chosen for the graph visualisations in the project.  When features such as plotting the intensity of the gradient were added matplotlib was pushed to its limits as it was being asked to plot hundreds of lines.  It was discovered that matplotlib is not optimised for speed, it is instead optimised for producing graphs of a publication standard.  This poses a dilemma: researchers want to be able to generate quality graphs, whilst the tool wants to offer real time interactivity and customisation.  There are tweaks that can be applied to make matplotlib be faster. There are also alternative graphing libraries that could be considered.  Threading was also looked into but caused segmentation faults.
-
-\tdi{Became more noticable once collaboration was added and things were being redrawn more}
 
 
-\subsection{Change how the visualisation is calculated}
-Currently the visualisation is stored as a snapshot of the entire state.  The undo functionality is built around taking copies of this snapshot. When the visualisations are being displayed the \ac{UI} components look at this single snapshot.  Making copies of a large snapshot is not a cheap operation.  A more efficient approach would be to store operations.  To draw the latest visualisation the tool would simply traverse this list from the start.  Undoing an action would simply then be removing the last operation.
+
+
