@@ -160,7 +160,11 @@ Norman~\cite{normsev}, Schneiderman~\cite{shgold} and Neilson~\cite{neilten} eac
 
 \paragraph*{Reducing short-term memory load} is a principle in Schneiderman's and Neilson's lists.  It calls for keeping \acp{UI} simple.  It is important that users should be able to recognize what action needs to be performed, not remembering what action has to be performed.  This has been done by clearly and effectively labelling \ac{UI} elements and by having a shallow structure.  The user is not forced to go through deep menus and dialogues to perform actions.  When implementing \acp{UI} that are optimised for recognition it is important not to end up in a Norman's door situation~\cite{design_of_things}[p.87].  A Norman door is a door that has been particularly poorly designed and is labelled push or pull, rather than made clear through the design of the door.  Some minor Norman door situations have found their way into the project.  The most obvious one is in the session wizard on the results file selector page.  The user is able to select multiple files.  During evaluations the user did not discover this, so helper text was added telling the user that multiple files can be selected.  It had been assumed to be obvious, as it is a feature in many programs that you can select multiple files.
 
-\paragraph*{Constraining the user} is one of Norman's principles.  It suggests finding ways to restrict what actions a user can perform during use of the program.  This can be used to help guide the user through the program.  This has been accomplished in this project through the use of wizards and by enabling and disabling various \ac{UI} elements.  This is discussed further in Section~\ref{sec:guiding}
+\paragraph*{Constraining the user} is one of Norman's principles.  It suggests finding ways to restrict what actions a user can perform during use of the program.  This can be used to help guide the user through the program.  This has been accomplished in this project through the use of wizards and by enabling and disabling various \ac{UI} elements.
+
+The first evaluation of the second phase of the project unearthed that the users struggled to choose the correct action as there were multiple ways of performing the same action that had slightly different use cases.  For example, at one point results files could be added via two different menu items.  They were not constrained enough.  These multiple paths have been removed. Now there is only one way, initially, to open results files.  To help guide the user further, \ac{UI} elements are enabled and disabled as appropriate.  Now when the program is first loaded the only action a user can perform is to load a session or start a new session, or join a session.  Afterwards other \ac{UI} elements are enabled to allow the user to start using the tool effectively.  This guides the user through their use of the program.
+
+To help guide the user when they first use the program a session wizard is created.  This replaced a series of separate menu items that the user previously had to navigate. The new session wizard would typically be the entry route in the first time a user runs the program.  It was therefore important that it helped them understand what it is they are doing.  The process of setting up the session should also be as easy as possible so that the user does not dislike the prospect of using the program.  The session wizard can be seen in Figure~\ref{fig:session_wizard}.
 
 \paragraph*{Providing mappings to the real world} is one of Norman's and Neilson's principles.  It suggests that the program should `speak the user's language' and use words phrases and concepts that are familiar to them.  The cell cross-section animations are an example of that in this program.  It maps the results data into a form that is more familiar to biologists.
 
@@ -200,69 +204,13 @@ We can see that the tool has met most of these guidelines.  This indicates that 
 
 \paragraph*{Lie Factor} is a metric for whether a visualisation is misrepresenting the information~\cite{tufte}[p.57].  It is calculated by $\frac{\text{size of effect in graph}}{\text{size of effect in data}}$.  This was identified as an evaluation metric because correctly representing the data is vital.  The visualisations available in this tool do not misrepresent data.  The visualisations are plotting the data.  Lie factor is more of an issue in fancier graphics.
 
-\subsection{Collaboration}
-
-It was unfortunately not possible to test this feature with the users.  Only one laptop was available for the evaluation sessions.  Although it is possible to run two instances of the program and start the collaboration feature, it is is not a representative demonstration as the two instances must be switched between and the changes are not seen in real time.
-
-The evaluation has therefore been focussed on the responsiveness and functionality covered
-
-The implementation of real time collaboration is quite effective.  Almost all functionality that can be in a solo session has been implemented for collaborative work.  The only features that haven't are the large plot \tdi{Is this correct.} \tdi{Why was this not done in real time}.  This means that users are not limited in the actions that they can perform.
-
-The initial implementation of collaboration was note responsive enough.  It used blocking communication, effectively providing a lock around each action that affects the visualisation.  This involved waiting for a response from the collaborator to say that the change had been applied.  This meant having the user locked out of the \ac{UI} for duration of the round trip of the message.  The collaboration features were only tested on internal networks where that duration would be minimal.  Even with minimal duration it was a frustrating experience being locked out of the \ac{UI}.  Communication to users across non internal networks could only slower and therefore more frustrating to the user.  For this reason non blocking communication was implemented.  A thread is now created for each message sent.  This allows the \ac{UI} to not be locked out.  It did require losing the mutual exclusion guarantee.  This made the \ac{UI} more responsive, but sacrificed guaranteed correctness.
-
-\subsection{Search Results}
-\tdi{move this into evaluation?}
-Initial results are very promising with the tf.idf weighted cosine providing much clearer results than with simple euclidean distance.  There is not a large enough truth set of plot similarities to be able to confidently say that it is effective.  However these early promising results seem to indicate that further research would certainly be worthwhile, but outside the scope of the project.
-
-\tdi{Id I generate some data talk about the limitations of generating artificial data}
-
-\subsection{Animation}
-
-During the session wizard it is indicated to the user that they need the model file to be added to the session for animation.  This is for beginner users.  Advanced users will be able to use the model viewer to preview animation.  Once a session has been started the animation toolbar is made available.  The toolbar contains a play/pause button.  This enables discovery of two features.  The line drawn on the graph indicating current time and the time slider.  The user can see the time slider moving.  This provides a cue to them that they can move the slider to control time.
-
-The species/file selectors and the button to switch between file-focussed and species-focussed modes are less obvious in their behaviour.  Users were unable to work out what these features did.  After being prompted they were comfortable with them.  Discoverability is the issue.  User documentation would be a fix for this.
-
-The appearance of the time slider in the \ac{UI} is a particular weak point.  Many attempts were made to stretch the appearance of the slider widget but these were fruitless.
-
-The performance of the animation has been more than adequate.  In the cell segments the animation is smooth.  The animation of the line on the graph is also fairly smooth, although choppiness in frame transitions has been noticed.  The performance is better than the usual graph speed as the entire graph is not continuously being redrawn.  Only the single vertical line.
-
-Feedback from the users has been very positive for the animation feature.  It meets the goal of providing visualisations more familiar to the users.
-
-\subsection{Annotation}
-
-Annotation of the graph and the animation had to be implemented separately.  They also have to be evaluated separately.  One of the flaws of the current annotation implementation is the separation between the different annotations.  This is not user friendly as they have to learn two different systems, each with different behaviours.
-
-\subsubsection{Graph Annotations}
-
-Placing annotations is now quite user friendly.  The annotation type is chosen from the toolbar and then the graph is clicked to place.  Arrow annotations have an arrow that follows the mouse allowing the user to see the appearance before placing the annotation.  This was not possible for the text and circle annotations.
-
-Selecting annotations is not user friendly enough.  The need to right click to select an annotation is assumed knowledge.  It has not been made obvious enough to the user.
-
-Editing text and deleting provide the user with control over the annotation, but more needs to be provided in the future, in particular the ability to move annotations.
-
-\subsubsection{Animation Annotations}
-
-Placing annotations is reasonably user friendly.  The dialogue acts a guide to the user.  Having to click on a cell cross-section to place the annotation was hoped to be obvious as it follows the same behaviour as with the graph annotations.  This was not the case.  Text has been added to the dialogue to make this more obvious.
-
-There is also more of disjoint than would be desirable between the cell cross-sections and the animation annotation panel.  This was felt necessary due to space constraints.  A more desirable approach would be like the graph annotations where they are handled entirely from the toolbar.  Not a separate panel on the \ac{UI}.
-
-\subsection{Normalisation and Export}
-
-This is quite a user friendly feature.  This has been evidenced by the users having no trouble with the feature.  Normalising the data uses a checkbox menu item to toggle on or off.  This provides a visual clue to the user that is toggle-able state.  It should indicate as well that if they press the menu item and do not like the results that they can press the menu item again and revert to the previous appearance.
-
-Normalisation and export are both operations on the data and so have been grouped together on the menu.  The main issue with normalisation was how annotations should behave.  The approach was described in Section~\ref{sec:normalize}.  This was an adequate solution and keeps the state visible to the user.
-
-\subsection{Testing and Logging}
-
-The development of the project involved little formal testing and logging.  The intention had been to develop tests, but these tests never came to fruition.  The development work was too tempting. The lack of tests caused problems later in development.  New features being implemented, which would often involve refactoring, would often break existing functionality.  These bugs would then sometimes not be discovered until user testing.  This was not what the users wanted to be presented with.  Having tests would potentially have revealed these bugs.
-
-Another oversight was the lack of logging in the program.  This only became a problem towards the end of the project as it got more complex.  It would, sometimes, be difficult to recreate the bug that the users had discovered.  This made it harder to fix.  The problem reached its peak during the implementation of real time collaboration.  Trying to debug the distributed communication without formal logging was challenging.  Print statements were used as a simple form of logging that was somewhat helpful.  Having a more structured logging framework in place from the start would have eased debugging throughout the development process.
-
 \subsection{Finished Product}
 
-Figure~\ref{fig:main_ui} shows the main body of the \ac{UI} at the end of the development phase.  Figure~\ref{fig:old_ui} shows the previous version of the \ac{UI}.  The widgets have been placed in a more organised and consistent manner.  This style has been continued through the rest of the screens in the \ac{UI}.  A heading to the legend panel has been added.  This indicates to the user from the start where the legend will be placed.  It has also been much more prominent in an effort to draw the users attention to it.  The legend panel has been moved over to the right hand side to remove the boxed in feeling that the previous \ac{UI} gave.
+As well as evaluating the program as a whole, it is necessary to evaluate the major components.
 
-Figures~\ref{fig:add_anime_annotation}~and~\ref{fig:plot_prefs_dialogue} show the dialogues that are presented to the user for creating an animation annotation and changing the preferences of a line.  There is a consistent style to the dialogues to help the user feel comfortable.  In both dialogues related widgets are grouped together.  It was not felt necessary to use wizards for these functions.  Wizards imply a set of steps that need to be followed.  For the plot preferences dialogue there is no concept of order.  For the annotation dialogue there are not enough steps to warrant a wizard.
+\subsubsection{The User Interface}
+
+Figure~\ref{fig:main_ui} shows the main screen of the \ac{UI} at the end of the development phase.  Figure~\ref{fig:old_ui} shows the previous version of the \ac{UI}.  The widgets have, now, been placed in a more organised and consistent manner.  This style has been continued through the rest of the screens in the \ac{UI}.  A heading to the legend panel has been added.  This indicates to the user from the start where the legend will be placed.  It has also been much more prominent in an effort to draw the users attention to it.  The legend panel has been moved over to the right hand side to remove the boxed in feeling that the previous \ac{UI} gave.
 
 \begin{figure}[h!]
     \centering
@@ -278,6 +226,8 @@ Figures~\ref{fig:add_anime_annotation}~and~\ref{fig:plot_prefs_dialogue} show th
     \label{fig:old_ui}
 \end{figure}
 
+Figures~\ref{fig:add_anime_annotation}~and~\ref{fig:line_settings} show the dialogues that are presented to the user for creating an animation annotation and changing the preferences of a line.  There is a consistent style to the dialogues to help the user feel comfortable.  In both dialogues related widgets are grouped together.  It was not felt necessary to use wizards for these functions.  Wizards imply a set of steps that need to be followed.  For the plot preferences dialogue there is no concept of order.  For the annotation dialogue there are not enough steps to warrant a wizard.  The plot preferences dialogue in Figure~\ref{fig:plot_prefs_dialogue} spawns another dialogue when the user initiates a change colour action.  The spawned dialogue can be seen in Figure~\ref{fig:colour_picker}.  This is one of the most user unfriendly aspects of the entire \ac{UI}.  Whether you choose a new colour or not, the only way to exit the dialogue is by pressing the red close button.  This is a standard cancel action.  It does not inform the user that their action is going to be successful.  This confused all users.  This is a default dialogue provided by wxPython.  Ideally it would have been fixed, but there was not time.
+
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.5\textwidth]{images/add_annotation_dialogue.png}
@@ -287,29 +237,23 @@ Figures~\ref{fig:add_anime_annotation}~and~\ref{fig:plot_prefs_dialogue} show th
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.5\textwidth]{images/plot_preferences_dialogue.png}
-    \caption{Line preferences dialogue}
-    \label{fig:plot_prefs_dialogue}
+    \begin{subfigure}[b]{0.6\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/plot_preferences_dialogue.png}
+        \caption{Line preferences dialogue}
+        \label{fig:plot_prefs_dialogue}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.3\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/colour_selector.png}
+        \caption{Colour chooser dialogue}
+        \label{fig:colour_picker}
+    \end{subfigure}
+    \caption{Line settings dialogues.}
+    \label{fig:line_settings}
 \end{figure}
 
-\tdi{get figure of what session wizard used to look like}
-
-\tdi{The bits below were blindly moved from work done.  They may need some changes to make them fit with evaluation}
-
-\subsection{Matplotlib is Slow}
-
-matplotlib is the de facto standard for graphing in Python this, amongst other reasons (detailed in the MPP report), led to it being chosen for the graph visualisations in the project.  When features such as plotting the intensity of the gradient were added matplotlib was pushed to its limits as it was being asked to plot hundreds of lines.  It was discovered that matplotlib is not optimised for speed, it is instead optimised for producing graphs of a publication standard.  This poses a dilemma: researchers want to be able to generate quality graphs, whilst the tool wants to offer real time interactivity and customisation.  There are tweaks that can be applied to make matplotlib be faster. There are also alternative graphing libraries that could be considered.  Threading was also looked into but caused segmentation faults.
-
-\tdi{Became more noticable once collaboration was added and things were being redrawn more}
-
-\subsection{Guiding the User}
-\label{sec:guiding}
-
-\tdi{This needs breaking up to split between ui evaluation and hci principles}
-
-The first evaluation of the second phase of the project unearthed that the users struggled to choose the correct action as there were multiple ways of performing the same action that had slightly different use cases.  For example, at one point results files could be added via two different menu items.  There was also confusing language in the menu options.  These multiple paths have been removed. For example, now there is only one way to open results files initially.  To help guide the user further, \ac{UI} elements are enabled and disabled as appropriate.  Now when the program is first loaded the only action a user can perform is to load a session or start a new session, or join a session.  Afterwards other \ac{UI} elements are enabled to allow the user to start using the tool effectively.
-
-To help guide the user when they first use the program a session wizard is created.  This replaced a series of separate menu items that the user previously had to navigate. The new session wizard would typically be the entry route in the first time a user runs the program.  It is therefore important that it helps them understand what it is they are doing.  The process of setting up the session should also be as easy as possible so that the user does not dislike the prospect of using the program.  The session wizard can be seen in Figure~\ref{fig:session_wizard}.
+Wizards were used to guide the user through the process of setting up a new session.  The wizard can be seen in Figure~\ref{fig:session_wizard}.  An predecessor of the wizard can be seen in Figure~\ref{fig:old_session_dialogue}.  The old dialogue was not user friendly.  The user is presented with a long list of boxes that need filling.  This is overwhelming to a user.  It is also quite ugly.  The new session wizard fixed this.  The wizard follows the style of the other \ac{UI} screens, providing the user with a consistent experience.  Having different pages in the wizard for each step of the new session processes means the user does not need to remember the whole process.  They can focus on the current step.
 
 \begin{figure}[h!]
     \centering
@@ -344,10 +288,75 @@ To help guide the user when they first use the program a session wizard is creat
 
 Form validators are used on the title fields and results fields.  The validators ensure that a title and at least one results file are included.  This stops the user from creating an invalid session.  There is also help text on each page of the wizard instructing the user on what actions they should take.
 
-The model viewer page in Figure~\ref{fig:page_4} is similar to the cell cross-sections used in animation~\ref{sec:animation}.  There are two drop down boxes.  These drop down boxes control what is displayed in the cell cross-section.  Species in files can be selected.  The cell cross-section displays which compartments in the cell the species is present in.  The compartments are parsed from the model file.  This means that the model file is a requirement for model viewing and cell level animation.  This cell cross-section has replaced the previous model visualisation.  This model visualisation has two purposes. First, the user can sanity check that they have matching results and model files.  If a section of the cell has been left white then it acts as a cue to the user: if they were expecting the species to be present at that location then they know something has gone wrong.  Second, they can see how the model is structured.  The sections of the cell are labelled allowing the user to know what areas of the cell a species is present in.  This will hopefully increase their confidence with visualising and analysing the results from the models. Before the compartments were parsed from the model file automatically there was an user unfriendly system where the user had to input where in the cell a species is.  This was time consuming, difficult to use, and quite brittle.  At the time it assumed that there would be three compartments for every species, which is not a valid assumption.
+\begin{figure}[h!]
+    \centering
+    \includegraphics[height=0.5\textwidth]{images/old_wizard.png}
+    \caption{Session dialogue, the precursor to the session wizard.}
+    \label{fig:old_session_dialogue}
+\end{figure}
 
+The model viewer page in Figure~\ref{fig:page_4} is similar to the cell cross-sections used in animation~\ref{sec:animation}.  There are two drop down boxes.  These drop down boxes control what is displayed in the cell cross-section.  Species in files can be selected.  The cell cross-section displays which compartments in the cell the species is present in.  The compartments are parsed from the model file.  This means that the model file is a requirement for model viewing and cell level animation.  This cell cross-section has replaced the previous model visualisation.  The new model visualisation has two purposes. First, the user can sanity check that they have matching results and model files.  If a section of the cell has been left white then it acts as a cue to the user: if they were expecting the species to be present at that location then they know something has gone wrong.  Second, they can see how the model is structured.  The sections of the cell are labelled allowing the user to know what areas of the cell a species is present in.  This will hopefully increase their confidence with visualising and analysing the results from the models. Before the compartments were parsed from the model file automatically there was an user unfriendly system where the user had to input where in the cell a species is.  This was time consuming, difficult to use, and quite brittle.  At the time it assumed that there would be three compartments for every species, which is not a valid assumption.
 
+\subsubsection{Collaboration}
 
+It was not possible to perform an evaluation with any users of this feature.  Only one laptop was available for the evaluation sessions.  Although it is possible to run two instances of the program and start the collaboration feature, it is is not a representative demonstration as the two instances must be switched between and the changes are not seen in real time.
+
+The evaluation of this feature has therefore been focussed on the responsiveness of the collaboration and the coverage of the functionality that can be collaborated on.
+
+The implementation of real time collaboration is quite effective.  Almost all functionality that can be in a solo session has been implemented for collaborative work.  The only feature can't be used in the collaborative mode is the large plot. This was unable to implemented because of the issue of closing the large plot dialogue.  The event that closes the dialogue would be the event that sends the message to the collaborator.  The collaborator would then have this method called.  There is then an infinite loop.  Only one minor feature cannot be used in collaborative mode.  This means that collaboration does not limit the user in their work.
+
+The initial implementation of collaboration was not responsive enough.  It used blocking communication, effectively providing a lock around each action that effects the visualisation.  This involved waiting for a response from the collaborator to say that the change had been applied.  The \ac{UI} would be appear locked to the user for the duration of this message.  The collaboration features were only tested on internal networks where that duration would be minimal.  Even with minimal duration it was a frustrating experience being locked out of the \ac{UI}.  Communication to users across non internal networks could only slower and therefore more frustrating to the user.  For this reason non blocking communication was implemented.  A thread is now created for each message sent.  This allows the \ac{UI} to not be locked out.  It did require losing the mutual exclusion guarantee.  This made the \ac{UI} more responsive, but sacrificed guaranteed correctness.
+
+Collaboration offers almost all functionality and does result in any performance degradation.  The only issue is the lack of guaranteed ordering.  This is impossible in the current model.  Section~\ref{sec:ordering} discusses this further.
+
+\subsubsection{Search Results}
+Initial results are very promising with the tf.idf weighted cosine providing much more accurate results than with simple euclidean distance.  There is not a large enough truth set of plot similarities to be able to confidently say that it is effective.  However these early promising results seem to indicate that further research would certainly be worthwhile, but this is outside the scope of the project.
+
+\tdi{I'm planning on doing a little bit of investigation here, to represent it with more than 10 examples.}
+
+\subsubsection{Animation}
+
+Animation of cell cross-sections requires the model file to be provided.  Ideally the user would just need to provide the results file.  The results file does not include all the necessary information.  It was felt to be more user friendly to require the model file than having the user enter a lot of information in by hand.
+
+Users can use the model viewer, in the session wizard (Figure~\ref{fig:page_4}, to preview animation.  Once a session has been started the animation toolbar is made available.  The toolbar contains a play/pause button.  This enables discovery of two features.  The line drawn on the graph indicating current time and the time slider.  While the animation is playing the user can see the time slider and the line moving.  This provides a cue to them that they can move the slider to control time.
+
+The species/file selectors and the button to switch between file-focussed and species-focussed modes are less obvious in their behaviour.  Users were unable to work out what these features did.  After having the features explained they were comfortable with them.  Discoverability was the issue with these features.  A solution was not found. User documentation would be a fix for this.
+
+The appearance of the time slider in the \ac{UI} is a particular weak point in the \ac{UI}.  Many attempts were made to stretch the appearance of the slider widget but these were fruitless.
+
+The performance of the animation was more than adequate.  The animation of the cell segments is very smooth.  The animation of the line on the graph is also fairly smooth, although choppiness in frame transitions has been noticed.  The performance is better than the usual plotting speed of the graph. This is because only a select part of the graph is being redrawn -- the vertical line.
+
+Feedback from the users has been very positive for the animation feature.  It meets the goal of providing visualisations more familiar to the users.
+
+\subsubsection{Annotation}
+
+Annotation of the graph and the animation had to be implemented separately.  They also have to be evaluated separately.  One of the flaws of the current annotation implementation is the separation between the different annotations.  This is not user friendly as they have to learn two different systems, each with different behaviours.
+
+\paragraph*{Annotation of the Graph:} Placing annotations is now quite user friendly.  The annotation type is chosen from the toolbar and then the graph is clicked to place the annotation.  Arrow annotations have an arrow that follows the mouse allowing the user to see the appearance before placing the annotation.  This was not possible for the text and circle annotations.
+
+Selecting annotations is not user friendly enough.  The need to right click to select an annotation is assumed knowledge.  It has not been made obvious enough to the user.  No user was able to initiate the context menu without being told about it.  No solution was implemented.  One fix would be to remove the right click aspect, and instead use a hover menu.
+
+Editing text and deleting provide the user with control over the annotation. More control needs to be provided in the future, in particular the ability to move annotations.
+
+\paragraph*{Annotation of the Animation:} Placing annotations is reasonably user friendly.  The dialogue acts a guide to the user.  Having to click on a cell cross-section to place the annotation was hoped to be obvious as it follows the same behaviour as with the graph annotations.  This was not the case.  Text has been added to the dialogue to make this more obvious.
+
+There is also more of a disjoint than would be desirable between the cell cross-sections and the animation annotation panel.  This was felt necessary due to space constraints.  A more desirable approach would be similar to the graph annotations which are handled entirely from the toolbar, not a separate panel on the \ac{UI}.
+
+\subsubsection{Normalisation and Export}
+
+This is quite a user friendly feature.  This has been evidenced by the users having no trouble with the feature.  Normalising the data uses a checkbox menu item to toggle on or off.  This provides a visual clue to the user that it is a toggle-able state.  It should indicate as well that if they press the menu item and do not like the results that they can press the menu item again and revert to the previous appearance.
+
+Normalisation and export are both operations on the data and so have been grouped together on the menu.  The main issue with normalisation was how annotations should behave.  The approach was described in Section~\ref{sec:normalised}.  This was an adequate solution and keeps the state visible to the user.
+
+\subsubsection{Performance}
+
+The speed of the tool is not great.  It becomes sluggish at points.  This mainly due to matplotlib.  matplotlib is the de facto standard for graphing in Python this, amongst other reasons (detailed in the MPP report), led to it being chosen for the graph visualisations in the project.  When features such as plotting the intensity of the gradient were added matplotlib was pushed to its limits as it was being asked to plot thousands of lines.  It was discovered that matplotlib is not optimised for speed, it is instead optimised for producing graphs of a publishable standard.  This poses a dilemma: researchers want to be able to generate quality graphs, whilst the tool wants to offer real time interactivity and customisation.  There are tweaks that can be applied to make matplotlib be faster. There are also alternative graphing libraries that could be considered.  Threading was also looked into but caused segmentation faults.
+
+\subsection{Testing and Logging}
+
+The development of the project involved little formal testing and logging.  The intention had been to develop tests, but these tests never came to fruition.  The development work was too tempting. The lack of tests caused problems later in development.  New features being implemented, which would often involve refactoring, would sometimes break existing functionality.  These bugs might then not be discovered until the next round of user testing.  This was not what the users wanted to be presented with.  Having tests would potentially have revealed these bugs.
+
+Another oversight was the lack of logging in the program.  This only became a problem towards the end of the project as it got more complex.  It would, sometimes, be difficult to recreate a bug that the users had discovered.  This made the bug harder to fix.  The problem reached its peak during the implementation of real time collaboration.  Trying to debug the distributed communication without formal logging was challenging.  Print statements were used as a simple form of logging that was somewhat helpful.  Having a more structured logging framework in place from the start would have eased debugging throughout the development process.
 
 
 

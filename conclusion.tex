@@ -31,6 +31,7 @@ If this project was to be undertaken again, a different approach for the \ac{UI}
 \section{Unsolved Problems}
 
 \subsection{Complete Ordering Without Blocking}
+\label{sec:ordering}
 
 An initial version of the collaboration used blocking communication.  In a blocking mode it was possible to globally order the events.  This is described in Section~\ref{sec:collaboration}.  Blocking collaboration is far from optimal.  A slow network would make the collaboration unusable.  The program would lock out the user for the duration of the message and response.  Non blocking communication was added later through the use of threads when sending messages.  Now a thread is spawned for each message sent between the client and the server.  This prevents the \ac{UI} from being locked out during the communication process.  This had the undesirable side effect of not being able to guarantee correct ordering.  No solution has been found for this, apart from switching to a centralised model as described in Section~\ref{sec:cloud}.
 
