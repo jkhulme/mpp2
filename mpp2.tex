@@ -13,6 +13,7 @@
 \usepackage{todonotes}
 \usepackage{afterpage}
 \usepackage{pdflscape}
+\usepackage{morefloats}
 
 \let\oldtodo\todo
 \newcommand{\tdi}[1]{\oldtodo[inline]{#1}}
@@ -105,15 +106,13 @@ Acknowledgements go here.
 %\input{workplan}
 \input{conclusion}
 
-\clearpage
-\chapter{Appendix}
-\input{appendix}
-
-
 %\clearpage
 %\addcontentsline{toc}{section}{References}
 \bibliographystyle{unsrt}
 \bibliography{biblio}
 
+\clearpage
+\chapter{Appendix}
+\input{appendix}
 
 \end{document}
