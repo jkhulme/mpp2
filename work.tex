@@ -362,7 +362,7 @@ Early techniques used simple similarity measures such as Euclidean distance, but
     \label{fig:similar}
 \end{figure}
 
-It is important to define what it means for two lines to be similar.  It is obvious that in a case such as Figure~\ref{fig:similar} that the two lines are similar.  Both lines are the same shape and they are exhibiting the same behaviour.  When determining similarity of plots we should take a time invariant approach.  Perhaps less obvious is the case where we have offset in the Y-Axis as shown in Figure~\ref{fig:similar_y}.  Figure~\ref{fig:similar_1} shows two identical lines where one line had an additional 100000 population level.  Figure~\ref{fig:similar_2} shows two lines where one line is double the other line.  Figure~\ref{fig:similar_1} is effectively the same case as Figure~\ref{fig:similar}.  Figure~\ref{fig:similar_2} is different, but it is clear looking at the graph that they are exhibiting the same behaviour. When determining the similarity of plots we should take a scale invariant approach~\cite{esling}.
+It is important to define what it means for two lines to be similar.  It is obvious that in a case such as Figure~\ref{fig:similar} that the two lines are similar.  Both lines are the same shape and they are exhibiting the same behaviour.  When determining similarity of plots we should take a time invariant approach.  Perhaps less obvious is the case where we have offset in the Y-Axis as shown in Figure~\ref{fig:similar_y}.  Figure~\ref{fig:similar_1} shows two identical lines where one line had an additional 100000 population level.  Figure~\ref{fig:similar_2} shows two lines where one line is double the other line.  Figure~\ref{fig:similar_1} is effectively the same case as Figure~\ref{fig:similar}.  Figure~\ref{fig:similar_2} is different, but it is clear, looking at the graph, that they are exhibiting the same behaviour. When determining the similarity of plots we should take a scale invariant approach~\cite{esling}.
 
 \begin{figure}[h!]
     \centering
@@ -383,7 +383,7 @@ It is important to define what it means for two lines to be similar.  It is obvi
     \label{fig:similar_y}
 \end{figure}
 
-Approaches that have been researched to determine similarity between time series data have included shape based approaches and dynamic programming~\cite{agrawal, nakamura, keogh} techniques.  Not all of these approaches have included dimensionality reduction.  The dimensionality reduction transforms the input data into a vector space with fewer dimensions.  Similar values in the data space will, in theory, be transformed to the same value in the vector space.  The need for dimensionality reduction is explained later in this section.  After researching alternatives an approach was adapted from the work of Lin and Li~\cite{structural_similarity}.
+Approaches that have been researched to determine similarity between time series data have included shape based approaches and dynamic programming techniques~\cite{agrawal, nakamura, keogh}.  Not all of these approaches have included dimensionality reduction.  The dimensionality reduction transforms the input data into a vector space with fewer dimensions.  Similar values in the data space will, in theory, be transformed to the same value in the vector space.  The need for dimensionality reduction is explained later in this section.  After researching alternatives an approach was adapted from the work of Lin and Li~\cite{structural_similarity}.
 
 Lin and Li's approach uses normalised sub sequence data to reduce the dimensionality of the dataset.  The reduced data can then be used to efficiently find the most similar plots in the database.  The input data is converted into sub lists to ensure that all features will have been captured.  These lists are then normalised and have their dimensionality reduced.  This is where Lin and Li's work left the topic.  Work from the field of information retrieval was then applied to provide the similarity ranking. This approach is explained in further detail below.
 
@@ -443,7 +443,7 @@ Equation~\ref{eq:tfidf} is the equation for finding the similarity between a sho
 
 Equation~\ref{eq:dw} is the equation for calculating the \ac{tf.idf} weighting of a single word in document vector.  This equation would be applied to every word in the document vector and transform the document vector into the document's weight vector.
 
-Equation~\ref{eq:tfidf_cosine} is the equation for \ac{tf.idf} weighted cosine similarity.  This gives a better measure of similarity when comparing the query is a document as is the case here~\cite{tts_slides}[slide 11].
+Equation~\ref{eq:tfidf_cosine} is the equation for \ac{tf.idf} weighted cosine similarity.  This gives a better measure of similarity when the query is a document as is the case here~\cite{tts_slides}[slide 11].
 
 \begin{subequations}
     \begin{align}
