@@ -288,7 +288,7 @@ A similar issue to the difference in scale when calculating the distance from th
 After completing annotation of the graph it was important to expand this to the animation panel, as this is the other visualisation option available to a user.  Annotating animations posed more of a challenge than annotation of the graph and there were a number of issues to overcome.
 
 \begin{enumerate}
-\item How to implement the annotations?  For the graph matplotlib has built-in annotation support.  wxPython does have drawing support but not built-in annotation support.  Annotating on the animation will need manual handling of the drawing on top of the animation visualisation.  Manual drawing means that the automatic layout functionality that wxPython provides cannot be used.
+\item How to implement the annotations?  For the graph \texttt{matplotlib} has built-in annotation support.  \texttt{wxPython} does have drawing support but not built-in annotation support.  Annotating on the animation will need manual handling of the drawing on top of the animation visualisation.  Manual drawing means that the automatic layout functionality that \texttt{wxPython} provides cannot be used.
 \item When to display the annotations?  When an annotation is drawn on the graph it is displayed at all times.  The appearance of the graph does not change over time.  However the appearance of the animation visualisation does change over time.  The problem faced when annotating is whether to have annotations available at only specific times in the animation, or to have them there the whole time; and if they are going to appear and disappear, how can it be done without being distracting?
 \item How to give the user control over the annotations? When a user wants to edit or delete an annotation on the graph it is always there.  However on the animation panel if the annotation is temporal, then it is not always visible for the user to edit or delete and it would be frustrating for a user to constantly have to search through the animation to look for annotations to change them.
 \end{enumerate}
@@ -318,7 +318,7 @@ On the right hand side of the tool there is a panel which lists all annotations 
     \label{fig:annotation_dialog}
 \end{figure}
 
-The first problem -- how to display the annotations -- has also been solved.  Drawing in wxPython takes place on panels.  Each cell cross-section is placed on its own panel.  This drastically limits the available space.  The panels are not wide enough to have the annotation text drawn on.  The solution was to assign each annotation a number and that number is what is used to annotate the cell.  The number is then displayed in the annotation list box allowing the user to read the appropriate annotation.  This can be seen in Figure~\ref{fig:annotation_whole}
+The first problem -- how to display the annotations -- has also been solved.  Drawing in \texttt{wxPython} takes place on panels.  Each cell cross-section is placed on its own panel.  This drastically limits the available space.  The panels are not wide enough to have the annotation text drawn on.  The solution was to assign each annotation a number and that number is what is used to annotate the cell.  The number is then displayed in the annotation list box allowing the user to read the appropriate annotation.  This can be seen in Figure~\ref{fig:annotation_whole}
 
 \begin{figure}[h!]
     \centering
