@@ -90,7 +90,7 @@ We can see that there are a number of tools now that offer the ability to collab
 
 Early on in the first stage of the project it was decided to separate this project from the Eclipse plug-in.  It was felt that Eclipse is not the right tool to do data visualisation in.
 
-The initial development stages were focused on getting the new tool from having zero functionality to matching the visualisation features of the Eclipse plug-in.  This involved writing an early version of the \ac{UI}, parsing the Bio-PEPA results data, and plotting it using matplotlib~\cite{mpl}.
+The initial development stages were focused on getting the new tool from having zero functionality to matching the visualisation features of the Eclipse plug-in.  This involved writing an early version of the \ac{UI}, parsing the Bio-PEPA results data, and plotting it using \texttt{matplotlib}~\cite{mpl}.
 
 The next stage of the project was to extend the functionality.  The first new feature was intensity plotting where the colour of the line increases in intensity/opaqueness as the population of the species increases.  The next feature added was visualisation of the model.  Model visualisation used a system of nesting circles and rings to build a hierarchical view of the cell from its model components.  Finally the user was given control of the plot, allowing them to alter whether lines are plotted or not, what colour the line is and the thickness of the line.  Figure~\ref{fig:f75_mac_intro} shows how the main screen of the program looked at the end of the first stage of development (MPP1).
 
@@ -122,9 +122,9 @@ This section details the libraries that were used to build this project.  They a
 
 \subsection{matplotlib}
 
-matplotlib~\cite{mpl} is a graphing library for Python.  The graph visualisation is built on top of matplotlib.  The graph visualisation acts a wrapper around matplotlib.  The user does not have to write scripts that make calls to matplotlib.
+\texttt{matplotlib}~\cite{mpl} is a graphing library for Python.  The graph visualisation is built on top of \texttt{matplotlib}.  The graph visualisation acts a wrapper around \texttt{matplotlib}.  The user does not have to write scripts that make calls to \texttt{matplotlib}.
 
-Features built on top of matplotlib are:
+Features built on top of \texttt{matplotlib} are:
 \begin{itemize}
 \item Intensity Gradient Plotting
 \item Annotation infrastructure
@@ -134,9 +134,9 @@ Features built on top of matplotlib are:
 
 \subsection{wxPython}
 
-wxPython~\cite{wxpython} is the \ac{GUI} library.  The \ac{GUI} and the animation visualisation are built on top of wxPython.  The animation visualisation uses wxPython's drawing api.  This is detailed further in Sections~\ref{sec:animation}~\&~\ref{sec:anime_annotation}
+\texttt{wxPython}~\cite{wxpython} is the \ac{GUI} library.  The \ac{GUI} and the animation visualisation are built on top of \texttt{wxPython}.  The animation visualisation uses \texttt{wxPython's} drawing \ac{API}.  This is detailed further in Sections~\ref{sec:animation}~\&~\ref{sec:anime_annotation}
 
-Features build on top of wxPython are:
+Features build on top of \texttt{wxPython} are:
 \begin{itemize}
 \item The \ac{UI}
 \item Animation visualisation
@@ -145,7 +145,7 @@ Features build on top of wxPython are:
 
 \subsection{SimpleXMLRPCServer}
 
-SimpleXMLRPCServer~\cite{xmlrpcserver} has been used to enable communication between instances of the program.  SimpleXMLRPCServer was used to avoid having to write client and server code that would send and receive messages over sockets.  This allowed the development to focus on implementation of the \ac{API}
+\texttt{SimpleXMLRPCServer}~\cite{xmlrpcserver} has been used to enable communication between instances of the program.  \texttt{SimpleXMLRPCServer} was used to avoid having to write client and server code that would send and receive messages over sockets.  This allowed the development to focus on implementation of the \ac{API}
 
 Built on top of this library is
 \begin{itemize}
@@ -159,5 +159,5 @@ A singleton was used to act as a central repository for the data that visualisat
 Over the course of the project two different singleton implementations were used.  The first was taken from Paul Manta in this StackOverflow post - \url{http://stackoverflow.com/questions/6760685/creating-a-singleton-in-python}.  This was not threadsafe.  Towards the end of the project a different implementation was chosen.  The code for this second singleton can be found here: \url{https://gist.github.com/werediver/4396488}.  This implementation was threadsafe.
 
 \subsection{Miscellaneous}
-A number of other Python libraries were utilised in the project.  They are all part of the standard Python library.  They did not provide any significant relevant behaviour, instead they were used to aid implementation of the features in this project.  More significant discussion of how any of these libraries were used can be found around the discussion of the features that utilised them.  The libraries are: uuid, re, platform, os, time, threading, subprocess, copy, random, numpy, itertools, collections, math, pickle, sys, inspect.
+A number of other Python libraries were utilised in the project.  They are all part of the standard Python library.  They did not provide any significant relevant behaviour, instead they were used to aid implementation of the features in this project.  More significant discussion of how any of these libraries were used can be found around the discussion of the features that utilised them.  The libraries are: \texttt{uuid}, \texttt{re}, \texttt{platform}, \texttt{os}, \texttt{time}, \texttt{threading}, \texttt{subprocess}, \texttt{copy}, \texttt{random}, \texttt{numpy}, \texttt{itertools}, \texttt{collections}, \texttt{math}, \texttt{pickle}, \texttt{sys}, \texttt{inspect}.
 
