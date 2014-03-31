@@ -162,7 +162,7 @@ Norman~\cite{normsev}, Shneiderman~\cite{shgold} and Neilson~\cite{neilten} each
 
 \paragraph*{Supporting internal locus of control} is one of Shneiderman's principles.  It calls for making the user feel in control of the system and having the user instigate actions rather than respond to actions.  The user is the instigator of all actions in the tool.  The sense of control will be lost when collaborating as actions will be performed that they did not instigate.  This is unavoidable and is mitigated by the fact that the users have to instigate a collaborative session.
 
-\paragraph*{Reducing short-term memory load} is a principle in Shneiderman's and Neilson's lists.  It calls for keeping \acp{UI} simple.  It is important that users should be able to \textit{recognize} what action needs to be performed, not \textit{remembering} what action has to be performed.  This has been done by clearly and effectively labelling \ac{UI} elements and by having a shallow structure.  The user is not forced to go through deep menus and dialogues to perform actions.  When implementing \acp{UI} that are optimised for recognition it is important not to end up in a Norman door situation~\cite{design_of_things}[p.87].  A Norman door is a door that has been particularly poorly designed and is labelled push or pull, rather than made clear through the design of the door.  Some minor Norman door situations have found their way into the project.  The most obvious one is in the session wizard on the results file selector page.  The user is able to select multiple files.  During evaluations the user did not discover this, so helper text was added telling the user that multiple files can be selected.  It had been assumed to be obvious, as it is a feature in many programs that you can select multiple files.
+\paragraph*{Reducing short-term memory load} is a principle in Shneiderman's and Neilson's lists.  It calls for keeping \acp{UI} simple.  It is important that users should be able to \textit{recognise} what action needs to be performed, not \textit{remembering} what action has to be performed.  This has been done by clearly and effectively labelling \ac{UI} elements and by having a shallow structure.  The user is not forced to go through deep menus and dialogues to perform actions.  When implementing \acp{UI} that are optimised for recognition it is important not to end up in a Norman door situation~\cite{design_of_things}[p.87].  A Norman door is a door that has been particularly poorly designed and is labelled push or pull, rather than made clear through the design of the door.  Some minor Norman door situations have found their way into the project.  The most obvious one is in the session wizard on the results file selector page.  The user is able to select multiple files.  During evaluations the user did not discover this, so helper text was added telling the user that multiple files can be selected.  It had been assumed to be obvious, as it is a feature in many programs that you can select multiple files.
 
 \paragraph*{Constraining the user} is one of Norman's principles.  It suggests finding ways to restrict what actions a user can perform during use of the program.  This can be used to help guide the user through the program.  This has been accomplished in this project through the use of wizards and by enabling and disabling various \ac{UI} elements.
 
@@ -307,7 +307,11 @@ It was not possible to perform an evaluation with any users of this feature.  On
 
 The evaluation of this feature has therefore been focussed on the responsiveness of the collaboration and the coverage of the functionality that can be collaborated on.
 
-The implementation of real time collaboration is quite effective.  Almost all functionality that can be in a solo session has been implemented for collaborative work.  The only feature which cannot be used in the collaborative mode is the large plot. It was not possible to implement this feature because of the issue of closing the large plot dialogue.  The event that closes the dialogue would be the event that sends the message to the collaborator.  The collaborator would then have this method called.  There is then an infinite loop.  The displaying of a large version of the plot is a minor feature.  Not having access to it in the collaborative mode does not limit the user in their work.
+The implementation of real time collaboration is quite effective.  Almost all functionality that can be in a solo session has been implemented for collaborative work.  Only two features cannot be used in the collaborative mode:
+\begin{itemize}
+\item Viewing of the large plot. It was not possible to implement this feature because of the issue of closing the large plot dialogue.  The event that closes the dialogue would be the event that sends the message to the collaborator.  The collaborator would then have this method called.  There is then an infinite loop.  The displaying of a large version of the plot is a minor feature.  Not having access to it in the collaborative mode does not limit the user in their work.  This behaviour also fits in with the software reviewed in Section~\ref{sec:review}.  In two of the applications zoom levels were not forced on collaborators.
+\item Attaching of files.  It was not feasible to implement this feature.  It would be very inefficient to transfer large files through the RPC server.  This issue and potential solutions are discussed in Section~\ref{sec:cloud}
+\end{itemize}
 
 The initial implementation of collaboration was not responsive enough.  It used blocking communication, effectively providing a lock around each action that effects the visualisation.  This involved waiting for a response from the collaborator to say that the change had been applied.  The \ac{UI} would be appear locked to the user for the duration of this message.  The collaboration features were only tested on internal networks where that duration would be minimal.  Even with minimal duration it was a frustrating experience being locked out of the \ac{UI}.  Communication to users across non internal networks could only be slower and therefore more frustrating to the user.  For this reason non blocking communication was implemented.  A thread is now created for each message sent.  This allows the \ac{UI} to not be locked out.  It did require losing the mutual exclusion guarantee.  This made the \ac{UI} more responsive, but sacrificed guaranteed correctness. Section~\ref{sec:ordering} discusses this further.
 
@@ -332,7 +336,7 @@ The results were extremely positive.  The findings from each experiment are disc
 
 \begin{table}[h]
 \begin{center}
-    \resizebox{0.8\textwidth}{!} {\begin{minipage}{\textwidth}
+    \resizebox{0.65\textwidth}{!} {\begin{minipage}{\textwidth}
     \begin{tabular}{ | l | c | c | c | c | c | c | c | c | c | c | }
         \hline
         Rank & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
@@ -352,7 +356,7 @@ The results were extremely positive.  The findings from each experiment are disc
 
 \begin{table}[h]
 \begin{center}
-    \resizebox{0.8\textwidth}{!} {\begin{minipage}{\textwidth}
+    \resizebox{0.65\textwidth}{!} {\begin{minipage}{\textwidth}
     \begin{tabular}{ | l | c | c | c | c | c | c | c | c | c | c | }
         \hline
         Rank & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
