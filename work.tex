@@ -416,7 +416,7 @@ Now that we have a representation of the plot that is scale and time invariant a
 
 We could simply just use Euclidean distance again, using the two vectors as the input, but this does not do anything to weight rarer features.  If two plots have rare features in common then that is much more significant for similarity than if they share very common features.  A similarity measure that takes into account the importance of a word is therefore desirable.
 
-It was decided to implement \ac{tf.idf} weighted cosine as the similarity measure.  This takes into account term frequencies to provide a higher weight to rarer vectors.  \ac{tf.idf} is very well researched in the field of information retrieval and text mining.  Given that the representation is equivalent to a bag-of-words, a common representation in the field of information retrieval, it seems sensible to apply \ac{tf.idf} to this domain.  A description of how \ac{tf.idf} weighted cosine works can be found in Section~\ref{sec:tfidf}.
+It was decided to implement \ac{tf.idf} weighted cosine as the similarity measure.  This takes into account term frequencies to provide a higher weight to rarer vectors.  \ac{tf.idf} is very well researched in the field of information retrieval and text mining.  Given that the representation is equivalent to a bag-of-words, a common representation in the field of information retrieval, it seemed sensible to apply \ac{tf.idf} to this domain.  A description of how \ac{tf.idf} weighted cosine works can be found in Section~\ref{sec:tfidf}.
 
 The tf.idf weighted cosine similarity~\cite[p.~243]{se_book} can then be calculated between the query plot and each individual plot in the database.  These similarity scores can then be ranked.
 
