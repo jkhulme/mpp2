@@ -22,7 +22,7 @@ The following goals were to be completed during the second phase of development:
 \item Add the ability to annotate the visualisations -- The purpose of this goal is to allow the biologists to add extra supporting information directly onto the visualisation. This goal has been implemented: the user can add annotations to the visualisations.
 \item Allow the ability to save and load the program state -- The purpose of this goal was to allow the biologists to complete their work in multiple sessions. This goal has been implemented: users can save and load the program state into files, these can then be emailed to other users who can modify them.
 \item Provide a full session history to the user -- The purpose of this goal is to allow the biologists to recover from any mistakes they might make. This has been implemented: the user has a full undo and redo history within the session allowing them to easily correct mistakes.
-\item Data Mining -- The purpose of this goal was to have the program provide some level of automatic annotation and setting optimisation to reduce the workload for the biologists.  Due to other features being added that reduce the need for this goal, the goal has now been dropped.  The research for this goal was not lost however as a similar goal was added.  Data mining to identify features in not a goal that should be abandoned either, instead it would be implemented if the development continued.
+\item Data Mining -- The purpose of this goal was to have the program provide some level of automatic annotation and setting optimisation to reduce the workload for the biologists.  Due to other features being added that reduce the need for this goal, the goal has now been dropped.  The research for this goal was not lost however as a similar goal was added.  Data mining to identify features is not a goal that should be abandoned either, instead it would be implemented if the development continued.
 \item Making meta data accessible -- The purpose of this goal was to display the experiment settings in the \ac{UI}.  This goal has not been completed in this phase of development.  It was pushed back to allow development on real time collaboration and plots as queries features.  It has not been abandoned, instead it would be completed if development was to continue.
 \end{itemize}
 
@@ -45,7 +45,7 @@ This seemed like a very useful feature for users and it was added as a project g
 
 There has been a lot of research in recent years~\cite{goldin, chakrabarti, popivanov, faloutsos2, bollobas} into using time series data as a query against a database of other time series plots through some similarity measure.
 
-This would be a very useful feature to add to the tool.  By allowing researchers to use a plot as a query they would be able to discover other plots exhibiting similar behaviour.  This could be the same species reacting the same to different species, or a species that is exhibiting similar behaviour.  This could help the biologists discover alternative candidate species for research.
+This would be a very useful feature to add to the tool.  By allowing researchers to use a plot as a query they would be able to discover other plots exhibiting similar behaviour.  This could be the same species reacting in the same manner to different species, or a species that is exhibiting similar behaviour.  This could help the biologists discover alternative candidate species for research.
 
 This feature would be most effective if there was an online repository of plots for the biologist to search.  This would also allow them to discover potential collaborators.  Online repositories of data do exist: BioDARE is one of them.  These repositories are unlikely, at the moment, to store the data in a suitable way to allow for efficient search.
 
@@ -53,7 +53,7 @@ Given the potential usefulness of this feature, and the fact that none of the ot
 
 \subsection{Real Time Collaboration}
 
-An important area where all the reviewed software were lacking is collaboration, real time or not.  The current work flow using the existing software is: perform your analysis, save it, email it to a colleague with additional files and notes and have them open it. They then attempt to work out the visualisation is showing.  It is a disjointed conversation.
+An important area where all the reviewed software were lacking is collaboration, real time or not.  The current work flow using the existing software is: perform your analysis, save it, email it to a colleague with additional files and notes and have them open it. They then attempt to work out what the visualisation is showing.  It is a disjointed conversation.
 
 It is not just the modelling software that did not offer collaboration. None of the visualisation software reviewed offered real time collaboration either.
 
