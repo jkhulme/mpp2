@@ -1,6 +1,6 @@
 \chapter{Introduction}
 
-Biologists often use computer models to help guide their research as modelling is much cheaper than experimentation.  There are a number of tools available for biological modelling.  These tools typically require a certain level of numerical confidence to create and interpret.  Not all biologists have this numerical confidence.  Some researchers find writing and interpreting models a challenge; this can make them less effective in their research.  It is therefore necessary for the tools they use to help them relate the data to their field by incorporating domain knowledge.
+Biologists often use computer models to help guide their research as modelling is much cheaper than experimentation.  There are a number of tools available for biological modelling.  These tools typically require a certain level of numerical confidence to create and interpret models.  Not all biologists have this numerical confidence.  Some researchers find writing and interpreting models a challenge; this can make them less effective in their research.  It is therefore necessary for the tools they use to help them relate the data to their field by incorporating domain knowledge.
 
 One such tool that can be used for modelling is Bio-PEPA~\cite{biopepa}, an extension of the PEPA process algebra.  Bio-PEPA is currently implemented as a plugin for the Eclipse IDE.  Bio-PEPA visualises the model results as time-series graphs.  There is one team of Src researchers in particular, who use Bio-PEPA and do not have the numerical confidence, as described above, to be comfortable using Bio-PEPA.  This team was the original focus for the project.  The purpose of this project was to extend Bio-PEPA's visualisation capabilities to allow the previously mentioned team, and other similar users of Bio-PEPA, to more effectively analyse their results.
 
@@ -37,7 +37,7 @@ Chapter~\ref{chap:work} discusses the implementation work that has been performe
 
 Chapter~\ref{chap:eval} discusses the evaluation of the project.  This is spread over multiple evaluation sessions and includes evaluations with potential users as well as self evaluations.
 
-This chapter, the introduction, discusses the aims of the this project and gives a brief overview of the results.  The current landscape of similar software is evaluated.  There is also a brief introduction to the major external libraries that were used in this project.
+This chapter, the introduction, discusses the aims of the project and gives a brief overview of the results.  The current landscape of similar software is evaluated.  There is also a brief introduction to the major external libraries that were used in this project.
 
 The work that was implemented in this phase of the project consisted of:
 \begin{itemize}
@@ -67,7 +67,7 @@ The existing biological modelling software seems to be focused more on the ease 
 
 \subsection{Google Drive}
 
-Google Drive which was previously Google Docs, is one of the most widely used collaborative pieces of software.  Google Drive is used by a variety of user types.  The focus of the review was on the word processor.  Of the collaborative software reviewed this was felt to be the most user friendly.  One of the nicest features was a cursor indicating where every user currently editing the document is typing. Each user is also given a different colour allowing you to know who is doing what in real time.  Many people can edit a single document at once.  As well as editing documents users can also leave comments on the document.  Changes made by users appear near instantly to all users. The speed of editing is very important as it is frustrating as a user to have to wait to see changes others are making.  It is also very easy to invite others to edit the document with you.  Each document has a unique link and if a user visits that link they are taken to the document and can start editing.  Different permissions can be granted to different users allowing some level of collaboration with people who you do not necessarily want to grant full write access. These users can then just look at it in real time and offer comments.  Different parts of the editor have different levels of collaboration.  All text that is changed is changed for all, but preferences like font choice are only changed for the user, unless another user edits any text.  Also importantly from a \ac{UX} perspective is that any conflicts that arise appear to be resolved without any user intervention.  A history of what each user has done to the document is also provided and any unwanted changes can be rolled back.
+Google Drive which was previously Google Docs, is one of the most widely used collaborative pieces of software.  Google Drive is used by a variety of user types.  The focus of the review was on the word processor.  Of the collaborative software reviewed this was felt to be the most user friendly.  One of the nicest features was a cursor indicating where every user currently editing the document is typing. Each user is also given a different colour allowing you to know who is doing what in real time.  Many people can edit a single document at once.  As well as editing documents users can also leave comments on the document.  Changes made by users appear near instantly to all users. The speed of editing is very important as it is frustrating for a user to have to wait to see changes others are making.  It is also very easy to invite others to edit the document with you.  Each document has a unique link and if a user visits that link they are taken to the document and can start editing.  Different permissions can be granted to different users allowing some level of collaboration with people who you do not necessarily want to grant full write access. These users can then just look at it in real time and offer comments.  Different parts of the editor have different levels of collaboration.  All text that is changed is changed for all, but preferences like font choice are only changed for the user, unless another user edits any text.  Also important, from a \ac{UX} perspective is that any conflicts that arise appear to be resolved without any user intervention.  A history of what each user has done to the document is also provided and any unwanted changes can be rolled back.
 
 \subsection{Pidoco}
 
@@ -84,7 +84,7 @@ SynBioWave was a biological extension to Google Wave.  It is the only example fo
 
 From studying the alternative modelling tools available and their visualisation capabilities it was clear that the visualisation capabilities of Bio-PEPA had to be increased.  It was also clear that all the modelling tools were limited in their visualisation capability and that increasing the interactivity and customisation available would be very useful.
 
-We can see that there are a number of tools now that offer the ability to collaborate in real time.  Only one, however, could be found that was focused on synthetic biology.  This one tool appeared to now be obsolete.  Given how useful tools like collaborative document editors have been more commonplace it seems like a good idea to try and bring this functionality into the systems biology domain.  This would give Bio-PEPA a competitive advantage and hopefully encourage more researchers to use it.
+We can see that there are a number of tools now that offer the ability to collaborate in real time.  Only one, however, could be found that was focused on synthetic biology.  This one tool appeared to now be obsolete.  Given how useful tools like collaborative document editors have become more commonplace it seems like a good idea to try and bring this functionality into the systems biology domain.  This would give Bio-PEPA a competitive advantage and hopefully encourage more researchers to use it.
 
 \section{Previous Work}
 
@@ -110,7 +110,7 @@ The tool offers more visualisation and analysis capabilities than the Eclipse pl
 
 There are also features aimed at making it easier for biologists who are not comfortable analysing graphs to analyse their work.  This has been implemented as animated cell cross-sections simulating the movement of species through the cell.
 
-Innovative features include using plots as queries to find similar plots allowing for discoverability from within the tool, and real time collaboration that allows two collaborators to work together and see each others changes in real time.
+Innovative features include using plots as queries to find similar plots allowing for discoverability from within the tool, and real time collaboration that allows two collaborators to work together and see each other's changes in real time.
 
 There is a focus on ease of use in the finished product with all features made as easy as possible to use with little guidance.  Relying on recognition not recall.
 
@@ -154,7 +154,7 @@ Built on top of this library is
 
 \subsection{Singleton}
 
-A singleton was used to act as a central repository for the data that visualisation session needs.  A singleton was useful for this as only one instance of this repository was required.  Pre-existing code was used for these to save time.
+A singleton was used to act as a central repository for the data that a visualisation session needs.  A singleton was useful for this as only one instance of this repository was required.  Pre-existing code was used for this to save time.
 
 Over the course of the project two different singleton implementations were used.  The first was taken from Paul Manta in this StackOverflow post - \url{http://stackoverflow.com/questions/6760685/creating-a-singleton-in-python}.  This was not threadsafe.  Towards the end of the project a different implementation was chosen.  The code for this second singleton can be found here: \url{https://gist.github.com/werediver/4396488}.  This implementation was threadsafe.
 
