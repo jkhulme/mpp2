@@ -335,41 +335,41 @@ The results were extremely positive.  The findings from each experiment are disc
 \paragraph*{Experiment 1:} The results from this experiment can be seen in Table~\ref{table:tab1}.  These results have discarded the match between the query and itself.  The table shows the top 10 most similar plots found by \ac{tf.idf} weighted cosine and the measure of their similarity.  The plots of these graphs can be seen in Appendix~\ref{sec:experiment1}.  We can see in some graphs, particularly Figure~\ref{fig:ex1_1} and Figure~\ref{fig:ex1_3}, that there are structural similarities between the query plot and the result plots.  In some other graphs, particularly Figure~\ref{fig:ex1_2} and Figure~\ref{fig:ex1_8}, this similarity is less obvious.  This could be an issue of scale that is not obvious to the human eye.  It could also be a failing in the method for determining similarity.
 
 \begin{table}[h]
+\resizebox{0.8\textwidth}{!} {\begin{minipage}{\textwidth}
 \begin{center}
-    \resizebox{0.65\textwidth}{!} {\begin{minipage}{\textwidth}
-    \begin{tabular}{ | l | c | c | c | c | c | c | c | c | c | c | }
-        \hline
-        Rank & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
-        \hline
-        line id & 256 & 7017 & 8341 & 1380 & 4997 & 5462 & 6648 & 2298 & 595 & 190 \\
-        \hline
-        similarity & 0.1804 & 0.1765 & 0.1629 & 0.1623 & 0.1608 & 0.1601 & 0.1584 & 0.1575 & 0.1566 & 0.1562 \\
-        \hline
-    \end{tabular}
-    \caption{10 most similar plots from Experiment 1}
-    \label{table:tab1}
-    \end{minipage}}
+\begin{tabular}{ | l | c | c | c | c | c | c | c | c | c | c | }
+    \hline
+    Rank & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+    \hline
+    line id & 256 & 7017 & 8341 & 1380 & 4997 & 5462 & 6648 & 2298 & 595 & 190 \\
+    \hline
+    similarity & 0.1804 & 0.1765 & 0.1629 & 0.1623 & 0.1608 & 0.1601 & 0.1584 & 0.1575 & 0.1566 & 0.1562 \\
+    \hline
+\end{tabular}
+\caption{10 most similar plots from Experiment 1}
+\label{table:tab1}
 \end{center}
+\end{minipage}}
 \end{table}
 
 \paragraph*{Experiment 2:} The results of this experiment can be seen in Table~\ref{table:tab2}.  The results have discarded the match between the query and itself.  The table shows the top 10 most similar plots found by \ac{tf.idf} weighted cosine and the measure of their similarity.  This experiment contained the 10 mutated similar plots.  The 10 mutated plots are the entirety of the top 10.  Applying \ac{tf.idf} to Lin and Li's work~\cite{structural_similarity} appears to have been justified.  The three plots that were purely scalings of the original data have been returned as identical.  This is the correct behaviour of the algorithm as it is a scale invariant algorithm.  The eleventh most similar plot was plot 256, which was the most similar in Experiment 1.
 
 \begin{table}[h]
+\resizebox{0.8\textwidth}{!} {\begin{minipage}{\textwidth}
 \begin{center}
-    \resizebox{0.65\textwidth}{!} {\begin{minipage}{\textwidth}
-    \begin{tabular}{ | l | c | c | c | c | c | c | c | c | c | c | }
-        \hline
-        Rank & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
-        \hline
-        line id & 10002 & 10001 & 10000 & 10003 & 10008 & 10009 & 10005 & 10004 & 10007 & 100006 \\
-        \hline
-        similarity & 1.0 & 1.0 & 1.0 & 0.8980 & 0.8902 & 0.8525 & 0.8349 & 0.7787 & 0.7086 & 0.6649 \\
-        \hline
-    \end{tabular}
-    \caption{10 most similar plots from Experiment 2}
-    \label{table:tab2}
-    \end{minipage}}
+\begin{tabular}{ | l | c | c | c | c | c | c | c | c | c | c | }
+    \hline
+    Rank & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\
+    \hline
+    line id & 10002 & 10001 & 10000 & 10003 & 10008 & 10009 & 10005 & 10004 & 10007 & 100006 \\
+    \hline
+    similarity & 1.0 & 1.0 & 1.0 & 0.8980 & 0.8902 & 0.8525 & 0.8349 & 0.7787 & 0.7086 & 0.6649 \\
+    \hline
+\end{tabular}
+\caption{10 most similar plots from Experiment 2}
+\label{table:tab2}
 \end{center}
+\end{minipage}}
 \end{table}
 
 \paragraph*{Experiment 3:} In all 100 experiments the top ten most similar plots found by \ac{tf.idf} weighted cosine, excluding the query itself, were the mutated similar plots.  This is a positive indication that the approach for determining similarity was a valid one.  It does, however, indicate that using artificial data may have drawbacks.
