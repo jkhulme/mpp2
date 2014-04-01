@@ -1,15 +1,13 @@
 \chapter{Conclusion}
 
-This section contains a final look at the project.  The goals were looked at and it was decided whether or not the project met them.  There is also a detailed analysis of where future work in the project should be focussed.  There is also a discussion of any challenges that were faced and any problems that were unable to be resolved.
+This section contains a final look at the project.  The goals are re-examined and it is decided whether or not the project has met them.  There is also a detailed analysis of where future work in the project could be focussed.  Finally there is a discussion of the challenges that were faced and problems that could not be resolved.
 
 \section{Comparison to Objective}
 \label{sec:met_goal}
 
 The aim of the project was: ``to develop a tool to visualise the results of dynamic time-series models of intra-cellular behaviour based on biochemical reactions".  This goal has been met.  The results can be visualised statically and dynamically.  The cell level visualisation applies domain knowledge familiar to biologists to help them understand their results.  Additional features to help the user work more efficiently and effectively have been added.  With respect to meeting the project goal the tool has been successful.
 
-The users are now able to load the results from their dynamic time-series models of intra-cellular behaviour based on biochemical reactions into the program to be visualised.  There are static and dynamic visualisations.  These take the form of standard graphs and animations of an abstract view of cells.
-
-The user is able to interact with these visualisations.  They can customise them and attach additional information not present in the results files.
+The user is able to interact with the visualisations.  They can customise them and attach additional information not present in the results files.
 
 The user is also able to manipulate their data and export it.
 
@@ -22,7 +20,7 @@ Evaluations with potential users have shown positive reception to this new tool 
 Some challenges were faced in this project that were not discussed elsewhere in this report.  These are presented below.
 
 \subsection{wxPython Being Cross-Platform}
-Python was chosen for this project to allow for the project to be run on any system.  A cross platform \ac{GUI} toolkit was chosen for the same reason.  \texttt{wxPython} was chosen (details of why can be found in the MPP report).  Initially this was successful.  The program was running on \texttt{MacOS} and \texttt{Linux}.  As the project was developed further some discrepancies were uncovered between \texttt{wxPython} on different platforms.  Initially this was coped with by writing different versions of parts of the code for each platform.  Eventually this became impractical.  Development support for \texttt{Linux} was halted.  Currently the project has only been tested running on \texttt{MacOSX} \texttt{Mountain} \texttt{Lion}.
+Python was chosen for this project to allow the project to be run on any system.  A cross platform \ac{GUI} toolkit was selected for the same reason.  \texttt{wxPython} was picked (details of why can be found in the MPP report).  At first this was successful.  The program was running on \texttt{MacOS} and \texttt{Linux}.  As the project was developed further some discrepancies were uncovered between \texttt{wxPython} on different platforms.  Initially this was coped with by writing different versions of parts of the code for each platform.  Eventually this became impractical.  Development support for \texttt{Linux} was halted.  Currently the project has only been tested running on \texttt{MacOSX} \texttt{Mountain} \texttt{Lion}.
 
 An attempt was made to test the program on Windows, but there were problems installing the necessary Python libraries.
 
@@ -37,14 +35,14 @@ An initial version of collaboration used blocking communication.  In a blocking 
 
 \subsection{Distributed Undo Forgetting States}
 
-When doing a visualisation without any collaborators the undo and redo functionality works as expected.  In the collaborative mode however there is a bug.  If we have the user and the collaborator, changes the user makes are sent to the collaborator.  If the user issues an undo command their undo history is correct.  The collaborator's undo history appears to forget states.  This leaves the collaborator and the user seeing different visualisations.  This bug appears to be related to the issues that arose when first implementing undo and redo. Python's deep copy had to be introduced.  Despite numerous attempts to solve this bug a solution was not found that resolved the issue before the project deadline.
+When doing a visualisation without any collaborators the undo and redo functionality works as expected.  In the collaborative mode however there is a bug.  If we have a user and a collaborator, changes the user makes are sent to the collaborator.  If the user issues an undo command their undo history is correct.  The collaborator's undo history appears to forget states.  This leaves the collaborator and the user seeing different visualisations.  This bug appears to be related to the issues that arose when first implementing undo and redo. Python's deep copy had to be introduced.  Despite numerous attempts to solve this bug a solution was not found that resolved the issue before the project deadline.
 
 \section{The Future}
 
 By the end of the project the program that had been developed was in a state that could be used by users.  There is more functionality than the Eclipse plugin and it is stable.  There is, however, work which could be done if development were to continue.  This is detailed below.
 
 \subsection{Plots as Queries}
-A prototype system for using plots as queries was developed (Section~\ref{sec:search}).  Early results were promising, but further work needs to be performed.  The first step would be working with a team of biologists and creating a large evaluation set. This would be a labelled set of plots that are similar or not similar.  This would allow the effectiveness to be accurately measured.  This would also include tuning of the parameters used, such as feature size and vocabulary size.  Other systems for using time series data as queries could also be developed and then the different systems can have their effectiveness compared.
+A prototype system for using plots as queries was developed (Section~\ref{sec:search}).  Early results are promising, but further work needs to be performed.  The first step would be working with a team of biologists and creating a large evaluation set. This would be a labelled set of plots that are similar or not similar.  This would allow the effectiveness to be accurately measured.  This would also include tuning of the parameters used, such as feature size and vocabulary size.  Other systems for using time series data as queries could also be developed and then the different systems can have their effectiveness compared.
 
 There should also be an online repository of time-series data.  This would be processed for use in the search algorithms.  This would be done with the technique in Section~\ref{sec:search}.  \ac{tf.idf}, information retrieval, and machine learning in general, all rely on having a large amount of data.  One user will typically not have enough data to give the best results.  A central repository of data would allow all users' data to be used to gather statistics on the data to be used in the algorithms.  Other users' data could also be displayed in the results.  This would allow users to discover related work and potential collaborators.  Having a central repository also takes some control of the data out of the hands of the user.  Part of the reason for not integrating this feature with the \ac{UI} during this project was that it would have been difficult to track the location of the experiment data.  If the data had been uploaded to a central repository then there would be no problems tracking it, as the user would have no say in the location.
 
@@ -60,7 +58,7 @@ Again, all of these work best with a large amount of data and so would need to b
 \label{sec:cloud}
 All of the collaboration software reviewed (see Section~\ref{sec:review}) worked using a model where there is a single server.  This is a much simpler model for collaboration as the only ordering is the ordering on the server.
 
-Adopting this model the for tool's architecture would require some refactoring of the project.  The code would need to be separated completely into a server and a client.  The server would do the the work: parsing the data, performing the intensity calculations and handling the creation of annotations.  The client would just display the information from the server.
+Adopting this model for the tool's architecture would require some refactoring of the project.  The code would need to be separated completely into a server and a client.  The server would do the the work: parsing the data, performing the intensity calculations and handling the creation of annotations.  The client would just display the information from the server.
 
 Work towards this goal would also hopefully include rewriting the project so that the client could be a browser-based client.  A lot of problems arose from \texttt{wxPython} not being as cross platform compatible as had been hoped.  Rewriting the client to be browser-based should solve the cross platform problems.
 
